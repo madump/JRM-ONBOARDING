@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="JRMRC service-based client onboarding form for website, UI/UX, GoHighLevel, automation, and graphic design projects." />
+  <meta name="description" content="JRMRC client onboarding form for the four service packages offered by JRMRC: Custom Coded Website, GoHighLevel Setup, GHL + AI Receptionist, and GHL AI Revenue System." />
   <title>JRMRC Client Onboarding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -945,6 +945,52 @@
       color: #52606b;
     }
 
+    .service-card .package-name {
+      display: block;
+      padding-right: 28px;
+      font: 800 15px/1.3 "Manrope", sans-serif;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .service-card .package-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
+    }
+
+    .service-card .package-price {
+      font: 800 18px/1 "Manrope", sans-serif;
+      color: #315f00;
+    }
+
+    .service-card .package-timeline {
+      color: #667085;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .service-card .package-desc {
+      display: block;
+      color: #52606b;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .package-scope-note {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(133,255,10,.08);
+      border: 1px solid rgba(133,255,10,.28);
+      color: #294700;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
     .service-panel {
       grid-column: 1 / -1;
       margin-top: 4px;
@@ -1025,7 +1071,7 @@
       <div class="hero-content reveal">
         <div class="eyebrow">Client onboarding</div>
         <h1>Tell me what I need to <span class="hero-highlight">start.</span></h1>
-        <p class="hero-copy">Choose the service you booked and complete only the details needed for that project.</p>
+        <p class="hero-copy">Choose the package you booked and complete only the details needed to start.</p>
         <div class="hero-actions">
           <a class="primary-btn" href="#onboarding-form">
             Start onboarding
@@ -1055,7 +1101,7 @@
           </div>
           <div class="quick-item">
             <div class="quick-num">02</div>
-            <div><b>Service</b><small>Questions for your project</small></div>
+            <div><b>Package</b><small>Questions for your build</small></div>
             <span class="quick-state">Required</span>
           </div>
           <div class="quick-item">
@@ -1075,7 +1121,7 @@
     <section id="onboarding-form" aria-labelledby="form-title">
       <div class="section-intro reveal">
         <h2 id="form-title">Project onboarding</h2>
-        <p>Select the service you booked. The form will show the questions I need for that work.</p>
+        <p>Select the package you purchased. You’ll only see the questions needed for that build.</p>
       </div>
 
       <form id="clientForm" novalidate>
@@ -1114,144 +1160,104 @@
               <div class="form-section-head">
                 <div class="step-badge">02</div>
                 <div>
-                  <h3>Service booked</h3>
-                  <p>Choose your project type.</p>
+                  <h3>Package booked</h3>
+                  <p>Choose the JRMRC package you purchased.</p>
                 </div>
               </div>
 
               <div class="field-grid">
                 <div class="field full">
-                  <span class="label">Which service are we starting? <span class="required">*</span></span>
-                  <div class="service-grid" role="radiogroup" aria-label="Service booked">
+                  <span class="label">Which package are we starting? <span class="required">*</span></span>
+                  <div class="service-grid" role="radiogroup" aria-label="Package booked">
                     <label class="option-card service-card">
-                      <input type="radio" name="service" value="website" required />
-                      <strong>Website / Landing Page</strong>
-                      <small>New website, redesign, landing page, or funnel page.</small>
+                      <input type="radio" name="service" value="custom-coded-website" required />
+                      <span class="package-name">Custom Coded Website</span>
+                      <span class="package-price-row"><span class="package-price">$499</span><span class="package-timeline">7–10 business days</span></span>
+                      <span class="package-desc">Up to 5 standard pages, CRO-focused structure, basic SEO, GitHub/Vercel handoff, and 30-day technical support.</span>
                     </label>
+
                     <label class="option-card service-card">
-                      <input type="radio" name="service" value="uiux" />
-                      <strong>UI/UX Design</strong>
-                      <small>Website, dashboard, portal, app, or interface design.</small>
+                      <input type="radio" name="service" value="foundation" />
+                      <span class="package-name">GoHighLevel Setup</span>
+                      <span class="package-price-row"><span class="package-price">$799</span><span class="package-timeline">Foundation · 7–10 business days</span></span>
+                      <span class="package-desc">CRM, calendars, lead capture, email/SMS, up to 5 workflows, landing/booking page, integrations, and handover.</span>
                     </label>
+
                     <label class="option-card service-card">
-                      <input type="radio" name="service" value="ghl" />
-                      <strong>GoHighLevel / CRM</strong>
-                      <small>CRM, pipeline, forms, calendars, funnels, and workflows.</small>
+                      <input type="radio" name="service" value="ai-receptionist" />
+                      <span class="package-name">GHL + AI Receptionist</span>
+                      <span class="package-price-row"><span class="package-price">$1,799</span><span class="package-timeline">10–15 business days</span></span>
+                      <span class="package-desc">GHL Setup plus inbound Voice AI for questions, qualification, booking, live transfer, and up to 10 workflows.</span>
                     </label>
+
                     <label class="option-card service-card">
-                      <input type="radio" name="service" value="automation" />
-                      <strong>Automation & Integrations</strong>
-                      <small>Connect apps and automate repetitive business processes.</small>
-                    </label>
-                    <label class="option-card service-card">
-                      <input type="radio" name="service" value="graphic" />
-                      <strong>Graphic Design</strong>
-                      <small>Social graphics, covers, ads, banners, and branded assets.</small>
+                      <input type="radio" name="service" value="revenue-system" />
+                      <span class="package-name">GHL AI Revenue System</span>
+                      <span class="package-price-row"><span class="package-price">$2,999</span><span class="package-timeline">15–20 business days</span></span>
+                      <span class="package-desc">Inbound + outbound AI, CRM/SMS/chat replies, reactivation, advanced routing, up to 15 workflows, 2 calendars, and 2 pipelines.</span>
                     </label>
                   </div>
                 </div>
 
-                <div class="service-panel" data-service-panel="website" hidden>
+                <div class="service-panel" data-service-panel="custom-coded-website" hidden>
                   <div class="service-panel-head">
-                    <h4>Website / Landing Page details</h4>
-                    <p>Only the information needed to design and build the page.</p>
+                    <h4>Custom Coded Website</h4>
+                    <p>Tell me what the up-to-5-page website needs to say and do.</p>
                   </div>
                   <div class="field-grid">
+                    <p class="package-scope-note"><strong>Package scope:</strong> responsive coded marketing website, up to 5 standard pages, CRO-focused structure, basic SEO, GitHub/Vercel handoff, and 30-day technical support.</p>
                     <div class="field">
-                      <label for="webType">What are we building? <span class="required">*</span></label>
-                      <select id="webType" name="webType" data-conditional-required>
+                      <label for="codedSiteType">Website type <span class="required">*</span></label>
+                      <select id="codedSiteType" name="codedSiteType" data-conditional-required>
                         <option value="">Select one</option>
                         <option>New website</option>
                         <option>Website redesign</option>
-                        <option>Landing page</option>
-                        <option>Sales funnel page</option>
-                        <option>Website update / improvement</option>
+                        <option>Landing page / single-page site</option>
                       </select>
                     </div>
                     <div class="field">
-                      <label for="webPlatform">Platform</label>
-                      <select id="webPlatform" name="webPlatform">
-                        <option value="">Select one</option>
-                        <option>GoHighLevel</option>
-                        <option>WordPress</option>
-                        <option>Custom HTML / CSS / JavaScript</option>
-                        <option>Other / Not sure</option>
-                      </select>
+                      <label for="codedDomain">Domain / current URL</label>
+                      <input id="codedDomain" name="codedDomain" type="text" placeholder="yourdomain.com or current website" />
                     </div>
                     <div class="field full">
-                      <label for="webGoal">Primary goal / CTA <span class="required">*</span></label>
-                      <input id="webGoal" name="webGoal" type="text" placeholder="Example: Book a call, request a quote, buy, or submit a form" data-conditional-required />
+                      <label for="codedGoal">Primary goal / CTA <span class="required">*</span></label>
+                      <input id="codedGoal" name="codedGoal" type="text" placeholder="Book a call, request a quote, submit a form, buy, call now…" data-conditional-required />
                     </div>
                     <div class="field full">
-                      <label for="webPages">Pages or sections needed <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="webPages" name="webPages" placeholder="Example: Home, Services, About, Contact — or Hero, Benefits, Testimonials, CTA" data-conditional-required></textarea>
+                      <label for="codedPages">Pages needed — up to 5 <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="codedPages" name="codedPages" placeholder="Example: Home, About, Services, Reviews, Contact" data-conditional-required></textarea>
                     </div>
                     <div class="field">
-                      <label for="webCopy">Is the copy ready?</label>
-                      <select id="webCopy" name="webCopy">
+                      <label for="codedCopy">Copy/content status <span class="required">*</span></label>
+                      <select id="codedCopy" name="codedCopy" data-conditional-required>
                         <option value="">Select one</option>
-                        <option>Yes, final copy is ready</option>
+                        <option>Final copy is ready</option>
                         <option>I have rough copy</option>
-                        <option>I need help with the copy</option>
+                        <option>Use content from my current website</option>
+                        <option>I need help organizing the copy</option>
                       </select>
                     </div>
                     <div class="field">
-                      <label for="webDomain">Domain / live URL</label>
-                      <input id="webDomain" name="webDomain" type="text" placeholder="Domain or current page URL" />
+                      <label for="codedLeadDestination">Where should leads go?</label>
+                      <input id="codedLeadDestination" name="codedLeadDestination" type="text" placeholder="Email, CRM, booking page, phone, etc." />
                     </div>
                     <div class="field full">
-                      <label for="webReferences">Design references</label>
-                      <textarea class="compact-textarea" id="webReferences" name="webReferences" placeholder="Paste 1–3 websites you like and what you like about them."></textarea>
+                      <label for="codedReferences">Design references</label>
+                      <textarea class="compact-textarea" id="codedReferences" name="codedReferences" placeholder="Paste 1–3 websites you like and tell me what you like about them."></textarea>
                     </div>
                   </div>
                 </div>
 
-                <div class="service-panel" data-service-panel="uiux" hidden>
+                <div class="service-panel" data-service-panel="foundation" hidden>
                   <div class="service-panel-head">
-                    <h4>UI/UX Design details</h4>
-                    <p>Define the interface, users, and required screens.</p>
+                    <h4>GoHighLevel Setup — Foundation</h4>
+                    <p>Define the CRM, lead capture, booking, messaging, and workflows to configure.</p>
                   </div>
                   <div class="field-grid">
+                    <p class="package-scope-note"><strong>Package scope:</strong> CRM, calendars, lead capture, email/SMS, up to 5 workflows, one landing/booking page, integration testing, and handover support.</p>
                     <div class="field">
-                      <label for="uxProduct">What are we designing? <span class="required">*</span></label>
-                      <select id="uxProduct" name="uxProduct" data-conditional-required>
-                        <option value="">Select one</option>
-                        <option>Website</option>
-                        <option>Landing page</option>
-                        <option>Dashboard / portal</option>
-                        <option>Web app</option>
-                        <option>Mobile app</option>
-                        <option>Other interface</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label for="uxScreens">Approx. screens / pages</label>
-                      <input id="uxScreens" name="uxScreens" type="text" placeholder="Example: 5 screens" />
-                    </div>
-                    <div class="field full">
-                      <label for="uxUsers">Who will use it? <span class="required">*</span></label>
-                      <input id="uxUsers" name="uxUsers" type="text" placeholder="Example: Customers, staff, students, admins" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="uxFlow">Main user action / flow <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="uxFlow" name="uxFlow" placeholder="What should the user be able to do?" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="uxExisting">Existing design / Figma / reference link</label>
-                      <input id="uxExisting" name="uxExisting" type="url" placeholder="https://..." />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="service-panel" data-service-panel="ghl" hidden>
-                  <div class="service-panel-head">
-                    <h4>GoHighLevel / CRM details</h4>
-                    <p>Tell me what needs to be configured inside your CRM.</p>
-                  </div>
-                  <div class="field-grid">
-                    <div class="field">
-                      <label for="ghlAccount">Do you already have a GHL account? <span class="required">*</span></label>
-                      <select id="ghlAccount" name="ghlAccount" data-conditional-required>
+                      <label for="foundationAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
+                      <select id="foundationAccount" name="foundationAccount" data-conditional-required>
                         <option value="">Select one</option>
                         <option>Yes</option>
                         <option>No</option>
@@ -1259,20 +1265,20 @@
                       </select>
                     </div>
                     <div class="field">
-                      <label for="ghlLocation">Location / sub-account name</label>
-                      <input id="ghlLocation" name="ghlLocation" type="text" placeholder="Account or location name" />
+                      <label for="foundationLocation">Location / sub-account name</label>
+                      <input id="foundationLocation" name="foundationLocation" type="text" placeholder="Account or location name" />
                     </div>
                     <div class="field full">
-                      <label for="ghlSetup">What needs to be set up? <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="ghlSetup" name="ghlSetup" placeholder="Example: Pipeline, form, calendar, funnel, email/SMS workflow, lead routing" data-conditional-required></textarea>
+                      <label for="foundationLeadFlow">Where do leads come from and what should happen next? <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="foundationLeadFlow" name="foundationLeadFlow" placeholder="Example: Website form → CRM → sales pipeline → email/SMS follow-up → booking" data-conditional-required></textarea>
                     </div>
                     <div class="field full">
-                      <label for="ghlLeadFlow">Describe your lead flow <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="ghlLeadFlow" name="ghlLeadFlow" placeholder="Where do leads come from and what should happen after they submit?" data-conditional-required></textarea>
+                      <label for="foundationWorkflows">Workflows needed — up to 5 <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="foundationWorkflows" name="foundationWorkflows" placeholder="List the automations you want, one per line." data-conditional-required></textarea>
                     </div>
                     <div class="field">
-                      <label for="ghlMessaging">Email / SMS needed?</label>
-                      <select id="ghlMessaging" name="ghlMessaging">
+                      <label for="foundationMessaging">Messaging needed?</label>
+                      <select id="foundationMessaging" name="foundationMessaging">
                         <option value="">Select one</option>
                         <option>Email only</option>
                         <option>SMS only</option>
@@ -1281,72 +1287,134 @@
                       </select>
                     </div>
                     <div class="field">
-                      <label for="ghlCalendar">Calendar / booking needed?</label>
-                      <select id="ghlCalendar" name="ghlCalendar">
+                      <label for="foundationCalendar">Calendar / booking setup <span class="required">*</span></label>
+                      <input id="foundationCalendar" name="foundationCalendar" type="text" placeholder="What should clients book?" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="foundationPage">Landing / booking page goal <span class="required">*</span></label>
+                      <input id="foundationPage" name="foundationPage" type="text" placeholder="Example: Capture leads and book a 30-minute consultation" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="foundationIntegrations">Apps / integrations to connect</label>
+                      <input id="foundationIntegrations" name="foundationIntegrations" type="text" placeholder="Google Calendar, Stripe, Gmail, Zapier, Make, etc." />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="ai-receptionist" hidden>
+                  <div class="service-panel-head">
+                    <h4>GHL + AI Receptionist</h4>
+                    <p>Give the AI what it needs to answer, qualify, book, and transfer inbound calls.</p>
+                  </div>
+                  <div class="field-grid">
+                    <p class="package-scope-note"><strong>Package scope:</strong> everything in GHL Setup plus inbound Voice AI for questions, qualification, appointment booking, live transfer, and up to 10 workflows.</p>
+                    <div class="field">
+                      <label for="aiAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
+                      <select id="aiAccount" name="aiAccount" data-conditional-required>
                         <option value="">Select one</option>
                         <option>Yes</option>
                         <option>No</option>
-                        <option>Already set up</option>
+                        <option>Not sure</option>
                       </select>
                     </div>
-                  </div>
-                </div>
-
-                <div class="service-panel" data-service-panel="automation" hidden>
-                  <div class="service-panel-head">
-                    <h4>Automation & Integration details</h4>
-                    <p>Describe the current manual process and the result you want.</p>
-                  </div>
-                  <div class="field-grid">
-                    <div class="field full">
-                      <label for="autoApps">Apps / platforms to connect <span class="required">*</span></label>
-                      <input id="autoApps" name="autoApps" type="text" placeholder="Example: GoHighLevel, Gmail, Google Sheets, Zapier, Make, WordPress" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="autoCurrent">What happens now? <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="autoCurrent" name="autoCurrent" placeholder="Describe the manual steps you currently do." data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="autoDesired">What should happen automatically? <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="autoDesired" name="autoDesired" placeholder="Example: When a form is submitted, create/update the contact, notify the team, and send a follow-up." data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="autoExisting">Existing automation / error / workflow link</label>
-                      <textarea class="compact-textarea" id="autoExisting" name="autoExisting" placeholder="Add any existing setup, issue, or reference link."></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="service-panel" data-service-panel="graphic" hidden>
-                  <div class="service-panel-head">
-                    <h4>Graphic Design details</h4>
-                    <p>Tell me exactly what asset needs to be designed.</p>
-                  </div>
-                  <div class="field-grid">
                     <div class="field">
-                      <label for="graphicType">Design needed <span class="required">*</span></label>
-                      <select id="graphicType" name="graphicType" data-conditional-required>
+                      <label for="aiLocation">Location / sub-account name</label>
+                      <input id="aiLocation" name="aiLocation" type="text" placeholder="Account or location name" />
+                    </div>
+                    <div class="field full">
+                      <label for="aiPurpose">What should the AI receptionist handle? <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="aiPurpose" name="aiPurpose" placeholder="Example: Answer FAQs, qualify callers, book appointments, and transfer urgent calls" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="aiFaq">Common questions the AI must answer <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="aiFaq" name="aiFaq" placeholder="List your most common questions and the correct answers." data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="aiQualification">Qualification questions <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="aiQualification" name="aiQualification" placeholder="What should the AI ask before booking or transferring?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field">
+                      <label for="aiBooking">What should the AI book? <span class="required">*</span></label>
+                      <input id="aiBooking" name="aiBooking" type="text" placeholder="Consultation, estimate, appointment, demo…" data-conditional-required />
+                    </div>
+                    <div class="field">
+                      <label for="aiTransfer">Live transfer number / rule <span class="required">*</span></label>
+                      <input id="aiTransfer" name="aiTransfer" type="text" placeholder="Number + when the AI should transfer" data-conditional-required />
+                    </div>
+                    <div class="field">
+                      <label for="aiHours">Business hours / after-hours behavior <span class="required">*</span></label>
+                      <input id="aiHours" name="aiHours" type="text" placeholder="Example: Mon–Fri 8–5; after hours book or take a message" data-conditional-required />
+                    </div>
+                    <div class="field">
+                      <label for="aiTone">Agent name / tone</label>
+                      <input id="aiTone" name="aiTone" type="text" placeholder="Example: Alex — friendly, concise, professional" />
+                    </div>
+                    <div class="field full">
+                      <label for="aiWorkflows">Extra workflows — up to 10 total</label>
+                      <textarea class="compact-textarea" id="aiWorkflows" name="aiWorkflows" placeholder="List follow-ups, notifications, lead routing, missed-call flows, etc."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="revenue-system" hidden>
+                  <div class="service-panel-head">
+                    <h4>GHL AI Revenue System</h4>
+                    <p>Map the full inbound, outbound, reactivation, routing, pipeline, and booking system.</p>
+                  </div>
+                  <div class="field-grid">
+                    <p class="package-scope-note"><strong>Package scope:</strong> inbound + outbound AI, CRM/SMS/chat replies, reactivation, advanced routing, up to 15 workflows, 2 calendars, 2 pipelines, and optimization.</p>
+                    <div class="field">
+                      <label for="revAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
+                      <select id="revAccount" name="revAccount" data-conditional-required>
                         <option value="">Select one</option>
-                        <option>Social media post</option>
-                        <option>Facebook cover</option>
-                        <option>Ad creative</option>
-                        <option>Banner</option>
-                        <option>Website graphic</option>
-                        <option>Presentation graphic</option>
-                        <option>Other</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>Not sure</option>
                       </select>
                     </div>
                     <div class="field">
-                      <label for="graphicSize">Size / platform</label>
-                      <input id="graphicSize" name="graphicSize" type="text" placeholder="Example: Facebook post 1080 × 1080" />
+                      <label for="revLocation">Location / sub-account name</label>
+                      <input id="revLocation" name="revLocation" type="text" placeholder="Account or location name" />
                     </div>
                     <div class="field full">
-                      <label for="graphicCopy">Text to include <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="graphicCopy" name="graphicCopy" placeholder="Paste the exact headline, body copy, CTA, contact details, etc." data-conditional-required></textarea>
+                      <label for="revGoal">Primary revenue-system goal <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revGoal" name="revGoal" placeholder="Example: Respond to every lead, reactivate old leads, qualify automatically, and increase booked appointments" data-conditional-required></textarea>
                     </div>
                     <div class="field full">
-                      <label for="graphicStyle">Style / reference</label>
-                      <textarea class="compact-textarea" id="graphicStyle" name="graphicStyle" placeholder="Paste a reference link or describe the look you want."></textarea>
+                      <label for="revLeadSources">Lead sources / channels <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revLeadSources" name="revLeadSources" placeholder="Website, Facebook ads, Google ads, phone calls, chat, imported lists, referrals…" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="revOutbound">Outbound / reactivation use case <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revOutbound" name="revOutbound" placeholder="Who should the system contact, why, and what outcome should it drive?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="revQualification">Qualification rules <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revQualification" name="revQualification" placeholder="What information makes a lead qualified, unqualified, urgent, or ready to book?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="revRouting">Routing rules <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revRouting" name="revRouting" placeholder="Who should receive each type of lead, and when should the system escalate or transfer?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field">
+                      <label for="revCalendars">Calendars — up to 2 <span class="required">*</span></label>
+                      <input id="revCalendars" name="revCalendars" type="text" placeholder="List the appointment types" data-conditional-required />
+                    </div>
+                    <div class="field">
+                      <label for="revPipelines">Pipelines — up to 2 <span class="required">*</span></label>
+                      <input id="revPipelines" name="revPipelines" type="text" placeholder="Example: Sales Pipeline, Reactivation Pipeline" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="revWorkflows">Workflows — up to 15 <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="revWorkflows" name="revWorkflows" placeholder="List the automations you need, one per line." data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="revIntegrations">Apps / integrations</label>
+                      <input id="revIntegrations" name="revIntegrations" type="text" placeholder="Stripe, calendars, email, Zapier, Make, spreadsheets, external CRM, etc." />
+                    </div>
+                    <div class="field full">
+                      <label for="revSuccess">How will we measure success?</label>
+                      <input id="revSuccess" name="revSuccess" type="text" placeholder="Example: response time, booked calls, reactivated leads, show rate, revenue" />
                     </div>
                   </div>
                 </div>
@@ -1462,7 +1530,7 @@
 
               <div class="jump-list">
                 <a class="jump-link active" href="#contact" data-link="contact"><span>01 · Contact</span><span></span></a>
-                <a class="jump-link" href="#service" data-link="service"><span>02 · Service</span><span></span></a>
+                <a class="jump-link" href="#service" data-link="service"><span>02 · Package</span><span></span></a>
                 <a class="jump-link" href="#assets" data-link="assets"><span>03 · Assets</span><span></span></a>
                 <a class="jump-link" href="#kickoff" data-link="kickoff"><span>04 · Kickoff</span><span></span></a>
               </div>
@@ -1525,7 +1593,7 @@
       const fileList = document.getElementById('fileList');
       const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
       const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
-      const storageKey = 'jrmrcClientOnboarding_v2';
+      const storageKey = 'jrmrcClientOnboarding_v3';
       const WORKER_URL = 'https://wild-hat-8199.jhimrickofficial.workers.dev/';
       const MAX_FILE_SIZE = 10 * 1024 * 1024;
       const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024;
@@ -1699,102 +1767,143 @@
 
       function serviceLabel(service) {
         const labels = {
-          website: 'Website / Landing Page',
-          uiux: 'UI/UX Design',
-          ghl: 'GoHighLevel / CRM',
-          automation: 'Automation & Integrations',
-          graphic: 'Graphic Design'
+          'custom-coded-website': 'Custom Coded Website — $499',
+          foundation: 'GoHighLevel Setup — Foundation — $799',
+          'ai-receptionist': 'GHL + AI Receptionist — $1,799',
+          'revenue-system': 'GHL AI Revenue System — $2,999'
         };
         return labels[service] || service;
       }
 
-      function buildServiceSummary(service) {
-        const lines = [];
+      function workerServiceKey(service) {
+        return service === 'custom-coded-website' ? 'website' : 'ghl';
+      }
 
-        if (service === 'website') {
-          lines.push(`Project type: ${getValue('webType')}`);
-          lines.push(`Platform: ${getValue('webPlatform') || 'Not specified'}`);
-          lines.push(`Primary goal / CTA: ${getValue('webGoal')}`);
-          lines.push(`Pages / sections: ${getValue('webPages')}`);
-          lines.push(`Copy status: ${getValue('webCopy') || 'Not specified'}`);
-          lines.push(`Domain / live URL: ${getValue('webDomain') || 'Not specified'}`);
-          lines.push(`Design references: ${getValue('webReferences') || 'None provided'}`);
-        } else if (service === 'uiux') {
-          lines.push(`Product / interface: ${getValue('uxProduct')}`);
-          lines.push(`Approx. screens / pages: ${getValue('uxScreens') || 'Not specified'}`);
-          lines.push(`Users: ${getValue('uxUsers')}`);
-          lines.push(`Main user flow: ${getValue('uxFlow')}`);
-          lines.push(`Existing design / Figma: ${getValue('uxExisting') || 'None provided'}`);
-        } else if (service === 'ghl') {
-          lines.push(`Existing GHL account: ${getValue('ghlAccount')}`);
-          lines.push(`Location / sub-account: ${getValue('ghlLocation') || 'Not specified'}`);
-          lines.push(`Setup needed: ${getValue('ghlSetup')}`);
-          lines.push(`Lead flow: ${getValue('ghlLeadFlow')}`);
-          lines.push(`Email / SMS: ${getValue('ghlMessaging') || 'Not specified'}`);
-          lines.push(`Calendar / booking: ${getValue('ghlCalendar') || 'Not specified'}`);
-        } else if (service === 'automation') {
-          lines.push(`Apps / platforms: ${getValue('autoApps')}`);
-          lines.push(`Current process: ${getValue('autoCurrent')}`);
-          lines.push(`Desired automation: ${getValue('autoDesired')}`);
-          lines.push(`Existing workflow / issue: ${getValue('autoExisting') || 'None provided'}`);
-        } else if (service === 'graphic') {
-          lines.push(`Design needed: ${getValue('graphicType')}`);
-          lines.push(`Size / platform: ${getValue('graphicSize') || 'Not specified'}`);
-          lines.push(`Text / copy: ${getValue('graphicCopy')}`);
-          lines.push(`Style / reference: ${getValue('graphicStyle') || 'None provided'}`);
+      function buildServiceSummary(service) {
+        const lines = [`Package booked: ${serviceLabel(service)}`];
+
+        if (service === 'custom-coded-website') {
+          lines.push(`Website type: ${getValue('codedSiteType')}`);
+          lines.push(`Primary goal / CTA: ${getValue('codedGoal')}`);
+          lines.push(`Pages: ${getValue('codedPages')}`);
+          lines.push(`Copy/content: ${getValue('codedCopy')}`);
+          lines.push(`Domain / current URL: ${getValue('codedDomain') || 'Not specified'}`);
+          lines.push(`Lead destination: ${getValue('codedLeadDestination') || 'Not specified'}`);
+          lines.push(`Design references: ${getValue('codedReferences') || 'None provided'}`);
+        } else if (service === 'foundation') {
+          lines.push(`Existing GHL account: ${getValue('foundationAccount')}`);
+          lines.push(`Location / sub-account: ${getValue('foundationLocation') || 'Not specified'}`);
+          lines.push(`Lead flow: ${getValue('foundationLeadFlow')}`);
+          lines.push(`Workflows (up to 5): ${getValue('foundationWorkflows')}`);
+          lines.push(`Messaging: ${getValue('foundationMessaging') || 'Not specified'}`);
+          lines.push(`Calendar / booking: ${getValue('foundationCalendar')}`);
+          lines.push(`Landing / booking page goal: ${getValue('foundationPage')}`);
+          lines.push(`Integrations: ${getValue('foundationIntegrations') || 'None specified'}`);
+        } else if (service === 'ai-receptionist') {
+          lines.push(`Existing GHL account: ${getValue('aiAccount')}`);
+          lines.push(`Location / sub-account: ${getValue('aiLocation') || 'Not specified'}`);
+          lines.push(`AI responsibilities: ${getValue('aiPurpose')}`);
+          lines.push(`FAQs / knowledge: ${getValue('aiFaq')}`);
+          lines.push(`Qualification questions: ${getValue('aiQualification')}`);
+          lines.push(`Booking: ${getValue('aiBooking')}`);
+          lines.push(`Live transfer: ${getValue('aiTransfer')}`);
+          lines.push(`Business hours / after-hours: ${getValue('aiHours')}`);
+          lines.push(`Agent name / tone: ${getValue('aiTone') || 'Not specified'}`);
+          lines.push(`Extra workflows: ${getValue('aiWorkflows') || 'None specified'}`);
+        } else if (service === 'revenue-system') {
+          lines.push(`Existing GHL account: ${getValue('revAccount')}`);
+          lines.push(`Location / sub-account: ${getValue('revLocation') || 'Not specified'}`);
+          lines.push(`Primary goal: ${getValue('revGoal')}`);
+          lines.push(`Lead sources / channels: ${getValue('revLeadSources')}`);
+          lines.push(`Outbound / reactivation: ${getValue('revOutbound')}`);
+          lines.push(`Qualification rules: ${getValue('revQualification')}`);
+          lines.push(`Routing rules: ${getValue('revRouting')}`);
+          lines.push(`Calendars (up to 2): ${getValue('revCalendars')}`);
+          lines.push(`Pipelines (up to 2): ${getValue('revPipelines')}`);
+          lines.push(`Workflows (up to 15): ${getValue('revWorkflows')}`);
+          lines.push(`Integrations: ${getValue('revIntegrations') || 'None specified'}`);
+          lines.push(`Success metric: ${getValue('revSuccess') || 'Not specified'}`);
         }
 
         return lines.filter(line => !line.endsWith(': ')).join('\n');
       }
 
       function appendWorkerCompatibilityFields(formData) {
-        const selectedService = form.querySelector('input[name="service"]:checked')?.value || '';
-        const summary = buildServiceSummary(selectedService);
+        const selectedPackage = form.querySelector('input[name="service"]:checked')?.value || '';
+        const summary = buildServiceSummary(selectedPackage);
+        const packageName = serviceLabel(selectedPackage);
 
-        // Map this service-based form to the field names already used by your Worker.
+        // Common fields used by the existing Worker.
         formData.set('business_name', getValue('company'));
         formData.set('primary_contact', getValue('name'));
         formData.set('client_email', getValue('email'));
-        formData.set('service', serviceLabel(selectedService));
+        formData.set('package_name', packageName);
         formData.set('brand_asset_link', getValue('brandLink'));
         formData.set('content_notes', getValue('accessNotes'));
         formData.set('desired_launch', getValue('deadline'));
         formData.set('approver', getValue('contactPerson'));
         formData.set('communication', getValue('channel'));
+        formData.set('business_description', `${packageName} onboarding`);
+        formData.set('required_features', summary);
 
         const updatePreference = getValue('updateFrequency');
         const notes = getValue('notes');
         formData.set(
           'additional_notes',
-          [notes, updatePreference ? `Update preference: ${updatePreference}` : '']
-            .filter(Boolean)
-            .join('\n')
+          [
+            `Package booked: ${packageName}`,
+            notes,
+            updatePreference ? `Update preference: ${updatePreference}` : ''
+          ].filter(Boolean).join('\n')
         );
 
-        // Keep the service-specific information visible in the current Worker email.
-        formData.set('required_features', summary);
-        formData.set('business_description', `${serviceLabel(selectedService)} onboarding`);
+        // Keep the existing Worker compatible: coded website -> website,
+        // all three GoHighLevel packages -> ghl.
+        formData.set('service', workerServiceKey(selectedPackage));
 
-        if (selectedService === 'website') {
-          formData.set('project_goal', getValue('webGoal'));
-          formData.set('required_pages', getValue('webPages'));
-          formData.set('hosting_provider', getValue('webPlatform'));
-          formData.set('reference_sites', getValue('webReferences'));
-        } else if (selectedService === 'uiux') {
-          formData.set('project_goal', getValue('uxFlow'));
-          formData.set('target_audience', getValue('uxUsers'));
-          formData.set('required_pages', getValue('uxScreens'));
-          formData.set('reference_sites', getValue('uxExisting'));
-        } else if (selectedService === 'ghl') {
-          formData.set('project_goal', getValue('ghlSetup'));
-          formData.set('required_features', summary);
-        } else if (selectedService === 'automation') {
-          formData.set('project_goal', getValue('autoDesired'));
-          formData.set('required_features', summary);
-        } else if (selectedService === 'graphic') {
-          formData.set('project_goal', getValue('graphicType'));
-          formData.set('content_notes', [getValue('graphicCopy'), getValue('graphicStyle'), getValue('accessNotes')].filter(Boolean).join('\n\n'));
-          formData.set('required_features', summary);
+        if (selectedPackage === 'custom-coded-website') {
+          formData.set('webType', `${packageName} — ${getValue('codedSiteType')}`);
+          formData.set('webPlatform', 'Custom HTML / CSS / JavaScript');
+          formData.set('webGoal', getValue('codedGoal'));
+          formData.set('webPages', getValue('codedPages'));
+          formData.set('webCopy', getValue('codedCopy'));
+          formData.set('webDomain', getValue('codedDomain'));
+          formData.set('webReferences', getValue('codedReferences'));
+
+          formData.set('project_goal', getValue('codedGoal'));
+          formData.set('required_pages', getValue('codedPages'));
+          formData.set('hosting_provider', 'Custom HTML / CSS / JavaScript');
+          formData.set('reference_sites', getValue('codedReferences'));
+        }
+
+        if (selectedPackage === 'foundation') {
+          formData.set('ghlAccount', getValue('foundationAccount'));
+          formData.set('ghlLocation', getValue('foundationLocation'));
+          formData.set('ghlSetup', summary);
+          formData.set('ghlLeadFlow', getValue('foundationLeadFlow'));
+          formData.set('ghlMessaging', getValue('foundationMessaging'));
+          formData.set('ghlCalendar', getValue('foundationCalendar'));
+          formData.set('project_goal', getValue('foundationPage'));
+        }
+
+        if (selectedPackage === 'ai-receptionist') {
+          formData.set('ghlAccount', getValue('aiAccount'));
+          formData.set('ghlLocation', getValue('aiLocation'));
+          formData.set('ghlSetup', summary);
+          formData.set('ghlLeadFlow', getValue('aiQualification'));
+          formData.set('ghlMessaging', 'Inbound Voice AI + GoHighLevel');
+          formData.set('ghlCalendar', getValue('aiBooking'));
+          formData.set('project_goal', getValue('aiPurpose'));
+        }
+
+        if (selectedPackage === 'revenue-system') {
+          formData.set('ghlAccount', getValue('revAccount'));
+          formData.set('ghlLocation', getValue('revLocation'));
+          formData.set('ghlSetup', summary);
+          formData.set('ghlLeadFlow', getValue('revRouting'));
+          formData.set('ghlMessaging', 'Inbound + outbound AI / CRM / SMS / chat');
+          formData.set('ghlCalendar', getValue('revCalendars'));
+          formData.set('project_goal', getValue('revGoal'));
         }
       }
 
