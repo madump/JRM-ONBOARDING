@@ -831,9 +831,10 @@
     .modal {
       position: fixed;
       inset: 0;
-      z-index: 200;
-      background: rgba(17,19,24,.34);
-      backdrop-filter: blur(12px);
+      z-index: 9999;
+      background: rgba(12,21,29,.62);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: grid;
       place-items: center;
       padding: 20px;
@@ -845,33 +846,165 @@
     .modal.open { opacity: 1; pointer-events: auto; }
 
     .modal-card {
-      width: min(520px, 100%);
-      padding: 34px;
-      border-radius: 26px;
-      border: 1px solid var(--line);
+      width: min(680px, 100%);
+      min-height: 420px;
+      padding: clamp(30px, 5vw, 54px);
+      border-radius: 30px;
+      border: 1px solid rgba(12,21,29,.12);
       background: #ffffff;
-      box-shadow: 0 30px 100px rgba(16,24,40,.18);
-      transform: translateY(14px) scale(.98);
+      box-shadow: 0 34px 120px rgba(12,21,29,.28);
+      transform: translateY(18px) scale(.97);
       transition: transform .25s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-card::before {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      left: 50%;
+      top: -245px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: rgba(133,255,10,.16);
+      filter: blur(28px);
+      pointer-events: none;
     }
 
     .modal.open .modal-card { transform: translateY(0) scale(1); }
 
     .modal-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
-      margin-bottom: 22px;
+      width: 92px;
+      height: 92px;
+      border-radius: 28px;
+      margin: 0 auto 28px;
       display: grid;
       place-items: center;
       background: var(--accent);
       color: #080a07;
+      box-shadow: 0 16px 50px rgba(133,255,10,.24);
+      position: relative;
+      z-index: 1;
     }
 
-    .modal-icon svg { width: 26px; height: 26px; }
-    .modal-card h3 { font: 800 30px/1.15 "Manrope", sans-serif; letter-spacing: -.035em; margin-bottom: 10px; }
-    .modal-card p { color: var(--muted); line-height: 1.65; font-size: 14px; margin-bottom: 24px; }
-    .modal-card .primary-btn { width: 100%; min-height: 50px; }
+    .modal-icon svg { width: 44px; height: 44px; }
+
+    .modal-card h3 {
+      font: 800 clamp(32px, 6vw, 46px)/1.05 "Manrope", sans-serif;
+      letter-spacing: -.045em;
+      margin: 0 0 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-card p {
+      max-width: 540px;
+      margin: 0 auto 24px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-meta {
+      display: grid;
+      gap: 8px;
+      max-width: 540px;
+      margin: 0 auto 26px;
+      padding: 16px 18px;
+      border: 1px solid rgba(12,21,29,.09);
+      border-radius: 16px;
+      background: #f8fafb;
+      text-align: left;
+      color: #344054;
+      font-size: 13px;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+
+    .modal-meta:empty { display: none; }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-actions .primary-btn,
+    .modal-actions .ghost-btn {
+      min-width: 180px;
+      min-height: 52px;
+    }
+
+    .modal.error .modal-card::before {
+      background: rgba(255,107,107,.18);
+    }
+
+    .modal.error .modal-icon {
+      background: #ffe4e4;
+      color: #9b1c1c;
+      box-shadow: 0 16px 50px rgba(255,107,107,.18);
+    }
+
+    .modal.sending .modal-icon {
+      background: #eefbdc;
+      color: #315f00;
+    }
+
+    .modal-spinner {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 4px solid rgba(49,95,0,.14);
+      border-top-color: #315f00;
+      animation: modalSpin .8s linear infinite;
+    }
+
+    @keyframes modalSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .modal-status-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin: 0 0 12px;
+      color: #52606b;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .modal-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(133,255,10,.12);
+    }
+
+    .modal.error .modal-status-dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(255,107,107,.12);
+    }
+
+    @media (max-width: 620px) {
+      .modal-card { min-height: 0; padding: 30px 20px; }
+      .modal-icon { width: 76px; height: 76px; border-radius: 22px; }
+      .modal-icon svg { width: 36px; height: 36px; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .primary-btn,
+      .modal-actions .ghost-btn { width: 100%; }
+    }
 
     .reveal {
       opacity: 0;
@@ -1563,14 +1696,29 @@
     <span id="toastText">Progress saved.</span>
   </div>
 
-  <div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+  <div class="modal" id="statusModal" role="dialog" aria-modal="true" aria-labelledby="statusTitle" aria-describedby="statusMessage">
     <div class="modal-card">
-      <div class="modal-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+      <div class="modal-status-line">
+        <span class="modal-status-dot"></span>
+        <span id="statusEyebrow">Processing</span>
       </div>
-      <h3 id="successTitle">Onboarding complete.</h3>
-      <p>Your onboarding has been sent successfully. Any uploaded assets were sent to your project storage.</p>
-      <button class="primary-btn" id="closeModal" type="button">Done</button>
+
+      <div class="modal-icon" id="statusIcon" aria-hidden="true">
+        <div class="modal-spinner"></div>
+      </div>
+
+      <h3 id="statusTitle">Sending onboarding…</h3>
+      <p id="statusMessage">Please keep this page open while your onboarding is being securely submitted.</p>
+
+      <div class="modal-meta" id="statusMeta"></div>
+
+      <div class="modal-actions">
+        <a class="primary-btn" id="driveFolderBtn" href="#" target="_blank" rel="noopener" hidden>
+          Open Google Drive Folder
+        </a>
+        <button class="primary-btn" id="statusCloseBtn" type="button" hidden>Done</button>
+        <button class="ghost-btn" id="statusRetryBtn" type="button" hidden>Try again</button>
+      </div>
     </div>
   </div>
 
@@ -1586,8 +1734,15 @@
       const saveBtn = document.getElementById('saveBtn');
       const toast = document.getElementById('toast');
       const toastText = document.getElementById('toastText');
-      const modal = document.getElementById('successModal');
-      const closeModal = document.getElementById('closeModal');
+      const statusModal = document.getElementById('statusModal');
+      const statusEyebrow = document.getElementById('statusEyebrow');
+      const statusIcon = document.getElementById('statusIcon');
+      const statusTitle = document.getElementById('statusTitle');
+      const statusMessage = document.getElementById('statusMessage');
+      const statusMeta = document.getElementById('statusMeta');
+      const statusCloseBtn = document.getElementById('statusCloseBtn');
+      const statusRetryBtn = document.getElementById('statusRetryBtn');
+      const driveFolderBtn = document.getElementById('driveFolderBtn');
       const uploadZone = document.getElementById('uploadZone');
       const assetFiles = document.getElementById('assetFiles');
       const fileList = document.getElementById('fileList');
@@ -1606,6 +1761,88 @@
         toast.classList.add('show');
         clearTimeout(toastTimer);
         toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+      }
+
+
+      function openStatusModal(mode, options = {}) {
+        const {
+          eyebrow = '',
+          title = '',
+          message = '',
+          meta = '',
+          driveUrl = ''
+        } = options;
+
+        statusModal.classList.remove('sending', 'success', 'error');
+        statusModal.classList.add(mode);
+
+        statusEyebrow.textContent = eyebrow;
+        statusTitle.textContent = title;
+        statusMessage.textContent = message;
+        statusMeta.textContent = meta;
+
+        statusCloseBtn.hidden = mode === 'sending';
+        statusRetryBtn.hidden = mode !== 'error';
+
+        driveFolderBtn.hidden = !(mode === 'success' && driveUrl);
+        if (driveUrl) {
+          driveFolderBtn.href = driveUrl;
+        } else {
+          driveFolderBtn.removeAttribute('href');
+        }
+
+        if (mode === 'sending') {
+          statusIcon.innerHTML = '<div class="modal-spinner"></div>';
+        } else if (mode === 'success') {
+          statusIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+          `;
+        } else {
+          statusIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <path d="M12 9v4"/>
+              <path d="M12 17h.01"/>
+              <path d="M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/>
+            </svg>
+          `;
+        }
+
+        statusModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeStatusModal() {
+        if (statusModal.classList.contains('sending')) return;
+        statusModal.classList.remove('open', 'sending', 'success', 'error');
+        document.body.style.overflow = '';
+      }
+
+      function debugGroup(label, callback) {
+        try {
+          console.groupCollapsed(`[JRMRC Onboarding] ${label}`);
+          callback();
+        } finally {
+          console.groupEnd();
+        }
+      }
+
+      function buildDebugFormSnapshot(formData) {
+        const snapshot = {};
+        for (const [key, value] of formData.entries()) {
+          if (value instanceof File) {
+            if (!snapshot[key]) snapshot[key] = [];
+            snapshot[key].push({
+              name: value.name,
+              type: value.type,
+              size: value.size
+            });
+          } else {
+            snapshot[key] = value;
+          }
+        }
+        return snapshot;
       }
 
       function savableFields() {
@@ -1926,18 +2163,43 @@
         e.preventDefault();
         updateServicePanel();
 
+        console.info('[JRMRC Onboarding] Submit button pressed.');
+
         if (!form.checkValidity()) {
           form.reportValidity();
+
           const firstInvalid = form.querySelector(':invalid:not(:disabled)');
+          const invalidFields = [...form.querySelectorAll(':invalid:not(:disabled)')]
+            .map(field => field.name || field.id || 'unknown');
+
+          console.warn('[JRMRC Onboarding] Validation failed.', {
+            invalidFields
+          });
+
           if (firstInvalid) {
             firstInvalid.closest('.form-section')?.scrollIntoView({
               behavior: 'smooth',
               block: 'start'
             });
           }
+
           showToast('Complete the required fields.');
+
+          openStatusModal('error', {
+            eyebrow: 'Form incomplete',
+            title: 'A few details are missing.',
+            message: 'Please complete the highlighted required fields, then submit the onboarding form again.',
+            meta: invalidFields.length
+              ? `Required fields to review: ${invalidFields.join(', ')}`
+              : 'Please review the required fields in the form.'
+          });
+
           return;
         }
+
+        const startedAt = performance.now();
+        const controller = new AbortController();
+        const requestTimeout = setTimeout(() => controller.abort(), 90000);
 
         try {
           validateUploads();
@@ -1946,24 +2208,75 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = 'Sending onboarding…';
 
+          openStatusModal('sending', {
+            eyebrow: 'Secure submission',
+            title: 'Sending your onboarding…',
+            message: 'Your information is being sent to JRMRC. Please keep this page open until confirmation appears.',
+            meta: assetFiles.files.length
+              ? `${assetFiles.files.length} file${assetFiles.files.length === 1 ? '' : 's'} included with this submission.`
+              : 'No files were attached. Your onboarding details will still be submitted.'
+          });
+
           const formData = new FormData(form);
           appendWorkerCompatibilityFields(formData);
 
+          debugGroup('Outgoing request', () => {
+            console.log('Worker URL:', WORKER_URL);
+            console.log('Method:', 'POST');
+            console.log('Started:', new Date().toISOString());
+            console.log('Form data:', buildDebugFormSnapshot(formData));
+          });
+
           const response = await fetch(WORKER_URL, {
             method: 'POST',
-            body: formData
+            body: formData,
+            signal: controller.signal
+          });
+
+          const elapsedMs = Math.round(performance.now() - startedAt);
+
+          console.info('[JRMRC Onboarding] Worker responded.', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok,
+            elapsedMs
+          });
+
+          const rawResponse = await response.text();
+
+          debugGroup('Raw Worker response', () => {
+            console.log('HTTP status:', response.status);
+            console.log('HTTP status text:', response.statusText);
+            console.log('Response body:', rawResponse);
           });
 
           let result = {};
+
           try {
-            result = await response.json();
-          } catch {
-            throw new Error('The server returned an invalid response.');
+            result = rawResponse ? JSON.parse(rawResponse) : {};
+          } catch (parseError) {
+            console.error('[JRMRC Onboarding] Could not parse Worker JSON response.', {
+              parseError,
+              rawResponse
+            });
+            throw new Error(
+              `The server returned an invalid response (HTTP ${response.status}). Check the browser console and Cloudflare Worker logs.`
+            );
           }
 
           if (!response.ok || result.success === false) {
-            throw new Error(result.message || 'Unable to submit onboarding.');
+            console.error('[JRMRC Onboarding] Backend rejected the submission.', {
+              status: response.status,
+              result
+            });
+
+            throw new Error(
+              result.message ||
+              `Unable to submit onboarding. Server returned HTTP ${response.status}.`
+            );
           }
+
+          console.info('[JRMRC Onboarding] Submission completed successfully.', result);
 
           localStorage.removeItem(storageKey);
           form.reset();
@@ -1971,25 +2284,80 @@
           updateServicePanel();
           updateProgress();
 
-          modal.classList.add('open');
-          document.body.style.overflow = 'hidden';
+          const successDetails = [
+            result.submissionId ? `Submission ID: ${result.submissionId}` : '',
+            result.driveFolderName ? `Drive folder: ${result.driveFolderName}` : '',
+            result.emailSent === true ? 'Email notification: sent' : '',
+            Number.isFinite(result.filesUploaded)
+              ? `Files uploaded: ${result.filesUploaded}`
+              : ''
+          ].filter(Boolean).join('\n');
+
+          openStatusModal('success', {
+            eyebrow: 'Submission complete',
+            title: 'Onboarding received!',
+            message: 'Your onboarding was submitted successfully. JRMRC now has the project information needed to begin.',
+            meta: successDetails || 'Your submission was accepted successfully.',
+            driveUrl: result.driveFolderUrl || ''
+          });
+
         } catch (error) {
-          console.error('Onboarding submission error:', error);
-          showToast(error.message || 'Submission failed. Please try again.');
+          const isAbort = error?.name === 'AbortError';
+          const friendlyMessage = isAbort
+            ? 'The submission took too long and was stopped. Please try again. If it happens again, check the Cloudflare Worker and Apps Script logs.'
+            : (error?.message || 'Submission failed. Please try again.');
+
+          console.error('[JRMRC Onboarding] SUBMISSION ERROR', {
+            name: error?.name,
+            message: error?.message,
+            stack: error?.stack,
+            workerUrl: WORKER_URL,
+            timestamp: new Date().toISOString()
+          });
+
+          showToast('Submission failed.');
+
+          openStatusModal('error', {
+            eyebrow: 'Submission error',
+            title: 'We could not send your onboarding.',
+            message: friendlyMessage,
+            meta: 'Technical details were written to the browser console. Press F12 → Console to view them.'
+          });
+
         } finally {
+          clearTimeout(requestTimeout);
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalSubmitHtml;
         }
       });
 
-      function closeSuccess() {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-      }
+      statusCloseBtn.addEventListener('click', closeStatusModal);
 
-      closeModal.addEventListener('click', closeSuccess);
-      modal.addEventListener('click', e => { if (e.target === modal) closeSuccess(); });
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSuccess(); });
+      statusRetryBtn.addEventListener('click', () => {
+        closeStatusModal();
+        document.getElementById('onboarding-form')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+
+      statusModal.addEventListener('click', e => {
+        if (
+          e.target === statusModal &&
+          !statusModal.classList.contains('sending')
+        ) {
+          closeStatusModal();
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (
+          e.key === 'Escape' &&
+          !statusModal.classList.contains('sending')
+        ) {
+          closeStatusModal();
+        }
+      });
 
       const sectionObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
