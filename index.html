@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JRMRC service-based client onboarding form for website, UI/UX, GoHighLevel, automation, and graphic design projects." />
+  <title>JRMRC Client Onboarding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f7f8fa;
+      --surface: rgba(17,19,24,.04);
+      --surface-2: rgba(17,19,24,.065);
+      --line: rgba(17,19,24,.11);
+      --line-strong: rgba(17,19,24,.2);
+      --text: #0c151d;
+      --muted: #46515b;
+      --accent-ink: #315f00;
+      --accent: #85ff0a;
+      --accent-2: #b9ff72;
+      --danger: #ff6b6b;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --shadow: 0 24px 70px rgba(16,24,40,.10);
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 84% 12%, rgba(133,255,10,.16), transparent 26rem),
+        radial-gradient(circle at 8% 32%, rgba(142,255,193,.12), transparent 25rem),
+        var(--bg);
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .2;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(17,19,24,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,19,24,.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, #000, transparent 78%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    ::selection {
+      background: var(--accent);
+      color: #050605;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(17,19,24,.08);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      max-width: var(--max);
+      margin: 0 auto;
+      min-height: 74px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: #090b08;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(133,255,10,.08);
+      font-weight: 900;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font: 500 11px/1.2 "DM Sans", sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-pill {
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(17,19,24,.025);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(133,255,10,.10);
+    }
+
+    .ghost-btn,
+    .primary-btn {
+      appearance: none;
+      border: 0;
+      min-height: 44px;
+      border-radius: 12px;
+      padding: 0 16px;
+      font-weight: 700;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .ghost-btn {
+      color: var(--text);
+      background: rgba(17,19,24,.04);
+      border: 1px solid var(--line);
+    }
+
+    .ghost-btn:hover { background: rgba(17,19,24,.075); }
+
+    .primary-btn {
+      color: #0a0c08;
+      background: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 32px rgba(133,255,10,.16);
+    }
+
+    .primary-btn:hover { transform: translateY(-2px); }
+    .primary-btn svg, .ghost-btn svg { width: 17px; height: 17px; }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px 90px;
+    }
+
+    .hero {
+      min-height: 610px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+      gap: 70px;
+      align-items: center;
+      padding: 74px 0 58px;
+      border-bottom: 1px solid rgba(17,19,24,.08);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #3f5f00;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 790px;
+      margin-bottom: 22px;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .97;
+      letter-spacing: -.065em;
+      font-weight: 800;
+    }
+
+    .hero-highlight {
+      color: #365200;
+      -webkit-text-stroke: 0;
+    }
+
+    .hero-copy {
+      max-width: 610px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .hero-actions .primary-btn {
+      min-height: 52px;
+      padding: 0 22px;
+    }
+
+    .mini-note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,248,250,.96));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      right: -60px;
+      top: -70px;
+      background: var(--accent);
+      filter: blur(70px);
+      opacity: .17;
+      pointer-events: none;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .progress-row strong {
+      font: 800 42px/1 "Manrope", sans-serif;
+      letter-spacing: -.04em;
+    }
+
+    .progress-row span {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    .progress-track {
+      height: 8px;
+      background: rgba(17,19,24,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 26px;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .35s ease;
+    }
+
+    .quick-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .quick-item {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(17,19,24,.07);
+    }
+
+    .quick-item:last-child { border-bottom: 0; }
+
+    .quick-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: rgba(17,19,24,.055);
+      border: 1px solid rgba(17,19,24,.08);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #303740;
+    }
+
+    .quick-item b { display: block; font-size: 14px; margin-bottom: 2px; }
+    .quick-item small { color: var(--muted); font-size: 12px; }
+    .quick-state { color: #454c55; font-size: 12px; }
+
+    .section-intro {
+      padding: 82px 0 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .section-intro h2 {
+      margin-bottom: 0;
+      font: 800 clamp(36px, 4.5vw, 60px)/1.05 "Manrope", sans-serif;
+      letter-spacing: -.045em;
+    }
+
+    .section-intro p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 4px;
+      max-width: 560px;
+      justify-self: end;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 85px;
+    }
+
+    .process-card {
+      min-height: 220px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .process-card:hover {
+      transform: translateY(-5px);
+      background: #f8f9fa;
+      border-color: var(--line-strong);
+    }
+
+    .process-card .icon-box {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(133,255,10,.10);
+      color: var(--accent-ink);
+    }
+
+    .process-card svg { width: 20px; height: 20px; }
+    .process-card h3 { margin-bottom: 8px; font: 700 18px/1.3 "Manrope", sans-serif; }
+    .process-card p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .form-shell {
+      min-width: 0;
+    }
+
+    .form-section {
+      scroll-margin-top: 104px;
+      padding: 34px;
+      margin-bottom: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .form-section-head {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 15px;
+      align-items: start;
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(17,19,24,.08);
+    }
+
+    .step-badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #f3f5f7;
+      border: 1px solid var(--line);
+      color: var(--accent-ink);
+      font: 800 13px/1 "Manrope", sans-serif;
+    }
+
+    .form-section h3 {
+      margin: 2px 0 6px;
+      font: 800 24px/1.2 "Manrope", sans-serif;
+      letter-spacing: -.025em;
+    }
+
+    .form-section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field { min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+
+    label,
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 9px;
+      color: #20242a;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .required { color: #a33a2b; }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      outline: none;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid rgba(17,19,24,.18);
+      border-radius: var(--radius-sm);
+      min-height: 50px;
+      padding: 0 14px;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    textarea {
+      min-height: 128px;
+      padding-top: 14px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: #6b7280; opacity: 1; }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(133,255,10,.72);
+      box-shadow: 0 0 0 4px rgba(133,255,10,.10);
+      background: #fbfcfd;
+    }
+
+    select {
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #9da2aa 50%),
+        linear-gradient(135deg, #9da2aa 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) 21px,
+        calc(100% - 13px) 21px;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+    }
+
+    option { background: #ffffff; color: var(--text); }
+
+    .helper {
+      display: block;
+      color: #59616c;
+      font-size: 12px;
+      margin-top: 7px;
+      line-height: 1.5;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .option-card {
+      position: relative;
+      min-height: 94px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(17,19,24,.10);
+      background: #ffffff;
+      cursor: pointer;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .option-card:hover { transform: translateY(-2px); border-color: rgba(17,19,24,.20); }
+    .option-card input { position: absolute; opacity: 0; pointer-events: none; }
+    .option-card strong { display: block; margin-bottom: 4px; font-size: 13px; }
+    .option-card small { color: #59616c; font-size: 12px; line-height: 1.45; display: block; }
+
+    .option-card:has(input:checked) {
+      border-color: rgba(133,255,10,.78);
+      background: rgba(133,255,10,.075);
+      box-shadow: inset 0 0 0 1px rgba(133,255,10,.12);
+    }
+
+    .option-card:has(input:checked)::after {
+      content: "✓";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #060705;
+      background: var(--accent);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .upload-zone {
+      position: relative;
+      border: 1px dashed rgba(17,19,24,.20);
+      border-radius: var(--radius-md);
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      background: #fbfcfd;
+      transition: border-color .2s ease, background .2s ease;
+    }
+
+    .upload-zone.dragover {
+      border-color: var(--accent);
+      background: rgba(133,255,10,.06);
+    }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      min-height: 100%;
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--accent-ink);
+      background: rgba(198,255,63,.14);
+      border: 1px solid rgba(133,255,10,.12);
+    }
+
+    .upload-icon svg { width: 20px; height: 20px; }
+    .upload-zone b { display: block; font-size: 14px; margin-bottom: 5px; }
+    .upload-zone span { color: var(--muted); font-size: 12px; }
+
+    .file-list {
+      margin-top: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(17,19,24,.08);
+      background: rgba(17,19,24,.025);
+      border-radius: 10px;
+      padding: 9px 11px;
+      color: #3f454d;
+      font-size: 12px;
+    }
+
+    .file-item small { color: var(--muted); white-space: nowrap; }
+
+    .sidebar {
+      position: sticky;
+      top: 96px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .side-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      padding: 20px;
+    }
+
+    .side-card h4 {
+      margin: 0 0 15px;
+      font: 700 14px/1.3 "Manrope", sans-serif;
+      color: #20242a;
+    }
+
+    .side-progress {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .ring {
+      --value: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--accent) calc(var(--value) * 1%), rgba(17,19,24,.08) 0);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .ring::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .ring span {
+      position: relative;
+      z-index: 1;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .side-progress b { display: block; margin-bottom: 3px; font-size: 13px; }
+    .side-progress small { color: var(--muted); font-size: 12px; line-height: 1.45; display: block; }
+
+    .jump-list {
+      display: grid;
+      gap: 4px;
+    }
+
+    .jump-link {
+      padding: 10px 11px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .jump-link:hover,
+    .jump-link.active {
+      color: var(--text);
+      background: rgba(17,19,24,.055);
+    }
+
+    .jump-link span:last-child {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(17,19,24,.16);
+    }
+
+    .jump-link.done span:last-child { background: var(--accent); }
+
+    .secure-note {
+      display: flex;
+      gap: 11px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .secure-note svg { width: 17px; height: 17px; flex: 0 0 auto; color: #343a40; }
+    .secure-note b { color: #20242a; }
+
+    .submit-panel {
+      margin-top: 18px;
+      padding: 28px 30px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(133,255,10,.16);
+      background:
+        linear-gradient(135deg, rgba(133,255,10,.16), rgba(255,255,255,.96) 48%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .submit-panel::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -110px;
+      bottom: -160px;
+      border-radius: 50%;
+      background: rgba(133,255,10,.10);
+      filter: blur(10px);
+    }
+
+    .submit-panel h3 { margin-bottom: 6px; font: 800 22px/1.2 "Manrope", sans-serif; }
+    .submit-panel p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .submit-panel .primary-btn { position: relative; z-index: 1; min-width: 184px; min-height: 50px; }
+
+    .footer {
+      margin-top: 68px;
+      padding: 28px 0 4px;
+      border-top: 1px solid rgba(17,19,24,.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: #545b65;
+      font-size: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translate(-50%, 20px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(17,19,24,.18);
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      color: #20242a;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast .check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #060705;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 11px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(17,19,24,.34);
+      backdrop-filter: blur(12px);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .modal.open { opacity: 1; pointer-events: auto; }
+
+    .modal-card {
+      width: min(520px, 100%);
+      padding: 34px;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: 0 30px 100px rgba(16,24,40,.18);
+      transform: translateY(14px) scale(.98);
+      transition: transform .25s ease;
+    }
+
+    .modal.open .modal-card { transform: translateY(0) scale(1); }
+
+    .modal-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #080a07;
+    }
+
+    .modal-icon svg { width: 26px; height: 26px; }
+    .modal-card h3 { font: 800 30px/1.15 "Manrope", sans-serif; letter-spacing: -.035em; margin-bottom: 10px; }
+    .modal-card p { color: var(--muted); line-height: 1.65; font-size: 14px; margin-bottom: 24px; }
+    .modal-card .primary-btn { width: 100%; min-height: 50px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 1020px) {
+      .hero { grid-template-columns: 1fr; gap: 44px; min-height: auto; }
+      .hero-card { max-width: 680px; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .workspace { grid-template-columns: 1fr; }
+      .sidebar { position: static; order: -1; grid-template-columns: 1fr 1fr; }
+      .side-card:first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 720px) {
+      .page, .nav { padding-left: 16px; padding-right: 16px; }
+      .nav { min-height: 66px; }
+      .brand small, .status-pill { display: none; }
+      .ghost-btn { padding: 0 12px; font-size: 12px; }
+      .hero { padding-top: 54px; padding-bottom: 45px; }
+      h1 { font-size: clamp(49px, 15vw, 72px); }
+      .hero-copy { font-size: 16px; }
+      .hero-card { padding: 20px; }
+      .section-intro { grid-template-columns: 1fr; padding-top: 64px; gap: 14px; }
+      .section-intro p { justify-self: start; }
+      .process-grid { grid-template-columns: 1fr; margin-bottom: 58px; }
+      .process-card { min-height: 0; }
+      .process-card .icon-box { margin-bottom: 25px; }
+      .form-section { padding: 22px 17px; border-radius: 20px; }
+      .form-section-head { grid-template-columns: 42px 1fr; }
+      .step-badge { width: 42px; height: 42px; border-radius: 12px; }
+      .form-section h3 { font-size: 20px; }
+      .field-grid, .option-grid { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+      .side-card:first-child { grid-column: auto; }
+      .submit-panel { flex-direction: column; align-items: stretch; padding: 23px 20px; }
+      .submit-panel .primary-btn { width: 100%; }
+      .footer { align-items: flex-start; flex-direction: column; }
+      .nav-actions .ghost-btn span { display: none; }
+    }
+
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .service-card {
+      min-height: 112px;
+      padding: 18px;
+    }
+
+    .service-card strong {
+      padding-right: 28px;
+      font: 800 15px/1.35 "Manrope", sans-serif;
+      color: var(--text);
+    }
+
+    .service-card small {
+      max-width: 38ch;
+      color: #52606b;
+    }
+
+    .service-panel {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(12,21,29,.10);
+      background: #f8fafb;
+    }
+
+    .service-panel[hidden] { display: none !important; }
+
+    .service-panel-head {
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(12,21,29,.08);
+    }
+
+    .service-panel-head h4 {
+      margin: 0 0 5px;
+      font: 800 18px/1.3 "Manrope", sans-serif;
+      letter-spacing: -.02em;
+      color: var(--text);
+    }
+
+    .service-panel-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .inline-note {
+      grid-column: 1 / -1;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(133,255,10,.38);
+      background: rgba(133,255,10,.09);
+      color: #294700;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .compact-textarea { min-height: 104px; }
+
+    @media (max-width: 720px) {
+      .service-grid { grid-template-columns: 1fr; }
+      .service-panel { padding: 18px 14px; }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <span class="brand-mark">J</span>
+        <span>
+          JRMRC
+          <small>Client Onboarding</small>
+        </span>
+      </a>
+
+      <div class="nav-actions">
+        <div class="status-pill" aria-label="Autosave status">
+          <span class="status-dot"></span>
+          Progress saved locally
+        </div>
+        <button class="ghost-btn" id="saveBtn" type="button" aria-label="Save form progress">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          <span>Save progress</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="page">
+    <section class="hero">
+      <div class="hero-content reveal">
+        <div class="eyebrow">Client onboarding</div>
+        <h1>Tell me what I need to <span class="hero-highlight">start.</span></h1>
+        <p class="hero-copy">Choose the service you booked and complete only the details needed for that project.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#onboarding-form">
+            Start onboarding
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <span class="mini-note">Short and service-specific</span>
+        </div>
+      </div>
+
+      <aside class="hero-card reveal" aria-label="Onboarding progress overview">
+        <div class="progress-row">
+          <div>
+            <span>Current progress</span>
+            <strong id="heroPercent">0%</strong>
+          </div>
+          <span id="completionLabel">Let’s begin</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="heroProgress"></div>
+        </div>
+
+        <div class="quick-list">
+          <div class="quick-item">
+            <div class="quick-num">01</div>
+            <div><b>Contact</b><small>Your basic details</small></div>
+            <span class="quick-state">Required</span>
+          </div>
+          <div class="quick-item">
+            <div class="quick-num">02</div>
+            <div><b>Service</b><small>Questions for your project</small></div>
+            <span class="quick-state">Required</span>
+          </div>
+          <div class="quick-item">
+            <div class="quick-num">03</div>
+            <div><b>Assets</b><small>Files, links & access</small></div>
+            <span class="quick-state">Optional</span>
+          </div>
+          <div class="quick-item">
+            <div class="quick-num">04</div>
+            <div><b>Kickoff</b><small>Deadline & approval</small></div>
+            <span class="quick-state">Required</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="onboarding-form" aria-labelledby="form-title">
+      <div class="section-intro reveal">
+        <h2 id="form-title">Project onboarding</h2>
+        <p>Select the service you booked. The form will show the questions I need for that work.</p>
+      </div>
+
+      <form id="clientForm" novalidate>
+        <div class="workspace">
+          <div class="form-shell">
+            <section id="contact" class="form-section reveal" data-section>
+              <div class="form-section-head">
+                <div class="step-badge">01</div>
+                <div>
+                  <h3>Contact</h3>
+                  <p>Basic client and business details.</p>
+                </div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="name">Your name <span class="required">*</span></label>
+                  <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+                </div>
+                <div class="field">
+                  <label for="email">Email <span class="required">*</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+                </div>
+                <div class="field">
+                  <label for="company">Business / brand <span class="required">*</span></label>
+                  <input id="company" name="company" type="text" autocomplete="organization" placeholder="Business name" required />
+                </div>
+                <div class="field">
+                  <label for="website">Current website</label>
+                  <input id="website" name="website" type="url" inputmode="url" placeholder="https://yourwebsite.com" />
+                </div>
+              </div>
+            </section>
+
+            <section id="service" class="form-section reveal" data-section>
+              <div class="form-section-head">
+                <div class="step-badge">02</div>
+                <div>
+                  <h3>Service booked</h3>
+                  <p>Choose your project type.</p>
+                </div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <span class="label">Which service are we starting? <span class="required">*</span></span>
+                  <div class="service-grid" role="radiogroup" aria-label="Service booked">
+                    <label class="option-card service-card">
+                      <input type="radio" name="service" value="website" required />
+                      <strong>Website / Landing Page</strong>
+                      <small>New website, redesign, landing page, or funnel page.</small>
+                    </label>
+                    <label class="option-card service-card">
+                      <input type="radio" name="service" value="uiux" />
+                      <strong>UI/UX Design</strong>
+                      <small>Website, dashboard, portal, app, or interface design.</small>
+                    </label>
+                    <label class="option-card service-card">
+                      <input type="radio" name="service" value="ghl" />
+                      <strong>GoHighLevel / CRM</strong>
+                      <small>CRM, pipeline, forms, calendars, funnels, and workflows.</small>
+                    </label>
+                    <label class="option-card service-card">
+                      <input type="radio" name="service" value="automation" />
+                      <strong>Automation & Integrations</strong>
+                      <small>Connect apps and automate repetitive business processes.</small>
+                    </label>
+                    <label class="option-card service-card">
+                      <input type="radio" name="service" value="graphic" />
+                      <strong>Graphic Design</strong>
+                      <small>Social graphics, covers, ads, banners, and branded assets.</small>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="website" hidden>
+                  <div class="service-panel-head">
+                    <h4>Website / Landing Page details</h4>
+                    <p>Only the information needed to design and build the page.</p>
+                  </div>
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="webType">What are we building? <span class="required">*</span></label>
+                      <select id="webType" name="webType" data-conditional-required>
+                        <option value="">Select one</option>
+                        <option>New website</option>
+                        <option>Website redesign</option>
+                        <option>Landing page</option>
+                        <option>Sales funnel page</option>
+                        <option>Website update / improvement</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="webPlatform">Platform</label>
+                      <select id="webPlatform" name="webPlatform">
+                        <option value="">Select one</option>
+                        <option>GoHighLevel</option>
+                        <option>WordPress</option>
+                        <option>Custom HTML / CSS / JavaScript</option>
+                        <option>Other / Not sure</option>
+                      </select>
+                    </div>
+                    <div class="field full">
+                      <label for="webGoal">Primary goal / CTA <span class="required">*</span></label>
+                      <input id="webGoal" name="webGoal" type="text" placeholder="Example: Book a call, request a quote, buy, or submit a form" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="webPages">Pages or sections needed <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="webPages" name="webPages" placeholder="Example: Home, Services, About, Contact — or Hero, Benefits, Testimonials, CTA" data-conditional-required></textarea>
+                    </div>
+                    <div class="field">
+                      <label for="webCopy">Is the copy ready?</label>
+                      <select id="webCopy" name="webCopy">
+                        <option value="">Select one</option>
+                        <option>Yes, final copy is ready</option>
+                        <option>I have rough copy</option>
+                        <option>I need help with the copy</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="webDomain">Domain / live URL</label>
+                      <input id="webDomain" name="webDomain" type="text" placeholder="Domain or current page URL" />
+                    </div>
+                    <div class="field full">
+                      <label for="webReferences">Design references</label>
+                      <textarea class="compact-textarea" id="webReferences" name="webReferences" placeholder="Paste 1–3 websites you like and what you like about them."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="uiux" hidden>
+                  <div class="service-panel-head">
+                    <h4>UI/UX Design details</h4>
+                    <p>Define the interface, users, and required screens.</p>
+                  </div>
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="uxProduct">What are we designing? <span class="required">*</span></label>
+                      <select id="uxProduct" name="uxProduct" data-conditional-required>
+                        <option value="">Select one</option>
+                        <option>Website</option>
+                        <option>Landing page</option>
+                        <option>Dashboard / portal</option>
+                        <option>Web app</option>
+                        <option>Mobile app</option>
+                        <option>Other interface</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="uxScreens">Approx. screens / pages</label>
+                      <input id="uxScreens" name="uxScreens" type="text" placeholder="Example: 5 screens" />
+                    </div>
+                    <div class="field full">
+                      <label for="uxUsers">Who will use it? <span class="required">*</span></label>
+                      <input id="uxUsers" name="uxUsers" type="text" placeholder="Example: Customers, staff, students, admins" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="uxFlow">Main user action / flow <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="uxFlow" name="uxFlow" placeholder="What should the user be able to do?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="uxExisting">Existing design / Figma / reference link</label>
+                      <input id="uxExisting" name="uxExisting" type="url" placeholder="https://..." />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="ghl" hidden>
+                  <div class="service-panel-head">
+                    <h4>GoHighLevel / CRM details</h4>
+                    <p>Tell me what needs to be configured inside your CRM.</p>
+                  </div>
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="ghlAccount">Do you already have a GHL account? <span class="required">*</span></label>
+                      <select id="ghlAccount" name="ghlAccount" data-conditional-required>
+                        <option value="">Select one</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>Not sure</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="ghlLocation">Location / sub-account name</label>
+                      <input id="ghlLocation" name="ghlLocation" type="text" placeholder="Account or location name" />
+                    </div>
+                    <div class="field full">
+                      <label for="ghlSetup">What needs to be set up? <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="ghlSetup" name="ghlSetup" placeholder="Example: Pipeline, form, calendar, funnel, email/SMS workflow, lead routing" data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="ghlLeadFlow">Describe your lead flow <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="ghlLeadFlow" name="ghlLeadFlow" placeholder="Where do leads come from and what should happen after they submit?" data-conditional-required></textarea>
+                    </div>
+                    <div class="field">
+                      <label for="ghlMessaging">Email / SMS needed?</label>
+                      <select id="ghlMessaging" name="ghlMessaging">
+                        <option value="">Select one</option>
+                        <option>Email only</option>
+                        <option>SMS only</option>
+                        <option>Email + SMS</option>
+                        <option>No messaging</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="ghlCalendar">Calendar / booking needed?</label>
+                      <select id="ghlCalendar" name="ghlCalendar">
+                        <option value="">Select one</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                        <option>Already set up</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="automation" hidden>
+                  <div class="service-panel-head">
+                    <h4>Automation & Integration details</h4>
+                    <p>Describe the current manual process and the result you want.</p>
+                  </div>
+                  <div class="field-grid">
+                    <div class="field full">
+                      <label for="autoApps">Apps / platforms to connect <span class="required">*</span></label>
+                      <input id="autoApps" name="autoApps" type="text" placeholder="Example: GoHighLevel, Gmail, Google Sheets, Zapier, Make, WordPress" data-conditional-required />
+                    </div>
+                    <div class="field full">
+                      <label for="autoCurrent">What happens now? <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="autoCurrent" name="autoCurrent" placeholder="Describe the manual steps you currently do." data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="autoDesired">What should happen automatically? <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="autoDesired" name="autoDesired" placeholder="Example: When a form is submitted, create/update the contact, notify the team, and send a follow-up." data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="autoExisting">Existing automation / error / workflow link</label>
+                      <textarea class="compact-textarea" id="autoExisting" name="autoExisting" placeholder="Add any existing setup, issue, or reference link."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="service-panel" data-service-panel="graphic" hidden>
+                  <div class="service-panel-head">
+                    <h4>Graphic Design details</h4>
+                    <p>Tell me exactly what asset needs to be designed.</p>
+                  </div>
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="graphicType">Design needed <span class="required">*</span></label>
+                      <select id="graphicType" name="graphicType" data-conditional-required>
+                        <option value="">Select one</option>
+                        <option>Social media post</option>
+                        <option>Facebook cover</option>
+                        <option>Ad creative</option>
+                        <option>Banner</option>
+                        <option>Website graphic</option>
+                        <option>Presentation graphic</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="graphicSize">Size / platform</label>
+                      <input id="graphicSize" name="graphicSize" type="text" placeholder="Example: Facebook post 1080 × 1080" />
+                    </div>
+                    <div class="field full">
+                      <label for="graphicCopy">Text to include <span class="required">*</span></label>
+                      <textarea class="compact-textarea" id="graphicCopy" name="graphicCopy" placeholder="Paste the exact headline, body copy, CTA, contact details, etc." data-conditional-required></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="graphicStyle">Style / reference</label>
+                      <textarea class="compact-textarea" id="graphicStyle" name="graphicStyle" placeholder="Paste a reference link or describe the look you want."></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="assets" class="form-section reveal" data-section>
+              <div class="form-section-head">
+                <div class="step-badge">03</div>
+                <div>
+                  <h3>Assets & access</h3>
+                  <p>Send the files and access needed to do the work.</p>
+                </div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <label for="brandLink">Files / Google Drive link</label>
+                  <input id="brandLink" name="brandLink" type="url" placeholder="https://drive.google.com/..." />
+                  <small class="helper">Logo, brand guide, photos, videos, copy, screenshots, or references.</small>
+                </div>
+
+                <div class="field full">
+                  <span class="label">Upload files</span>
+                  <div class="upload-zone" id="uploadZone">
+                    <input id="assetFiles" name="assetFiles" type="file" multiple accept="image/*,.pdf,.doc,.docx,.txt,.zip" />
+                    <div>
+                      <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg>
+                      </div>
+                      <b>Drop files here or click to browse</b>
+                      <span>Images, PDFs, documents, or ZIP files</span>
+                    </div>
+                  </div>
+                  <div class="file-list" id="fileList" aria-live="polite"></div>
+                </div>
+
+                <div class="field full">
+                  <label for="accessNotes">Access needed</label>
+                  <textarea class="compact-textarea" id="accessNotes" name="accessNotes" placeholder="List the platforms I need access to. Do not paste passwords here."></textarea>
+                  <small class="helper">Use a secure password manager for credentials.</small>
+                </div>
+              </div>
+            </section>
+
+            <section id="kickoff" class="form-section reveal" data-section>
+              <div class="form-section-head">
+                <div class="step-badge">04</div>
+                <div>
+                  <h3>Kickoff details</h3>
+                  <p>Deadline, approval, and anything that can block the project.</p>
+                </div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="deadline">Target deadline <span class="required">*</span></label>
+                  <input id="deadline" name="deadline" type="date" required />
+                </div>
+                <div class="field">
+                  <label for="contactPerson">Final approver <span class="required">*</span></label>
+                  <input id="contactPerson" name="contactPerson" type="text" placeholder="Name / role" required />
+                </div>
+                <div class="field">
+                  <label for="channel">Preferred communication <span class="required">*</span></label>
+                  <select id="channel" name="channel" required>
+                    <option value="">Select one</option>
+                    <option>Email</option>
+                    <option>Slack / chat</option>
+                    <option>Wrike / project manager</option>
+                    <option>Call / meeting</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="updateFrequency">Update preference</label>
+                  <select id="updateFrequency" name="updateFrequency">
+                    <option value="">Select one</option>
+                    <option>At each milestone</option>
+                    <option>Twice per week</option>
+                    <option>Weekly</option>
+                    <option>Only when approval is needed</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="notes">Important notes</label>
+                  <textarea class="compact-textarea" id="notes" name="notes" placeholder="Deadline context, restrictions, required approvals, or anything I need to know before starting."></textarea>
+                </div>
+              </div>
+            </section>
+
+            <div class="submit-panel reveal">
+              <div>
+                <h3>Ready to start?</h3>
+                <p>Review your answers and send the onboarding form.</p>
+              </div>
+              <button class="primary-btn" type="submit">
+                Submit onboarding
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <aside class="sidebar" aria-label="Form navigation">
+            <div class="side-card">
+              <h4>Onboarding progress</h4>
+              <div class="side-progress">
+                <div class="ring" id="progressRing"><span id="ringPercent">0%</span></div>
+                <div>
+                  <b id="progressHeadline">Just getting started</b>
+                  <small>Complete the required fields.</small>
+                </div>
+              </div>
+
+              <div class="jump-list">
+                <a class="jump-link active" href="#contact" data-link="contact"><span>01 · Contact</span><span></span></a>
+                <a class="jump-link" href="#service" data-link="service"><span>02 · Service</span><span></span></a>
+                <a class="jump-link" href="#assets" data-link="assets"><span>03 · Assets</span><span></span></a>
+                <a class="jump-link" href="#kickoff" data-link="kickoff"><span>04 · Kickoff</span><span></span></a>
+              </div>
+            </div>
+
+            <div class="side-card">
+              <h4>Keep it simple</h4>
+              <p style="margin:0;color:var(--muted);font-size:12px;line-height:1.65;">Short answers are enough. Add links where possible.</p>
+            </div>
+
+            <div class="side-card">
+              <div class="secure-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                <span><b>Do not paste passwords.</b><br>Share credentials through a password manager.</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 JRMRC. Client Onboarding.</span>
+      <span>Clear scope. Faster kickoff.</span>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="check">✓</span>
+    <span id="toastText">Progress saved.</span>
+  </div>
+
+  <div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h3 id="successTitle">Onboarding complete.</h3>
+      <p>Thanks. Your project details are ready for review.</p>
+      <button class="primary-btn" id="closeModal" type="button">Done</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const form = document.getElementById('clientForm');
+      const heroPercent = document.getElementById('heroPercent');
+      const heroProgress = document.getElementById('heroProgress');
+      const completionLabel = document.getElementById('completionLabel');
+      const ring = document.getElementById('progressRing');
+      const ringPercent = document.getElementById('ringPercent');
+      const progressHeadline = document.getElementById('progressHeadline');
+      const saveBtn = document.getElementById('saveBtn');
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toastText');
+      const modal = document.getElementById('successModal');
+      const closeModal = document.getElementById('closeModal');
+      const uploadZone = document.getElementById('uploadZone');
+      const assetFiles = document.getElementById('assetFiles');
+      const fileList = document.getElementById('fileList');
+      const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
+      const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
+      const storageKey = 'jrmrcClientOnboarding_v2';
+      let toastTimer;
+
+      function showToast(message) {
+        toastText.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+      }
+
+      function savableFields() {
+        return [...form.querySelectorAll('input:not([type="file"]), textarea, select')];
+      }
+
+      function saveProgress(silent = true) {
+        const data = {};
+        savableFields().forEach(field => {
+          if (field.type === 'radio') {
+            if (field.checked) data[field.name] = field.value;
+          } else {
+            data[field.name] = field.value;
+          }
+        });
+        localStorage.setItem(storageKey, JSON.stringify(data));
+        if (!silent) showToast('Progress saved on this browser.');
+      }
+
+      function restoreProgress() {
+        let data;
+        try { data = JSON.parse(localStorage.getItem(storageKey) || '{}'); }
+        catch { data = {}; }
+
+        savableFields().forEach(field => {
+          if (!(field.name in data)) return;
+          if (field.type === 'radio') field.checked = field.value === data[field.name];
+          else field.value = data[field.name] || '';
+        });
+      }
+
+      function updateServicePanel() {
+        const selected = form.querySelector('input[name="service"]:checked')?.value || '';
+
+        servicePanels.forEach(panel => {
+          const active = panel.dataset.servicePanel === selected;
+          panel.hidden = !active;
+          panel.querySelectorAll('input, textarea, select').forEach(field => {
+            field.disabled = !active;
+            if (field.hasAttribute('data-conditional-required')) field.required = active;
+          });
+        });
+      }
+
+      function getRequiredGroups() {
+        const required = [...form.querySelectorAll('[required]:not(:disabled)')];
+        const groups = new Map();
+        required.forEach(field => {
+          const key = field.type === 'radio' ? `radio:${field.name}` : `field:${field.name || field.id}`;
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(field);
+        });
+        return [...groups.values()];
+      }
+
+      function groupComplete(group) {
+        const first = group[0];
+        if (first.type === 'radio') return group.some(x => x.checked);
+        if (first.type === 'email') return first.value.trim() !== '' && first.checkValidity();
+        return first.value.trim() !== '';
+      }
+
+      function sectionComplete(section) {
+        const required = [...section.querySelectorAll('[required]:not(:disabled)')];
+        if (!required.length) return true;
+        const keys = new Set();
+        const groups = [];
+        required.forEach(field => {
+          const key = field.type === 'radio' ? `radio:${field.name}` : `field:${field.name || field.id}`;
+          if (!keys.has(key)) {
+            keys.add(key);
+            groups.push(required.filter(x => (x.type === 'radio' ? `radio:${x.name}` : `field:${x.name || x.id}`) === key));
+          }
+        });
+        return groups.every(groupComplete);
+      }
+
+      function updateProgress() {
+        const groups = getRequiredGroups();
+        const complete = groups.filter(groupComplete).length;
+        const percent = groups.length ? Math.round((complete / groups.length) * 100) : 0;
+
+        heroPercent.textContent = `${percent}%`;
+        heroProgress.style.width = `${percent}%`;
+        ring.style.setProperty('--value', percent);
+        ringPercent.textContent = `${percent}%`;
+
+        if (percent === 100) {
+          completionLabel.textContent = 'Ready to submit';
+          progressHeadline.textContent = 'Ready to start';
+        } else if (percent >= 70) {
+          completionLabel.textContent = 'Almost there';
+          progressHeadline.textContent = 'Almost complete';
+        } else if (percent >= 35) {
+          completionLabel.textContent = 'In progress';
+          progressHeadline.textContent = 'Good progress';
+        } else {
+          completionLabel.textContent = percent ? 'Started' : 'Let’s begin';
+          progressHeadline.textContent = percent ? 'Keep going' : 'Just getting started';
+        }
+
+        document.querySelectorAll('[data-section]').forEach(section => {
+          const link = document.querySelector(`[data-link="${section.id}"]`);
+          if (link) link.classList.toggle('done', sectionComplete(section));
+        });
+      }
+
+      function formatBytes(bytes) {
+        if (bytes === 0) return '0 B';
+        const units = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+        return `${(bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0)} ${units[i]}`;
+      }
+
+      function renderFiles(files) {
+        fileList.innerHTML = '';
+        [...files].slice(0, 8).forEach(file => {
+          const row = document.createElement('div');
+          row.className = 'file-item';
+          const name = document.createElement('span');
+          name.textContent = file.name;
+          const size = document.createElement('small');
+          size.textContent = formatBytes(file.size);
+          row.append(name, size);
+          fileList.appendChild(row);
+        });
+      }
+
+      ['input', 'change'].forEach(evt => {
+        form.addEventListener(evt, e => {
+          if (e.target.matches('input[name="service"]')) updateServicePanel();
+          updateProgress();
+          saveProgress(true);
+        });
+      });
+
+      saveBtn.addEventListener('click', () => saveProgress(false));
+
+      assetFiles.addEventListener('change', () => renderFiles(assetFiles.files));
+      ['dragenter', 'dragover'].forEach(evt => uploadZone.addEventListener(evt, e => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+      }));
+      ['dragleave', 'drop'].forEach(evt => uploadZone.addEventListener(evt, e => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+      }));
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        updateServicePanel();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          const firstInvalid = form.querySelector(':invalid:not(:disabled)');
+          if (firstInvalid) firstInvalid.closest('.form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          showToast('Complete the required fields.');
+          return;
+        }
+        saveProgress(true);
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      function closeSuccess() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      closeModal.addEventListener('click', closeSuccess);
+      modal.addEventListener('click', e => { if (e.target === modal) closeSuccess(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSuccess(); });
+
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          document.querySelectorAll('.jump-link').forEach(link => link.classList.remove('active'));
+          document.querySelector(`[data-link="${entry.target.id}"]`)?.classList.add('active');
+        });
+      }, { rootMargin: '-28% 0px -58% 0px', threshold: 0 });
+
+      document.querySelectorAll('[data-section]').forEach(section => sectionObserver.observe(section));
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .08 });
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      restoreProgress();
+      updateServicePanel();
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
