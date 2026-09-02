@@ -1378,7 +1378,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></svg>
                       </div>
                       <b>Drop files here or click to browse</b>
-                      <span>Images, PDFs, documents, or ZIP files</span>
+                      <span>Images, PDFs, documents, or ZIP files · Max 10 MB each / 25 MB total</span>
                     </div>
                   </div>
                   <div class="file-list" id="fileList" aria-live="polite"></div>
@@ -1501,7 +1501,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
       </div>
       <h3 id="successTitle">Onboarding complete.</h3>
-      <p>Thanks. Your project details are ready for review.</p>
+      <p>Your onboarding has been sent successfully. Any uploaded assets were sent to your project storage.</p>
       <button class="primary-btn" id="closeModal" type="button">Done</button>
     </div>
   </div>
@@ -1526,6 +1526,11 @@
       const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
       const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
       const storageKey = 'jrmrcClientOnboarding_v2';
+      const WORKER_URL = 'https://wild-hat-8199.jhimrickofficial.workers.dev/';
+      const MAX_FILE_SIZE = 10 * 1024 * 1024;
+      const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalSubmitHtml = submitBtn.innerHTML;
       let toastTimer;
 
       function showToast(message) {
@@ -1681,19 +1686,191 @@
         uploadZone.classList.remove('dragover');
       }));
 
-      form.addEventListener('submit', e => {
+      function getValue(name) {
+        const field = form.elements[name];
+        if (!field) return '';
+
+        if (field instanceof RadioNodeList) {
+          return field.value || '';
+        }
+
+        return String(field.value || '').trim();
+      }
+
+      function serviceLabel(service) {
+        const labels = {
+          website: 'Website / Landing Page',
+          uiux: 'UI/UX Design',
+          ghl: 'GoHighLevel / CRM',
+          automation: 'Automation & Integrations',
+          graphic: 'Graphic Design'
+        };
+        return labels[service] || service;
+      }
+
+      function buildServiceSummary(service) {
+        const lines = [];
+
+        if (service === 'website') {
+          lines.push(`Project type: ${getValue('webType')}`);
+          lines.push(`Platform: ${getValue('webPlatform') || 'Not specified'}`);
+          lines.push(`Primary goal / CTA: ${getValue('webGoal')}`);
+          lines.push(`Pages / sections: ${getValue('webPages')}`);
+          lines.push(`Copy status: ${getValue('webCopy') || 'Not specified'}`);
+          lines.push(`Domain / live URL: ${getValue('webDomain') || 'Not specified'}`);
+          lines.push(`Design references: ${getValue('webReferences') || 'None provided'}`);
+        } else if (service === 'uiux') {
+          lines.push(`Product / interface: ${getValue('uxProduct')}`);
+          lines.push(`Approx. screens / pages: ${getValue('uxScreens') || 'Not specified'}`);
+          lines.push(`Users: ${getValue('uxUsers')}`);
+          lines.push(`Main user flow: ${getValue('uxFlow')}`);
+          lines.push(`Existing design / Figma: ${getValue('uxExisting') || 'None provided'}`);
+        } else if (service === 'ghl') {
+          lines.push(`Existing GHL account: ${getValue('ghlAccount')}`);
+          lines.push(`Location / sub-account: ${getValue('ghlLocation') || 'Not specified'}`);
+          lines.push(`Setup needed: ${getValue('ghlSetup')}`);
+          lines.push(`Lead flow: ${getValue('ghlLeadFlow')}`);
+          lines.push(`Email / SMS: ${getValue('ghlMessaging') || 'Not specified'}`);
+          lines.push(`Calendar / booking: ${getValue('ghlCalendar') || 'Not specified'}`);
+        } else if (service === 'automation') {
+          lines.push(`Apps / platforms: ${getValue('autoApps')}`);
+          lines.push(`Current process: ${getValue('autoCurrent')}`);
+          lines.push(`Desired automation: ${getValue('autoDesired')}`);
+          lines.push(`Existing workflow / issue: ${getValue('autoExisting') || 'None provided'}`);
+        } else if (service === 'graphic') {
+          lines.push(`Design needed: ${getValue('graphicType')}`);
+          lines.push(`Size / platform: ${getValue('graphicSize') || 'Not specified'}`);
+          lines.push(`Text / copy: ${getValue('graphicCopy')}`);
+          lines.push(`Style / reference: ${getValue('graphicStyle') || 'None provided'}`);
+        }
+
+        return lines.filter(line => !line.endsWith(': ')).join('\n');
+      }
+
+      function appendWorkerCompatibilityFields(formData) {
+        const selectedService = form.querySelector('input[name="service"]:checked')?.value || '';
+        const summary = buildServiceSummary(selectedService);
+
+        // Map this service-based form to the field names already used by your Worker.
+        formData.set('business_name', getValue('company'));
+        formData.set('primary_contact', getValue('name'));
+        formData.set('client_email', getValue('email'));
+        formData.set('service', serviceLabel(selectedService));
+        formData.set('brand_asset_link', getValue('brandLink'));
+        formData.set('content_notes', getValue('accessNotes'));
+        formData.set('desired_launch', getValue('deadline'));
+        formData.set('approver', getValue('contactPerson'));
+        formData.set('communication', getValue('channel'));
+
+        const updatePreference = getValue('updateFrequency');
+        const notes = getValue('notes');
+        formData.set(
+          'additional_notes',
+          [notes, updatePreference ? `Update preference: ${updatePreference}` : '']
+            .filter(Boolean)
+            .join('\n')
+        );
+
+        // Keep the service-specific information visible in the current Worker email.
+        formData.set('required_features', summary);
+        formData.set('business_description', `${serviceLabel(selectedService)} onboarding`);
+
+        if (selectedService === 'website') {
+          formData.set('project_goal', getValue('webGoal'));
+          formData.set('required_pages', getValue('webPages'));
+          formData.set('hosting_provider', getValue('webPlatform'));
+          formData.set('reference_sites', getValue('webReferences'));
+        } else if (selectedService === 'uiux') {
+          formData.set('project_goal', getValue('uxFlow'));
+          formData.set('target_audience', getValue('uxUsers'));
+          formData.set('required_pages', getValue('uxScreens'));
+          formData.set('reference_sites', getValue('uxExisting'));
+        } else if (selectedService === 'ghl') {
+          formData.set('project_goal', getValue('ghlSetup'));
+          formData.set('required_features', summary);
+        } else if (selectedService === 'automation') {
+          formData.set('project_goal', getValue('autoDesired'));
+          formData.set('required_features', summary);
+        } else if (selectedService === 'graphic') {
+          formData.set('project_goal', getValue('graphicType'));
+          formData.set('content_notes', [getValue('graphicCopy'), getValue('graphicStyle'), getValue('accessNotes')].filter(Boolean).join('\n\n'));
+          formData.set('required_features', summary);
+        }
+      }
+
+      function validateUploads() {
+        let total = 0;
+
+        for (const file of assetFiles.files) {
+          if (file.size > MAX_FILE_SIZE) {
+            throw new Error(`${file.name} is larger than 10 MB.`);
+          }
+          total += file.size;
+        }
+
+        if (total > MAX_TOTAL_FILE_SIZE) {
+          throw new Error('Total uploaded files cannot exceed 25 MB.');
+        }
+      }
+
+      form.addEventListener('submit', async e => {
         e.preventDefault();
         updateServicePanel();
+
         if (!form.checkValidity()) {
           form.reportValidity();
           const firstInvalid = form.querySelector(':invalid:not(:disabled)');
-          if (firstInvalid) firstInvalid.closest('.form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (firstInvalid) {
+            firstInvalid.closest('.form-section')?.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
           showToast('Complete the required fields.');
           return;
         }
-        saveProgress(true);
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
+
+        try {
+          validateUploads();
+          saveProgress(true);
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = 'Sending onboarding…';
+
+          const formData = new FormData(form);
+          appendWorkerCompatibilityFields(formData);
+
+          const response = await fetch(WORKER_URL, {
+            method: 'POST',
+            body: formData
+          });
+
+          let result = {};
+          try {
+            result = await response.json();
+          } catch {
+            throw new Error('The server returned an invalid response.');
+          }
+
+          if (!response.ok || result.success === false) {
+            throw new Error(result.message || 'Unable to submit onboarding.');
+          }
+
+          localStorage.removeItem(storageKey);
+          form.reset();
+          renderFiles([]);
+          updateServicePanel();
+          updateProgress();
+
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        } catch (error) {
+          console.error('Onboarding submission error:', error);
+          showToast(error.message || 'Submission failed. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalSubmitHtml;
+        }
       });
 
       function closeSuccess() {
