@@ -943,6 +943,10 @@
       min-height: 52px;
     }
 
+    .modal [hidden] {
+      display: none !important;
+    }
+
     .modal.error .modal-card::before {
       background: rgba(255,107,107,.18);
     }
@@ -1284,7 +1288,7 @@
                 </div>
                 <div class="field">
                   <label for="website">Current website</label>
-                  <input id="website" name="website" type="url" inputmode="url" placeholder="https://yourwebsite.com" />
+                  <input id="website" name="website" type="text" inputmode="url" placeholder="yourwebsite.com or https://yourwebsite.com" />
                 </div>
               </div>
             </section>
@@ -1566,7 +1570,7 @@
               <div class="field-grid">
                 <div class="field full">
                   <label for="brandLink">Files / Google Drive link</label>
-                  <input id="brandLink" name="brandLink" type="url" placeholder="https://drive.google.com/..." />
+                  <input id="brandLink" name="brandLink" type="text" inputmode="url" placeholder="drive.google.com/... or https://drive.google.com/..." />
                   <small class="helper">Logo, brand guide, photos, videos, copy, screenshots, or references.</small>
                 </div>
 
@@ -1754,7 +1758,10 @@
       const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024;
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalSubmitHtml = submitBtn.innerHTML;
+      const BUILD_VERSION = 'JRMRC-ONBOARDING-2026-09-03-V5';
       let toastTimer;
+
+      console.info(`[JRMRC Onboarding] Build loaded: ${BUILD_VERSION}`);
 
       function showToast(message) {
         toastText.textContent = message;
@@ -1781,7 +1788,7 @@
         statusMessage.textContent = message;
         statusMeta.textContent = meta;
 
-        statusCloseBtn.hidden = mode === 'sending';
+        statusCloseBtn.hidden = mode !== 'success';
         statusRetryBtn.hidden = mode !== 'error';
 
         driveFolderBtn.hidden = !(mode === 'success' && driveUrl);
@@ -1900,9 +1907,12 @@
 
       function groupComplete(group) {
         const first = group[0];
-        if (first.type === 'radio') return group.some(x => x.checked);
-        if (first.type === 'email') return first.value.trim() !== '' && first.checkValidity();
-        return first.value.trim() !== '';
+
+        if (first.type === 'radio') {
+          return group.some(x => x.checked);
+        }
+
+        return first.value.trim() !== '' && first.checkValidity();
       }
 
       function sectionComplete(section) {
@@ -1990,6 +2000,24 @@
         e.preventDefault();
         uploadZone.classList.remove('dragover');
       }));
+
+      function normalizeOptionalUrlField(field) {
+        if (!field) return;
+
+        const raw = String(field.value || '').trim();
+        if (!raw) return;
+
+        // Leave URLs and other explicit schemes alone.
+        if (/^[a-z][a-z0-9+.-]*:\/\//i.test(raw)) {
+          field.value = raw;
+          return;
+        }
+
+        // Common client input: example.com or www.example.com
+        if (/^(www\.)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(raw)) {
+          field.value = `https://${raw}`;
+        }
+      }
 
       function getValue(name) {
         const field = form.elements[name];
@@ -2165,12 +2193,19 @@
 
         console.info('[JRMRC Onboarding] Submit button pressed.');
 
+        normalizeOptionalUrlField(document.getElementById('website'));
+        normalizeOptionalUrlField(document.getElementById('brandLink'));
+
         if (!form.checkValidity()) {
           form.reportValidity();
 
           const firstInvalid = form.querySelector(':invalid:not(:disabled)');
           const invalidFields = [...form.querySelectorAll(':invalid:not(:disabled)')]
-            .map(field => field.name || field.id || 'unknown');
+            .map(field => {
+              if (field.id === 'website') return 'Current website';
+              if (field.id === 'brandLink') return 'Files / Google Drive link';
+              return field.name || field.id || 'unknown';
+            });
 
           console.warn('[JRMRC Onboarding] Validation failed.', {
             invalidFields
@@ -2221,6 +2256,7 @@
           appendWorkerCompatibilityFields(formData);
 
           debugGroup('Outgoing request', () => {
+            console.log('Build:', BUILD_VERSION);
             console.log('Worker URL:', WORKER_URL);
             console.log('Method:', 'POST');
             console.log('Started:', new Date().toISOString());
