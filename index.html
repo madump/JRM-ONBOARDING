@@ -957,6 +957,21 @@
       box-shadow: 0 16px 50px rgba(255,107,107,.18);
     }
 
+    .modal.warning .modal-card::before {
+      background: rgba(245,158,11,.18);
+    }
+
+    .modal.warning .modal-icon {
+      background: #fff4d6;
+      color: #8a4b00;
+      box-shadow: 0 16px 50px rgba(245,158,11,.16);
+    }
+
+    .modal.warning .modal-status-dot {
+      background: #f59e0b;
+      box-shadow: 0 0 0 5px rgba(245,158,11,.12);
+    }
+
     .modal.sending .modal-icon {
       background: #eefbdc;
       color: #315f00;
@@ -1262,6 +1277,10 @@
       </div>
 
       <form id="clientForm" novalidate>
+        <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+          <label for="company_website">Leave this field empty</label>
+          <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="workspace">
           <div class="form-shell">
             <section id="contact" class="form-section reveal" data-section>
@@ -1753,12 +1772,13 @@
       const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
       const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
       const storageKey = 'jrmrcClientOnboarding_v3';
+      const pendingSubmissionKey = 'jrmrcClientOnboarding_pendingSubmission_v1';
       const WORKER_URL = 'https://wild-hat-8199.jhimrickofficial.workers.dev/';
       const MAX_FILE_SIZE = 10 * 1024 * 1024;
       const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024;
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalSubmitHtml = submitBtn.innerHTML;
-      const BUILD_VERSION = 'JRMRC-ONBOARDING-2026-09-03-V5';
+      const BUILD_VERSION = 'JRMRC-ONBOARDING-2026-09-03-PROD-V6';
       let toastTimer;
 
       console.info(`[JRMRC Onboarding] Build loaded: ${BUILD_VERSION}`);
@@ -1780,7 +1800,7 @@
           driveUrl = ''
         } = options;
 
-        statusModal.classList.remove('sending', 'success', 'error');
+        statusModal.classList.remove('sending', 'success', 'warning', 'error');
         statusModal.classList.add(mode);
 
         statusEyebrow.textContent = eyebrow;
@@ -1788,10 +1808,10 @@
         statusMessage.textContent = message;
         statusMeta.textContent = meta;
 
-        statusCloseBtn.hidden = mode !== 'success';
+        statusCloseBtn.hidden = !['success', 'warning'].includes(mode);
         statusRetryBtn.hidden = mode !== 'error';
 
-        driveFolderBtn.hidden = !(mode === 'success' && driveUrl);
+        driveFolderBtn.hidden = !(['success', 'warning'].includes(mode) && driveUrl);
         if (driveUrl) {
           driveFolderBtn.href = driveUrl;
         } else {
@@ -1822,7 +1842,7 @@
 
       function closeStatusModal() {
         if (statusModal.classList.contains('sending')) return;
-        statusModal.classList.remove('open', 'sending', 'success', 'error');
+        statusModal.classList.remove('open', 'sending', 'success', 'warning', 'error');
         document.body.style.overflow = '';
       }
 
@@ -1835,21 +1855,29 @@
         }
       }
 
-      function buildDebugFormSnapshot(formData) {
-        const snapshot = {};
-        for (const [key, value] of formData.entries()) {
-          if (value instanceof File) {
-            if (!snapshot[key]) snapshot[key] = [];
-            snapshot[key].push({
-              name: value.name,
-              type: value.type,
-              size: value.size
-            });
-          } else {
-            snapshot[key] = value;
-          }
+      function createSubmissionId() {
+        if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+        return `sub-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+      }
+
+      function getPendingSubmission() {
+        try {
+          const existing = JSON.parse(localStorage.getItem(pendingSubmissionKey) || 'null');
+          if (existing?.id && existing?.createdAt) return existing;
+        } catch (error) {
+          console.warn('[JRMRC Onboarding] Could not read pending submission ID.', error);
         }
-        return snapshot;
+
+        const created = {
+          id: createSubmissionId(),
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem(pendingSubmissionKey, JSON.stringify(created));
+        return created;
+      }
+
+      function clearPendingSubmission() {
+        localStorage.removeItem(pendingSubmissionKey);
       }
 
       function savableFields() {
@@ -2093,12 +2121,17 @@
         return lines.filter(line => !line.endsWith(': ')).join('\n');
       }
 
-      function appendWorkerCompatibilityFields(formData) {
+      function appendWorkerCompatibilityFields(formData, submission) {
         const selectedPackage = form.querySelector('input[name="service"]:checked')?.value || '';
         const summary = buildServiceSummary(selectedPackage);
         const packageName = serviceLabel(selectedPackage);
 
-        // Common fields used by the existing Worker.
+        // Stable idempotency identity. Retries keep the same values until a
+        // successful backend response, so Drive and email side effects are safe.
+        formData.set('submission_id', submission.id);
+        formData.set('submission_created_at', submission.createdAt);
+
+        // Common fields used by the Worker.
         formData.set('business_name', getValue('company'));
         formData.set('primary_contact', getValue('name'));
         formData.set('client_email', getValue('email'));
@@ -2207,9 +2240,7 @@
               return field.name || field.id || 'unknown';
             });
 
-          console.warn('[JRMRC Onboarding] Validation failed.', {
-            invalidFields
-          });
+          console.warn('[JRMRC Onboarding] Validation failed.', { invalidFields });
 
           if (firstInvalid) {
             firstInvalid.closest('.form-section')?.scrollIntoView({
@@ -2219,7 +2250,6 @@
           }
 
           showToast('Complete the required fields.');
-
           openStatusModal('error', {
             eyebrow: 'Form incomplete',
             title: 'A few details are missing.',
@@ -2228,13 +2258,13 @@
               ? `Required fields to review: ${invalidFields.join(', ')}`
               : 'Please review the required fields in the form.'
           });
-
           return;
         }
 
         const startedAt = performance.now();
         const controller = new AbortController();
         const requestTimeout = setTimeout(() => controller.abort(), 90000);
+        const submission = getPendingSubmission();
 
         try {
           validateUploads();
@@ -2246,21 +2276,20 @@
           openStatusModal('sending', {
             eyebrow: 'Secure submission',
             title: 'Sending your onboarding…',
-            message: 'Your information is being sent to JRMRC. Please keep this page open until confirmation appears.',
+            message: 'Your information is being saved to JRMRC project storage. Please keep this page open until confirmation appears.',
             meta: assetFiles.files.length
               ? `${assetFiles.files.length} file${assetFiles.files.length === 1 ? '' : 's'} included with this submission.`
-              : 'No files were attached. Your onboarding details will still be submitted.'
+              : 'No files attached — that is okay. Your client folder and empty asset folders will still be created.'
           });
 
           const formData = new FormData(form);
-          appendWorkerCompatibilityFields(formData);
+          appendWorkerCompatibilityFields(formData, submission);
 
-          debugGroup('Outgoing request', () => {
-            console.log('Build:', BUILD_VERSION);
-            console.log('Worker URL:', WORKER_URL);
-            console.log('Method:', 'POST');
-            console.log('Started:', new Date().toISOString());
-            console.log('Form data:', buildDebugFormSnapshot(formData));
+          console.info('[JRMRC Onboarding] Sending request.', {
+            build: BUILD_VERSION,
+            submissionId: submission.id,
+            package: form.querySelector('input[name="service"]:checked')?.value || '',
+            fileCount: assetFiles.files.length
           });
 
           const response = await fetch(WORKER_URL, {
@@ -2270,96 +2299,122 @@
           });
 
           const elapsedMs = Math.round(performance.now() - startedAt);
-
-          console.info('[JRMRC Onboarding] Worker responded.', {
-            status: response.status,
-            statusText: response.statusText,
-            ok: response.ok,
-            elapsedMs
-          });
-
           const rawResponse = await response.text();
-
-          debugGroup('Raw Worker response', () => {
-            console.log('HTTP status:', response.status);
-            console.log('HTTP status text:', response.statusText);
-            console.log('Response body:', rawResponse);
-          });
-
           let result = {};
 
           try {
             result = rawResponse ? JSON.parse(rawResponse) : {};
           } catch (parseError) {
-            console.error('[JRMRC Onboarding] Could not parse Worker JSON response.', {
+            console.error('[JRMRC Onboarding] Invalid Worker JSON.', {
+              status: response.status,
               parseError,
-              rawResponse
+              responsePreview: rawResponse.slice(0, 1200),
+              submissionId: submission.id
             });
-            throw new Error(
-              `The server returned an invalid response (HTTP ${response.status}). Check the browser console and Cloudflare Worker logs.`
-            );
+            throw new Error('The server returned an invalid response.');
           }
+
+          console.info('[JRMRC Onboarding] Worker responded.', {
+            status: response.status,
+            ok: response.ok,
+            elapsedMs,
+            requestId: result.requestId || null,
+            submissionId: result.submissionId || submission.id,
+            resultStatus: result.status || null,
+            folderReused: Boolean(result.folderReused),
+            emailSent: result.emailSent
+          });
 
           if (!response.ok || result.success === false) {
-            console.error('[JRMRC Onboarding] Backend rejected the submission.', {
-              status: response.status,
-              result
+            console.error('[JRMRC Onboarding] Backend rejected submission.', {
+              httpStatus: response.status,
+              code: result.code || null,
+              requestId: result.requestId || null,
+              technicalMessage: result.message || null,
+              submissionId: submission.id
             });
 
-            throw new Error(
-              result.message ||
-              `Unable to submit onboarding. Server returned HTTP ${response.status}.`
+            const error = new Error(
+              result.userMessage ||
+              'We could not complete your onboarding submission. Your answers remain saved in this browser, so please try again.'
             );
+            error.requestId = result.requestId || '';
+            error.code = result.code || '';
+            error.technicalMessage = result.message || '';
+            throw error;
           }
 
-          console.info('[JRMRC Onboarding] Submission completed successfully.', result);
-
+          // Drive is saved at this point. Do NOT allow an email warning to make
+          // the client retry and accidentally create duplicate work.
           localStorage.removeItem(storageKey);
+          clearPendingSubmission();
           form.reset();
           renderFiles([]);
           updateServicePanel();
           updateProgress();
 
-          const successDetails = [
+          const details = [
             result.submissionId ? `Submission ID: ${result.submissionId}` : '',
             result.driveFolderName ? `Drive folder: ${result.driveFolderName}` : '',
-            result.emailSent === true ? 'Email notification: sent' : '',
-            Number.isFinite(result.filesUploaded)
-              ? `Files uploaded: ${result.filesUploaded}`
-              : ''
+            result.folderReused ? 'Existing folder reused safely: Yes' : 'New folder created: Yes',
+            `Files uploaded: ${Number(result.filesUploaded || 0)}`,
+            result.emailSent === true ? 'Internal notification email: sent' : 'Internal notification email: pending'
           ].filter(Boolean).join('\n');
 
-          openStatusModal('success', {
-            eyebrow: 'Submission complete',
-            title: 'Onboarding received!',
-            message: 'Your onboarding was submitted successfully. JRMRC now has the project information needed to begin.',
-            meta: successDetails || 'Your submission was accepted successfully.',
-            driveUrl: result.driveFolderUrl || ''
-          });
+          if (result.warning || result.emailSent === false) {
+            console.warn('[JRMRC Onboarding] Saved with warning.', {
+              requestId: result.requestId || null,
+              submissionId: result.submissionId || submission.id,
+              warning: result.warning || result.userMessage || 'Email notification was not sent.'
+            });
+
+            openStatusModal('warning', {
+              eyebrow: 'Onboarding received',
+              title: 'Your project information is saved.',
+              message: 'Your onboarding and Google Drive project folder were saved successfully. The internal notification email had an issue, but you do not need to submit the form again.',
+              meta: details,
+              driveUrl: result.driveFolderUrl || ''
+            });
+          } else {
+            openStatusModal('success', {
+              eyebrow: 'Submission complete',
+              title: 'Onboarding received!',
+              message: result.folderReused
+                ? 'Your onboarding was confirmed successfully. The existing project folder was reused, so no duplicate folder was created.'
+                : 'Your onboarding was submitted successfully. JRMRC now has the project information needed to begin.',
+              meta: details,
+              driveUrl: result.driveFolderUrl || ''
+            });
+          }
 
         } catch (error) {
           const isAbort = error?.name === 'AbortError';
+          const requestId = error?.requestId || '';
           const friendlyMessage = isAbort
-            ? 'The submission took too long and was stopped. Please try again. If it happens again, check the Cloudflare Worker and Apps Script logs.'
-            : (error?.message || 'Submission failed. Please try again.');
+            ? 'The submission took too long to confirm. Your answers are still saved in this browser. Please try again; the same submission ID will be reused to prevent duplicate folders.'
+            : (error?.message || 'Submission failed. Your answers are still saved in this browser. Please try again.');
 
           console.error('[JRMRC Onboarding] SUBMISSION ERROR', {
             name: error?.name,
+            code: error?.code || null,
             message: error?.message,
+            technicalMessage: error?.technicalMessage || null,
+            requestId: requestId || null,
+            submissionId: submission.id,
             stack: error?.stack,
             workerUrl: WORKER_URL,
             timestamp: new Date().toISOString()
           });
 
-          showToast('Submission failed.');
-
+          showToast('Submission needs attention.');
           openStatusModal('error', {
-            eyebrow: 'Submission error',
-            title: 'We could not send your onboarding.',
+            eyebrow: 'Submission not confirmed',
+            title: 'We could not confirm the submission.',
             message: friendlyMessage,
-            meta: 'Technical details were written to the browser console. Press F12 → Console to view them.'
+            meta: requestId
+              ? `Reference ID: ${requestId}\nYour form progress is still saved. Retrying will reuse the same submission ID.`
+              : 'Your form progress is still saved. Retrying will reuse the same submission ID.'
           });
-
         } finally {
           clearTimeout(requestTimeout);
           submitBtn.disabled = false;
