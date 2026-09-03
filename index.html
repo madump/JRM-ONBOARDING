@@ -1292,6 +1292,347 @@
       .nav-actions .ghost-btn svg { width: 19px; height: 19px; }
     }
 
+  
+    /* =========================================================
+       FORM READABILITY PASS
+       Higher contrast, larger type, clearer spacing, better mobile
+       ========================================================= */
+
+    :root {
+      --text: #0b131b;
+      --muted: #465361;
+      --line: rgba(11,19,27,.16);
+      --line-strong: rgba(11,19,27,.28);
+    }
+
+    body {
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .form-section {
+      padding: 38px;
+      border-color: rgba(11,19,27,.13);
+      box-shadow: 0 10px 30px rgba(11,19,27,.035);
+    }
+
+    .form-section-head {
+      padding-bottom: 26px;
+      margin-bottom: 28px;
+    }
+
+    .form-section h3 {
+      font-size: 26px;
+      line-height: 1.2;
+      color: #0b131b;
+    }
+
+    .form-section-head p {
+      color: #465361;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .field-grid {
+      gap: 22px 20px;
+    }
+
+    label,
+    .label {
+      margin-bottom: 10px;
+      color: #111b24;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .required {
+      color: #b42318;
+      font-weight: 800;
+    }
+
+    input,
+    textarea,
+    select {
+      min-height: 54px;
+      padding-left: 15px;
+      padding-right: 15px;
+      color: #0b131b;
+      background: #ffffff;
+      border: 1px solid rgba(11,19,27,.22);
+      border-radius: 12px;
+      font-size: 15.5px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    select {
+      padding-right: 46px;
+      background-position:
+        calc(100% - 20px) 23px,
+        calc(100% - 15px) 23px;
+    }
+
+    textarea,
+    .compact-textarea {
+      min-height: 118px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      line-height: 1.65;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #687482;
+      opacity: 1;
+      font-weight: 400;
+    }
+
+    input:hover,
+    textarea:hover,
+    select:hover {
+      border-color: rgba(11,19,27,.34);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #73dc0b;
+      box-shadow: 0 0 0 4px rgba(133,255,10,.14);
+      background: #ffffff;
+    }
+
+    .helper {
+      margin-top: 8px;
+      color: #596674;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .service-panel {
+      padding: 26px;
+      background: #fbfcfd;
+      border-color: rgba(11,19,27,.13);
+    }
+
+    .service-panel-head {
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+    }
+
+    .service-panel-head h4 {
+      font-size: 20px;
+      line-height: 1.3;
+      color: #0b131b;
+    }
+
+    .service-panel-head p {
+      color: #4b5966;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .package-scope-note,
+    .inline-note {
+      padding: 15px 16px;
+      color: #254300;
+      font-size: 13.5px;
+      line-height: 1.65;
+      background: #f0fde6;
+      border-color: rgba(108,205,15,.42);
+    }
+
+    .package-scope-note strong,
+    .inline-note strong {
+      color: #173000;
+      font-weight: 800;
+    }
+
+    .service-grid {
+      gap: 14px;
+    }
+
+    .service-card {
+      min-height: 132px;
+      padding: 20px;
+      border-color: rgba(11,19,27,.14);
+      box-shadow: 0 3px 10px rgba(11,19,27,.025);
+    }
+
+    .service-card .package-name {
+      margin-bottom: 10px;
+      color: #0b131b;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .service-card .package-price {
+      font-size: 19px;
+      color: #315f00;
+    }
+
+    .service-card .package-timeline {
+      color: #536170;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .service-card .package-desc {
+      color: #4d5a67;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .option-card:has(input:checked) {
+      border-color: #75dc12;
+      background: #f2fde8;
+      box-shadow:
+        inset 0 0 0 1px rgba(117,220,18,.22),
+        0 8px 22px rgba(71,130,15,.06);
+    }
+
+    .upload-zone {
+      min-height: 190px;
+      padding: 28px;
+      background: #fbfcfd;
+      border-color: rgba(11,19,27,.28);
+    }
+
+    .upload-zone b {
+      color: #111b24;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .upload-zone span {
+      color: #596674;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .file-item {
+      color: #27323d;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .side-card h4 {
+      font-size: 15px;
+      color: #111b24;
+    }
+
+    .side-progress b {
+      font-size: 14px;
+      color: #111b24;
+    }
+
+    .side-progress small,
+    .jump-link,
+    .secure-note {
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .submit-panel h3 {
+      font-size: 24px;
+      color: #0b131b;
+    }
+
+    .submit-panel p {
+      color: #4a5865;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      font-size: 14px;
+      letter-spacing: .005em;
+    }
+
+    @media (max-width: 720px) {
+      .form-section {
+        padding: 26px 18px;
+      }
+
+      .form-section-head {
+        padding-bottom: 20px;
+        margin-bottom: 22px;
+      }
+
+      .form-section h3 {
+        font-size: 22px;
+      }
+
+      .form-section-head p {
+        font-size: 14px;
+      }
+
+      .field-grid {
+        gap: 18px;
+      }
+
+      label,
+      .label {
+        font-size: 14px;
+      }
+
+      input,
+      textarea,
+      select {
+        min-height: 56px;
+        font-size: 16px; /* prevents iOS input zoom and improves legibility */
+      }
+
+      textarea,
+      .compact-textarea {
+        min-height: 124px;
+      }
+
+      .helper {
+        font-size: 13px;
+      }
+
+      .service-panel {
+        padding: 20px 16px;
+      }
+
+      .service-card {
+        min-height: 0;
+        padding: 18px;
+      }
+
+      .package-scope-note,
+      .inline-note {
+        font-size: 13px;
+      }
+
+      .submit-panel h3 {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .form-section {
+        padding: 22px 14px;
+        border-radius: 18px;
+      }
+
+      .service-panel {
+        padding: 18px 12px;
+      }
+
+      .upload-zone {
+        min-height: 165px;
+        padding: 22px 14px;
+      }
+    }
+
   </style>
 </head>
 <body>
