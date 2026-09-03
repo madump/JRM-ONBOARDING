@@ -1669,6 +1669,40 @@
                   <textarea class="compact-textarea" id="accessNotes" name="accessNotes" placeholder="List the platforms I need access to. Do not paste passwords here."></textarea>
                   <small class="helper">Use a secure password manager for credentials.</small>
                 </div>
+
+                <div class="field full">
+                  <div class="inline-note">
+                    <strong>SOP / Process Documentation</strong><br>
+                    Share the current process so I can understand how the work should operate before I build or automate it.
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="sopStatus">Do you already have an SOP?</label>
+                  <select id="sopStatus" name="sopStatus">
+                    <option value="">Select one</option>
+                    <option>Yes — documented SOP exists</option>
+                    <option>Partially documented</option>
+                    <option>No — process is currently informal</option>
+                    <option>Not sure</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="sopLink">SOP / process document link</label>
+                  <input id="sopLink" name="sopLink" type="text" inputmode="url" placeholder="Google Drive, Notion, Loom, PDF, etc." />
+                </div>
+
+                <div class="field full">
+                  <label for="sopProcess">Current process / workflow</label>
+                  <textarea class="compact-textarea" id="sopProcess" name="sopProcess" placeholder="Briefly describe the current steps from start to finish. Example: Lead comes in → staff reviews → call is booked → follow-up is sent → manager approves → project starts."></textarea>
+                  <small class="helper">Bullet points are fine. Include manual steps, approvals, handoffs, and tools used.</small>
+                </div>
+
+                <div class="field full">
+                  <label for="sopExceptions">Important rules, exceptions, or approval points</label>
+                  <textarea class="compact-textarea" id="sopExceptions" name="sopExceptions" placeholder="Example: VIP leads go directly to the owner, refunds need manager approval, after-hours calls create a task, etc."></textarea>
+                </div>
               </div>
             </section>
 
@@ -2187,7 +2221,14 @@
         formData.set('client_email', getValue('email'));
         formData.set('package_name', packageName);
         formData.set('brand_asset_link', getValue('brandLink'));
-        formData.set('content_notes', getValue('accessNotes'));
+        formData.set(
+          'content_notes',
+          [
+            getValue('accessNotes'),
+            getValue('sopProcess') ? `SOP / workflow:\n${getValue('sopProcess')}` : '',
+            getValue('sopExceptions') ? `Rules / exceptions:\n${getValue('sopExceptions')}` : ''
+          ].filter(Boolean).join('\n\n')
+        );
         formData.set('desired_launch', getValue('deadline'));
         formData.set('approver', getValue('contactPerson'));
         formData.set('communication', getValue('channel'));
@@ -2196,13 +2237,29 @@
 
         const updatePreference = getValue('updateFrequency');
         const notes = getValue('notes');
+        const sopStatus = getValue('sopStatus');
+        const sopLink = getValue('sopLink');
+        const sopProcess = getValue('sopProcess');
+        const sopExceptions = getValue('sopExceptions');
+
+        // SOP fields are sent individually and also mirrored into additional_notes
+        // so the existing Worker can preserve them even if it ignores new keys.
+        formData.set('sop_status', sopStatus);
+        formData.set('sop_link', sopLink);
+        formData.set('sop_process', sopProcess);
+        formData.set('sop_exceptions', sopExceptions);
+
         formData.set(
           'additional_notes',
           [
             `Package booked: ${packageName}`,
             notes,
-            updatePreference ? `Update preference: ${updatePreference}` : ''
-          ].filter(Boolean).join('\n')
+            updatePreference ? `Update preference: ${updatePreference}` : '',
+            sopStatus ? `SOP status: ${sopStatus}` : '',
+            sopLink ? `SOP / process link: ${sopLink}` : '',
+            sopProcess ? `Current SOP / workflow:\n${sopProcess}` : '',
+            sopExceptions ? `SOP rules / exceptions:\n${sopExceptions}` : ''
+          ].filter(Boolean).join('\n\n')
         );
 
         // Keep the existing Worker compatible: coded website -> website,
@@ -2270,6 +2327,7 @@
 
         normalizeOptionalUrlField(document.getElementById('website'));
         normalizeOptionalUrlField(document.getElementById('brandLink'));
+        normalizeOptionalUrlField(document.getElementById('sopLink'));
 
         if (!form.checkValidity()) {
           form.reportValidity();
