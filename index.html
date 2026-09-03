@@ -1497,11 +1497,11 @@
                 <div class="service-panel" data-service-panel="ai-receptionist" hidden>
                   <div class="service-panel-head">
                     <h4>GHL + AI Receptionist</h4>
-                    <p>Give the AI what it needs to answer, qualify, book, and transfer inbound calls.</p>
+                    <p>Confirm whether you already have an active GoHighLevel account.</p>
                   </div>
                   <div class="field-grid">
                     <p class="package-scope-note"><strong>Package scope:</strong> everything in GHL Setup plus inbound Voice AI for questions, qualification, appointment booking, live transfer, and up to 10 workflows.</p>
-                    <div class="field">
+                    <div class="field full">
                       <label for="aiAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
                       <select id="aiAccount" name="aiAccount" data-conditional-required>
                         <option value="">Select one</option>
@@ -1510,53 +1510,17 @@
                         <option>Not sure</option>
                       </select>
                     </div>
-                    <div class="field">
-                      <label for="aiLocation">Location / sub-account name</label>
-                      <input id="aiLocation" name="aiLocation" type="text" placeholder="Account or location name" />
-                    </div>
-                    <div class="field full">
-                      <label for="aiPurpose">What should the AI receptionist handle? <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="aiPurpose" name="aiPurpose" placeholder="Example: Answer FAQs, qualify callers, book appointments, and transfer urgent calls" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="aiFaq">Common questions the AI must answer <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="aiFaq" name="aiFaq" placeholder="List your most common questions and the correct answers." data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="aiQualification">Qualification questions <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="aiQualification" name="aiQualification" placeholder="What should the AI ask before booking or transferring?" data-conditional-required></textarea>
-                    </div>
-                    <div class="field">
-                      <label for="aiBooking">What should the AI book? <span class="required">*</span></label>
-                      <input id="aiBooking" name="aiBooking" type="text" placeholder="Consultation, estimate, appointment, demo…" data-conditional-required />
-                    </div>
-                    <div class="field">
-                      <label for="aiTransfer">Live transfer number / rule <span class="required">*</span></label>
-                      <input id="aiTransfer" name="aiTransfer" type="text" placeholder="Number + when the AI should transfer" data-conditional-required />
-                    </div>
-                    <div class="field">
-                      <label for="aiHours">Business hours / after-hours behavior <span class="required">*</span></label>
-                      <input id="aiHours" name="aiHours" type="text" placeholder="Example: Mon–Fri 8–5; after hours book or take a message" data-conditional-required />
-                    </div>
-                    <div class="field">
-                      <label for="aiTone">Agent name / tone</label>
-                      <input id="aiTone" name="aiTone" type="text" placeholder="Example: Alex — friendly, concise, professional" />
-                    </div>
-                    <div class="field full">
-                      <label for="aiWorkflows">Extra workflows — up to 10 total</label>
-                      <textarea class="compact-textarea" id="aiWorkflows" name="aiWorkflows" placeholder="List follow-ups, notifications, lead routing, missed-call flows, etc."></textarea>
-                    </div>
                   </div>
                 </div>
 
                 <div class="service-panel" data-service-panel="revenue-system" hidden>
                   <div class="service-panel-head">
                     <h4>GHL AI Revenue System</h4>
-                    <p>Map the full inbound, outbound, reactivation, routing, pipeline, and booking system.</p>
+                    <p>Confirm whether you already have an active GoHighLevel account.</p>
                   </div>
                   <div class="field-grid">
                     <p class="package-scope-note"><strong>Package scope:</strong> inbound + outbound AI, CRM/SMS/chat replies, reactivation, advanced routing, up to 15 workflows, 2 calendars, 2 pipelines, and optimization.</p>
-                    <div class="field">
+                    <div class="field full">
                       <label for="revAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
                       <select id="revAccount" name="revAccount" data-conditional-required>
                         <option value="">Select one</option>
@@ -1564,50 +1528,6 @@
                         <option>No</option>
                         <option>Not sure</option>
                       </select>
-                    </div>
-                    <div class="field">
-                      <label for="revLocation">Location / sub-account name</label>
-                      <input id="revLocation" name="revLocation" type="text" placeholder="Account or location name" />
-                    </div>
-                    <div class="field full">
-                      <label for="revGoal">Primary revenue-system goal <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revGoal" name="revGoal" placeholder="Example: Respond to every lead, reactivate old leads, qualify automatically, and increase booked appointments" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="revLeadSources">Lead sources / channels <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revLeadSources" name="revLeadSources" placeholder="Website, Facebook ads, Google ads, phone calls, chat, imported lists, referrals…" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="revOutbound">Outbound / reactivation use case <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revOutbound" name="revOutbound" placeholder="Who should the system contact, why, and what outcome should it drive?" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="revQualification">Qualification rules <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revQualification" name="revQualification" placeholder="What information makes a lead qualified, unqualified, urgent, or ready to book?" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="revRouting">Routing rules <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revRouting" name="revRouting" placeholder="Who should receive each type of lead, and when should the system escalate or transfer?" data-conditional-required></textarea>
-                    </div>
-                    <div class="field">
-                      <label for="revCalendars">Calendars — up to 2 <span class="required">*</span></label>
-                      <input id="revCalendars" name="revCalendars" type="text" placeholder="List the appointment types" data-conditional-required />
-                    </div>
-                    <div class="field">
-                      <label for="revPipelines">Pipelines — up to 2 <span class="required">*</span></label>
-                      <input id="revPipelines" name="revPipelines" type="text" placeholder="Example: Sales Pipeline, Reactivation Pipeline" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="revWorkflows">Workflows — up to 15 <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="revWorkflows" name="revWorkflows" placeholder="List the automations you need, one per line." data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="revIntegrations">Apps / integrations</label>
-                      <input id="revIntegrations" name="revIntegrations" type="text" placeholder="Stripe, calendars, email, Zapier, Make, spreadsheets, external CRM, etc." />
-                    </div>
-                    <div class="field full">
-                      <label for="revSuccess">How will we measure success?</label>
-                      <input id="revSuccess" name="revSuccess" type="text" placeholder="Example: response time, booked calls, reactivated leads, show rate, revenue" />
                     </div>
                   </div>
                 </div>
@@ -2205,28 +2125,8 @@
           lines.push(`Existing GHL account: ${getValue('foundationAccount')}`);
         } else if (service === 'ai-receptionist') {
           lines.push(`Existing GHL account: ${getValue('aiAccount')}`);
-          lines.push(`Location / sub-account: ${getValue('aiLocation') || 'Not specified'}`);
-          lines.push(`AI responsibilities: ${getValue('aiPurpose')}`);
-          lines.push(`FAQs / knowledge: ${getValue('aiFaq')}`);
-          lines.push(`Qualification questions: ${getValue('aiQualification')}`);
-          lines.push(`Booking: ${getValue('aiBooking')}`);
-          lines.push(`Live transfer: ${getValue('aiTransfer')}`);
-          lines.push(`Business hours / after-hours: ${getValue('aiHours')}`);
-          lines.push(`Agent name / tone: ${getValue('aiTone') || 'Not specified'}`);
-          lines.push(`Extra workflows: ${getValue('aiWorkflows') || 'None specified'}`);
         } else if (service === 'revenue-system') {
           lines.push(`Existing GHL account: ${getValue('revAccount')}`);
-          lines.push(`Location / sub-account: ${getValue('revLocation') || 'Not specified'}`);
-          lines.push(`Primary goal: ${getValue('revGoal')}`);
-          lines.push(`Lead sources / channels: ${getValue('revLeadSources')}`);
-          lines.push(`Outbound / reactivation: ${getValue('revOutbound')}`);
-          lines.push(`Qualification rules: ${getValue('revQualification')}`);
-          lines.push(`Routing rules: ${getValue('revRouting')}`);
-          lines.push(`Calendars (up to 2): ${getValue('revCalendars')}`);
-          lines.push(`Pipelines (up to 2): ${getValue('revPipelines')}`);
-          lines.push(`Workflows (up to 15): ${getValue('revWorkflows')}`);
-          lines.push(`Integrations: ${getValue('revIntegrations') || 'None specified'}`);
-          lines.push(`Success metric: ${getValue('revSuccess') || 'Not specified'}`);
         }
 
         return lines.filter(line => !line.endsWith(': ')).join('\n');
@@ -2298,22 +2198,14 @@
 
         if (selectedPackage === 'ai-receptionist') {
           formData.set('ghlAccount', getValue('aiAccount'));
-          formData.set('ghlLocation', getValue('aiLocation'));
           formData.set('ghlSetup', summary);
-          formData.set('ghlLeadFlow', getValue('aiQualification'));
           formData.set('ghlMessaging', 'Inbound Voice AI + GoHighLevel');
-          formData.set('ghlCalendar', getValue('aiBooking'));
-          formData.set('project_goal', getValue('aiPurpose'));
         }
 
         if (selectedPackage === 'revenue-system') {
           formData.set('ghlAccount', getValue('revAccount'));
-          formData.set('ghlLocation', getValue('revLocation'));
           formData.set('ghlSetup', summary);
-          formData.set('ghlLeadFlow', getValue('revRouting'));
           formData.set('ghlMessaging', 'Inbound + outbound AI / CRM / SMS / chat');
-          formData.set('ghlCalendar', getValue('revCalendars'));
-          formData.set('project_goal', getValue('revGoal'));
         }
       }
 
