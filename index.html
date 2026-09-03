@@ -1733,16 +1733,6 @@
                     <input id="sopLink" name="sopLink" type="text" inputmode="url" placeholder="Google Drive, Notion, Loom, PDF, etc." />
                   </div>
 
-                  <div class="field full">
-                    <label for="sopProcess">Current process / workflow</label>
-                    <textarea class="compact-textarea" id="sopProcess" name="sopProcess" placeholder="Briefly describe the current steps from start to finish. Example: Lead comes in → staff reviews → call is booked → follow-up is sent → manager approves → project starts."></textarea>
-                    <small class="helper">Bullet points are fine. Include manual steps, approvals, handoffs, and tools used.</small>
-                  </div>
-
-                  <div class="field full">
-                    <label for="sopExceptions">Important rules, exceptions, or approval points</label>
-                    <textarea class="compact-textarea" id="sopExceptions" name="sopExceptions" placeholder="Example: VIP leads go directly to the owner, refunds need manager approval, after-hours calls create a task, etc."></textarea>
-                  </div>
                 </div>
               </div>
             </section>
@@ -2070,20 +2060,12 @@
           sopFile.disabled = !hasDocumentedSop;
         }
 
-        [document.getElementById('sopLink'),
-         document.getElementById('sopProcess'),
-         document.getElementById('sopExceptions')].forEach(field => {
-          if (field) field.disabled = hasDocumentedSop;
-        });
+        const sopLink = document.getElementById('sopLink');
+        if (sopLink) sopLink.disabled = hasDocumentedSop;
 
         // Prevent stale data from a previous choice from being submitted.
         if (hasDocumentedSop) {
-          const sopLink = document.getElementById('sopLink');
-          const sopProcess = document.getElementById('sopProcess');
-          const sopExceptions = document.getElementById('sopExceptions');
           if (sopLink) sopLink.value = '';
-          if (sopProcess) sopProcess.value = '';
-          if (sopExceptions) sopExceptions.value = '';
         } else if (sopFile) {
           sopFile.value = '';
           if (sopFileList) sopFileList.innerHTML = '';
@@ -2325,14 +2307,7 @@
         formData.set('client_email', getValue('email'));
         formData.set('package_name', packageName);
         formData.set('brand_asset_link', getValue('brandLink'));
-        formData.set(
-          'content_notes',
-          [
-            getValue('accessNotes'),
-            getValue('sopProcess') ? `SOP / workflow:\n${getValue('sopProcess')}` : '',
-            getValue('sopExceptions') ? `Rules / exceptions:\n${getValue('sopExceptions')}` : ''
-          ].filter(Boolean).join('\n\n')
-        );
+        formData.set('content_notes', getValue('accessNotes'));
         formData.set('desired_launch', getValue('deadline'));
         formData.set('approver', getValue('contactPerson'));
         formData.set('communication', getValue('channel'));
@@ -2350,15 +2325,11 @@
         };
         const sopStatusText = sopStatusLabels[sopStatusValue] || sopStatusValue;
         const sopLink = getValue('sopLink');
-        const sopProcess = getValue('sopProcess');
-        const sopExceptions = getValue('sopExceptions');
 
         // SOP fields are sent individually and also mirrored into additional_notes
         // so the existing Worker can preserve them even if it ignores new keys.
         formData.set('sop_status', sopStatusText);
         formData.set('sop_link', sopLink);
-        formData.set('sop_process', sopProcess);
-        formData.set('sop_exceptions', sopExceptions);
 
         formData.set(
           'additional_notes',
@@ -2368,9 +2339,7 @@
             updatePreference ? `Update preference: ${updatePreference}` : '',
             sopStatusText ? `SOP status: ${sopStatusText}` : '',
             (sopStatusValue === 'yes' && sopFile?.files?.[0]) ? `SOP file uploaded: ${sopFile.files[0].name}` : '',
-            sopLink ? `SOP / process link: ${sopLink}` : '',
-            sopProcess ? `Current SOP / workflow:\n${sopProcess}` : '',
-            sopExceptions ? `SOP rules / exceptions:\n${sopExceptions}` : ''
+            sopLink ? `SOP / process link: ${sopLink}` : ''
           ].filter(Boolean).join('\n\n')
         );
 
