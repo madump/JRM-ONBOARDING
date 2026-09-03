@@ -1260,6 +1260,21 @@
 
     .compact-textarea { min-height: 104px; }
 
+    .sop-details-panel {
+      grid-column: 1 / -1;
+    }
+
+    .sop-details-panel[hidden],
+    .sop-upload-panel[hidden] {
+      display: none !important;
+    }
+
+    .sop-upload-zone {
+      min-height: 155px;
+      background: #ffffff;
+    }
+
+
     @media (max-width: 720px) {
       .service-grid { grid-template-columns: 1fr; }
       .service-panel { padding: 18px 14px; }
@@ -1677,31 +1692,57 @@
                   </div>
                 </div>
 
-                <div class="field">
+                <div class="field full">
                   <label for="sopStatus">Do you already have an SOP?</label>
                   <select id="sopStatus" name="sopStatus">
                     <option value="">Select one</option>
-                    <option>Yes — documented SOP exists</option>
-                    <option>Partially documented</option>
-                    <option>No — process is currently informal</option>
-                    <option>Not sure</option>
+                    <option value="yes">Yes — documented SOP exists</option>
+                    <option value="partial">Partially documented</option>
+                    <option value="no">No — process is currently informal</option>
+                    <option value="unsure">Not sure</option>
                   </select>
                 </div>
 
-                <div class="field">
-                  <label for="sopLink">SOP / process document link</label>
-                  <input id="sopLink" name="sopLink" type="text" inputmode="url" placeholder="Google Drive, Notion, Loom, PDF, etc." />
+                <div class="field full sop-upload-panel" id="sopUploadPanel" hidden>
+                  <span class="label">Upload your SOP <span class="required">*</span></span>
+                  <div class="upload-zone sop-upload-zone" id="sopUploadZone">
+                    <input
+                      id="sopFile"
+                      name="sopFile"
+                      type="file"
+                      accept=".pdf,.doc,.docx,.txt,.rtf,.odt,image/*"
+                    />
+                    <div>
+                      <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                          <path d="M12 16V4M7 9l5-5 5 5"/>
+                          <path d="M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/>
+                        </svg>
+                      </div>
+                      <b>Upload the SOP document</b>
+                      <span>PDF, Word, text, or image · Max 10 MB</span>
+                    </div>
+                  </div>
+                  <div class="file-list" id="sopFileList" aria-live="polite"></div>
+                  <small class="helper">If you already have a documented SOP, you do not need to complete the process questions below.</small>
                 </div>
 
-                <div class="field full">
-                  <label for="sopProcess">Current process / workflow</label>
-                  <textarea class="compact-textarea" id="sopProcess" name="sopProcess" placeholder="Briefly describe the current steps from start to finish. Example: Lead comes in → staff reviews → call is booked → follow-up is sent → manager approves → project starts."></textarea>
-                  <small class="helper">Bullet points are fine. Include manual steps, approvals, handoffs, and tools used.</small>
-                </div>
+                <div class="field-grid sop-details-panel" id="sopDetailsPanel">
+                  <div class="field full">
+                    <label for="sopLink">SOP / process document link</label>
+                    <input id="sopLink" name="sopLink" type="text" inputmode="url" placeholder="Google Drive, Notion, Loom, PDF, etc." />
+                  </div>
 
-                <div class="field full">
-                  <label for="sopExceptions">Important rules, exceptions, or approval points</label>
-                  <textarea class="compact-textarea" id="sopExceptions" name="sopExceptions" placeholder="Example: VIP leads go directly to the owner, refunds need manager approval, after-hours calls create a task, etc."></textarea>
+                  <div class="field full">
+                    <label for="sopProcess">Current process / workflow</label>
+                    <textarea class="compact-textarea" id="sopProcess" name="sopProcess" placeholder="Briefly describe the current steps from start to finish. Example: Lead comes in → staff reviews → call is booked → follow-up is sent → manager approves → project starts."></textarea>
+                    <small class="helper">Bullet points are fine. Include manual steps, approvals, handoffs, and tools used.</small>
+                  </div>
+
+                  <div class="field full">
+                    <label for="sopExceptions">Important rules, exceptions, or approval points</label>
+                    <textarea class="compact-textarea" id="sopExceptions" name="sopExceptions" placeholder="Example: VIP leads go directly to the owner, refunds need manager approval, after-hours calls create a task, etc."></textarea>
+                  </div>
                 </div>
               </div>
             </section>
@@ -1859,6 +1900,12 @@
       const uploadZone = document.getElementById('uploadZone');
       const assetFiles = document.getElementById('assetFiles');
       const fileList = document.getElementById('fileList');
+      const sopStatus = document.getElementById('sopStatus');
+      const sopUploadPanel = document.getElementById('sopUploadPanel');
+      const sopDetailsPanel = document.getElementById('sopDetailsPanel');
+      const sopFile = document.getElementById('sopFile');
+      const sopUploadZone = document.getElementById('sopUploadZone');
+      const sopFileList = document.getElementById('sopFileList');
       const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
       const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
       const storageKey = 'jrmrcClientOnboarding_v3';
@@ -2012,6 +2059,37 @@
         });
       }
 
+      function updateSopFields() {
+        const hasDocumentedSop = sopStatus?.value === 'yes';
+
+        if (sopUploadPanel) sopUploadPanel.hidden = !hasDocumentedSop;
+        if (sopDetailsPanel) sopDetailsPanel.hidden = hasDocumentedSop;
+
+        if (sopFile) {
+          sopFile.required = hasDocumentedSop;
+          sopFile.disabled = !hasDocumentedSop;
+        }
+
+        [document.getElementById('sopLink'),
+         document.getElementById('sopProcess'),
+         document.getElementById('sopExceptions')].forEach(field => {
+          if (field) field.disabled = hasDocumentedSop;
+        });
+
+        // Prevent stale data from a previous choice from being submitted.
+        if (hasDocumentedSop) {
+          const sopLink = document.getElementById('sopLink');
+          const sopProcess = document.getElementById('sopProcess');
+          const sopExceptions = document.getElementById('sopExceptions');
+          if (sopLink) sopLink.value = '';
+          if (sopProcess) sopProcess.value = '';
+          if (sopExceptions) sopExceptions.value = '';
+        } else if (sopFile) {
+          sopFile.value = '';
+          if (sopFileList) sopFileList.innerHTML = '';
+        }
+      }
+
       function getRequiredGroups() {
         const required = [...form.querySelectorAll('[required]:not(:disabled)')];
         const groups = new Map();
@@ -2102,6 +2180,7 @@
       ['input', 'change'].forEach(evt => {
         form.addEventListener(evt, e => {
           if (e.target.matches('input[name="service"]')) updateServicePanel();
+          if (e.target === sopStatus) updateSopFields();
           updateProgress();
           saveProgress(true);
         });
@@ -2110,6 +2189,31 @@
       saveBtn.addEventListener('click', () => saveProgress(false));
 
       assetFiles.addEventListener('change', () => renderFiles(assetFiles.files));
+
+      sopFile?.addEventListener('change', () => {
+        if (!sopFileList) return;
+        sopFileList.innerHTML = '';
+        const file = sopFile.files?.[0];
+        if (!file) return;
+
+        const row = document.createElement('div');
+        row.className = 'file-item';
+        const name = document.createElement('span');
+        name.textContent = file.name;
+        const size = document.createElement('small');
+        size.textContent = formatBytes(file.size);
+        row.append(name, size);
+        sopFileList.appendChild(row);
+      });
+
+      ['dragenter', 'dragover'].forEach(evt => sopUploadZone?.addEventListener(evt, e => {
+        e.preventDefault();
+        sopUploadZone.classList.add('dragover');
+      }));
+      ['dragleave', 'drop'].forEach(evt => sopUploadZone?.addEventListener(evt, e => {
+        e.preventDefault();
+        sopUploadZone.classList.remove('dragover');
+      }));
       ['dragenter', 'dragover'].forEach(evt => uploadZone.addEventListener(evt, e => {
         e.preventDefault();
         uploadZone.classList.add('dragover');
@@ -2237,14 +2341,21 @@
 
         const updatePreference = getValue('updateFrequency');
         const notes = getValue('notes');
-        const sopStatus = getValue('sopStatus');
+        const sopStatusValue = getValue('sopStatus');
+        const sopStatusLabels = {
+          yes: 'Yes — documented SOP exists',
+          partial: 'Partially documented',
+          no: 'No — process is currently informal',
+          unsure: 'Not sure'
+        };
+        const sopStatusText = sopStatusLabels[sopStatusValue] || sopStatusValue;
         const sopLink = getValue('sopLink');
         const sopProcess = getValue('sopProcess');
         const sopExceptions = getValue('sopExceptions');
 
         // SOP fields are sent individually and also mirrored into additional_notes
         // so the existing Worker can preserve them even if it ignores new keys.
-        formData.set('sop_status', sopStatus);
+        formData.set('sop_status', sopStatusText);
         formData.set('sop_link', sopLink);
         formData.set('sop_process', sopProcess);
         formData.set('sop_exceptions', sopExceptions);
@@ -2255,7 +2366,8 @@
             `Package booked: ${packageName}`,
             notes,
             updatePreference ? `Update preference: ${updatePreference}` : '',
-            sopStatus ? `SOP status: ${sopStatus}` : '',
+            sopStatusText ? `SOP status: ${sopStatusText}` : '',
+            (sopStatusValue === 'yes' && sopFile?.files?.[0]) ? `SOP file uploaded: ${sopFile.files[0].name}` : '',
             sopLink ? `SOP / process link: ${sopLink}` : '',
             sopProcess ? `Current SOP / workflow:\n${sopProcess}` : '',
             sopExceptions ? `SOP rules / exceptions:\n${sopExceptions}` : ''
@@ -2306,8 +2418,12 @@
 
       function validateUploads() {
         let total = 0;
+        const filesToValidate = [
+          ...assetFiles.files,
+          ...(sopFile?.files ? [...sopFile.files] : [])
+        ];
 
-        for (const file of assetFiles.files) {
+        for (const file of filesToValidate) {
           if (file.size > MAX_FILE_SIZE) {
             throw new Error(`${file.name} is larger than 10 MB.`);
           }
@@ -2327,7 +2443,9 @@
 
         normalizeOptionalUrlField(document.getElementById('website'));
         normalizeOptionalUrlField(document.getElementById('brandLink'));
-        normalizeOptionalUrlField(document.getElementById('sopLink'));
+        if (sopStatus?.value !== 'yes') {
+          normalizeOptionalUrlField(document.getElementById('sopLink'));
+        }
 
         if (!form.checkValidity()) {
           form.reportValidity();
@@ -2377,19 +2495,26 @@
             eyebrow: 'Secure submission',
             title: 'Sending your onboarding…',
             message: 'Your information is being saved to JRM Digital Solution project storage. Please keep this page open until confirmation appears.',
-            meta: assetFiles.files.length
-              ? `${assetFiles.files.length} file${assetFiles.files.length === 1 ? '' : 's'} included with this submission.`
+            meta: (assetFiles.files.length + (sopFile?.files?.length || 0))
+              ? `${assetFiles.files.length + (sopFile?.files?.length || 0)} file${(assetFiles.files.length + (sopFile?.files?.length || 0)) === 1 ? '' : 's'} included with this submission.`
               : 'No files attached — that is okay. Your client folder and empty asset folders will still be created.'
           });
 
           const formData = new FormData(form);
+
+          // Keep compatibility with the current Worker: send the SOP document
+          // through the same assetFiles collection used for project uploads.
+          if (sopStatus?.value === 'yes' && sopFile?.files?.[0]) {
+            formData.append('assetFiles', sopFile.files[0], `SOP - ${sopFile.files[0].name}`);
+          }
+
           appendWorkerCompatibilityFields(formData, submission);
 
           console.info('[JRMRC Onboarding] Sending request.', {
             build: BUILD_VERSION,
             submissionId: submission.id,
             package: form.querySelector('input[name="service"]:checked')?.value || '',
-            fileCount: assetFiles.files.length
+            fileCount: assetFiles.files.length + (sopFile?.files?.length || 0)
           });
 
           const response = await fetch(WORKER_URL, {
@@ -2572,6 +2697,7 @@
 
       restoreProgress();
       updateServicePanel();
+      updateSopFields();
       updateProgress();
     })();
   </script>
