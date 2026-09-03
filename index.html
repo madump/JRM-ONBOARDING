@@ -1478,11 +1478,11 @@
                 <div class="service-panel" data-service-panel="foundation" hidden>
                   <div class="service-panel-head">
                     <h4>GoHighLevel Setup — Foundation</h4>
-                    <p>Define the CRM, lead capture, booking, messaging, and workflows to configure.</p>
+                    <p>Confirm whether you already have an active GoHighLevel account.</p>
                   </div>
                   <div class="field-grid">
                     <p class="package-scope-note"><strong>Package scope:</strong> CRM, calendars, lead capture, email/SMS, up to 5 workflows, one landing/booking page, integration testing, and handover support.</p>
-                    <div class="field">
+                    <div class="field full">
                       <label for="foundationAccount">Do you already have GoHighLevel? <span class="required">*</span></label>
                       <select id="foundationAccount" name="foundationAccount" data-conditional-required>
                         <option value="">Select one</option>
@@ -1490,40 +1490,6 @@
                         <option>No</option>
                         <option>Not sure</option>
                       </select>
-                    </div>
-                    <div class="field">
-                      <label for="foundationLocation">Location / sub-account name</label>
-                      <input id="foundationLocation" name="foundationLocation" type="text" placeholder="Account or location name" />
-                    </div>
-                    <div class="field full">
-                      <label for="foundationLeadFlow">Where do leads come from and what should happen next? <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="foundationLeadFlow" name="foundationLeadFlow" placeholder="Example: Website form → CRM → sales pipeline → email/SMS follow-up → booking" data-conditional-required></textarea>
-                    </div>
-                    <div class="field full">
-                      <label for="foundationWorkflows">Workflows needed — up to 5 <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="foundationWorkflows" name="foundationWorkflows" placeholder="List the automations you want, one per line." data-conditional-required></textarea>
-                    </div>
-                    <div class="field">
-                      <label for="foundationMessaging">Messaging needed?</label>
-                      <select id="foundationMessaging" name="foundationMessaging">
-                        <option value="">Select one</option>
-                        <option>Email only</option>
-                        <option>SMS only</option>
-                        <option>Email + SMS</option>
-                        <option>No messaging</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label for="foundationCalendar">Calendar / booking setup <span class="required">*</span></label>
-                      <input id="foundationCalendar" name="foundationCalendar" type="text" placeholder="What should clients book?" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="foundationPage">Landing / booking page goal <span class="required">*</span></label>
-                      <input id="foundationPage" name="foundationPage" type="text" placeholder="Example: Capture leads and book a 30-minute consultation" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="foundationIntegrations">Apps / integrations to connect</label>
-                      <input id="foundationIntegrations" name="foundationIntegrations" type="text" placeholder="Google Calendar, Stripe, Gmail, Zapier, Make, etc." />
                     </div>
                   </div>
                 </div>
@@ -2237,13 +2203,6 @@
           lines.push(`Design references: ${getValue('codedReferences') || 'None provided'}`);
         } else if (service === 'foundation') {
           lines.push(`Existing GHL account: ${getValue('foundationAccount')}`);
-          lines.push(`Location / sub-account: ${getValue('foundationLocation') || 'Not specified'}`);
-          lines.push(`Lead flow: ${getValue('foundationLeadFlow')}`);
-          lines.push(`Workflows (up to 5): ${getValue('foundationWorkflows')}`);
-          lines.push(`Messaging: ${getValue('foundationMessaging') || 'Not specified'}`);
-          lines.push(`Calendar / booking: ${getValue('foundationCalendar')}`);
-          lines.push(`Landing / booking page goal: ${getValue('foundationPage')}`);
-          lines.push(`Integrations: ${getValue('foundationIntegrations') || 'None specified'}`);
         } else if (service === 'ai-receptionist') {
           lines.push(`Existing GHL account: ${getValue('aiAccount')}`);
           lines.push(`Location / sub-account: ${getValue('aiLocation') || 'Not specified'}`);
@@ -2334,12 +2293,7 @@
 
         if (selectedPackage === 'foundation') {
           formData.set('ghlAccount', getValue('foundationAccount'));
-          formData.set('ghlLocation', getValue('foundationLocation'));
           formData.set('ghlSetup', summary);
-          formData.set('ghlLeadFlow', getValue('foundationLeadFlow'));
-          formData.set('ghlMessaging', getValue('foundationMessaging'));
-          formData.set('ghlCalendar', getValue('foundationCalendar'));
-          formData.set('project_goal', getValue('foundationPage'));
         }
 
         if (selectedPackage === 'ai-receptionist') {
