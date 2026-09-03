@@ -4,24 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="JRM Digital Solution client onboarding form for Custom Coded Website, GoHighLevel Setup, GHL + AI Receptionist, and GHL AI Revenue System services." />
-  <meta name="theme-color" content="#080d15" />
+  <meta name="theme-color" content="#0b131b" />
   <meta name="application-name" content="JRM Digital Solution" />
   <meta name="apple-mobile-web-app-title" content="JRM Digital Solution" />
+  <meta name="msapplication-TileColor" content="#0b131b" />
 
-  <!-- Social / sharing metadata. For production, use the logo's absolute public HTTPS URL in og:image and twitter:image. -->
+  <!-- JRM Digital Solution brand / social metadata -->
+  <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+  <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+  <link rel="image_src" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="JRM Digital Solution" />
   <meta property="og:title" content="JRM Digital Solution | Client Onboarding" />
   <meta property="og:description" content="Start your JRM Digital Solution project by completing the client onboarding form." />
-  <meta property="og:image" content="jrm-digital-solution-logo.png" />
+  <meta property="og:image" content="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+  <meta property="og:image:secure_url" content="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+  <meta property="og:image:alt" content="JRM Digital Solution logo" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="JRM Digital Solution | Client Onboarding" />
   <meta name="twitter:description" content="Start your JRM Digital Solution project by completing the client onboarding form." />
-  <meta name="twitter:image" content="jrm-digital-solution-logo.png" />
+  <meta name="twitter:image" content="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
+  <meta name="twitter:image:alt" content="JRM Digital Solution logo" />
 
-  <link rel="icon" type="image/png" href="jrm-digital-solution-logo.png" />
-  <link rel="apple-touch-icon" href="jrm-digital-solution-logo.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "JRM Digital Solution",
+    "logo": "https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200"
+  }
+  </script>
 
   <title>JRM Digital Solution | Client Onboarding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,16 +110,17 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      border-bottom: 1px solid rgba(17,19,24,.08);
-      background: rgba(255,255,255,.88);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: #0b131b;
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.10);
     }
 
     .nav {
       max-width: var(--max);
       margin: 0 auto;
-      min-height: 74px;
+      min-height: 80px;
       padding: 0 24px;
       display: flex;
       align-items: center;
@@ -124,11 +139,11 @@
 
     .brand-logo {
       display: block;
-      width: clamp(138px, 15vw, 176px);
-      height: 52px;
+      width: 186px;
+      height: 58px;
       object-fit: contain;
       object-position: left center;
-      border-radius: 10px;
+      flex: 0 0 auto;
     }
 
     .brand-context {
@@ -139,9 +154,9 @@
 
     .brand small {
       display: block;
-      color: var(--muted);
+      color: rgba(232,238,244,.70);
       font: 600 10px/1.2 "DM Sans", sans-serif;
-      letter-spacing: .11em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       white-space: nowrap;
     }
@@ -153,9 +168,9 @@
     }
 
     .status-pill {
-      color: var(--muted);
-      border: 1px solid var(--line);
-      background: rgba(17,19,24,.025);
+      color: rgba(236,241,246,.78);
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.06);
       padding: 9px 12px;
       border-radius: 999px;
       font-size: 13px;
@@ -183,13 +198,16 @@
       transition: transform .2s ease, background .2s ease, border-color .2s ease;
     }
 
-    .ghost-btn {
-      color: var(--text);
-      background: rgba(17,19,24,.04);
-      border: 1px solid var(--line);
+    .topbar .ghost-btn {
+      color: #f5f8fb;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
     }
 
-    .ghost-btn:hover { background: rgba(17,19,24,.075); }
+    .topbar .ghost-btn:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.22);
+    }
 
     .primary-btn {
       color: #0a0c08;
@@ -1073,7 +1091,8 @@
       .page, .nav { padding-left: 16px; padding-right: 16px; }
       .nav { min-height: 66px; }
       .brand-context, .status-pill { display: none; }
-      .brand-logo { width: 132px; height: 46px; }
+      .brand-logo { width: 150px; height: 48px; }
+      .nav { min-height: 68px; }
       .ghost-btn { padding: 0 12px; font-size: 12px; }
       .hero { padding-top: 54px; padding-bottom: 45px; }
       h1 { font-size: clamp(49px, 15vw, 72px); }
@@ -1218,15 +1237,16 @@
   </style>
 </head>
 <body>
+  <!-- Logo source supplied by client: https://drive.google.com/file/d/18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn/view?usp=drive_link -->
   <header class="topbar">
     <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="JRM Digital Solution — Back to top">
         <img
           class="brand-logo"
-          src="jrm-digital-solution-logo.png"
+          src="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200"
           alt="JRM Digital Solution"
-          width="176"
-          height="64"
+          decoding="async"
+          fetchpriority="high"
         />
         <span class="brand-context">
           <small>Client Onboarding</small>
