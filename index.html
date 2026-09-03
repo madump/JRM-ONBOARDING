@@ -1369,7 +1369,7 @@
           </div>
           <div class="quick-item">
             <div class="quick-num">04</div>
-            <div><b>Kickoff</b><small>Deadline & approval</small></div>
+            <div><b>Kickoff</b><small>Communication & notes</small></div>
             <span class="quick-state">Required</span>
           </div>
         </div>
@@ -1742,37 +1742,19 @@
                 <div class="step-badge">04</div>
                 <div>
                   <h3>Kickoff details</h3>
-                  <p>Deadline, approval, and anything that can block the project.</p>
+                  <p>Choose how you prefer to communicate and add any final project notes.</p>
                 </div>
               </div>
 
               <div class="field-grid">
-                <div class="field">
-                  <label for="deadline">Target deadline <span class="required">*</span></label>
-                  <input id="deadline" name="deadline" type="date" required />
-                </div>
-                <div class="field">
-                  <label for="contactPerson">Final approver <span class="required">*</span></label>
-                  <input id="contactPerson" name="contactPerson" type="text" placeholder="Name / role" required />
-                </div>
-                <div class="field">
+                <div class="field full">
                   <label for="channel">Preferred communication <span class="required">*</span></label>
                   <select id="channel" name="channel" required>
                     <option value="">Select one</option>
-                    <option>Email</option>
-                    <option>Slack / chat</option>
-                    <option>Wrike / project manager</option>
-                    <option>Call / meeting</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="updateFrequency">Update preference</label>
-                  <select id="updateFrequency" name="updateFrequency">
-                    <option value="">Select one</option>
-                    <option>At each milestone</option>
-                    <option>Twice per week</option>
-                    <option>Weekly</option>
-                    <option>Only when approval is needed</option>
+                    <option>WhatsApp</option>
+                    <option>Slack</option>
+                    <option>Discord</option>
+                    <option>Telegram</option>
                   </select>
                 </div>
                 <div class="field full">
@@ -2308,13 +2290,10 @@
         formData.set('package_name', packageName);
         formData.set('brand_asset_link', getValue('brandLink'));
         formData.set('content_notes', getValue('accessNotes'));
-        formData.set('desired_launch', getValue('deadline'));
-        formData.set('approver', getValue('contactPerson'));
         formData.set('communication', getValue('channel'));
         formData.set('business_description', `${packageName} onboarding`);
         formData.set('required_features', summary);
 
-        const updatePreference = getValue('updateFrequency');
         const notes = getValue('notes');
         const sopStatusValue = getValue('sopStatus');
         const sopStatusLabels = {
@@ -2336,7 +2315,6 @@
           [
             `Package booked: ${packageName}`,
             notes,
-            updatePreference ? `Update preference: ${updatePreference}` : '',
             sopStatusText ? `SOP status: ${sopStatusText}` : '',
             (sopStatusValue === 'yes' && sopFile?.files?.[0]) ? `SOP file uploaded: ${sopFile.files[0].name}` : '',
             sopLink ? `SOP / process link: ${sopLink}` : ''
