@@ -8,8 +8,11 @@
   <meta name="application-name" content="JRM Digital Solution" />
   <meta name="apple-mobile-web-app-title" content="JRM Digital Solution" />
   <meta name="msapplication-TileColor" content="#0b131b" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="format-detection" content="telephone=no" />
 
   <!-- JRM Digital Solution brand / social metadata -->
+  <link rel="preload" as="image" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
   <link rel="icon" type="image/png" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
   <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
   <link rel="image_src" href="https://drive.google.com/thumbnail?id=18rOsWTlBwnHzkGXgJlotH5p8oHqeE9Rn&sz=w1200" />
@@ -43,31 +46,37 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+
     :root {
       --bg: #ffffff;
-      --bg-soft: #f7f8fa;
-      --surface: rgba(17,19,24,.04);
-      --surface-2: rgba(17,19,24,.065);
-      --line: rgba(17,19,24,.11);
-      --line-strong: rgba(17,19,24,.2);
-      --text: #0c151d;
-      --muted: #46515b;
-      --accent-ink: #315f00;
+      --bg-soft: #f7f9fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafb;
+      --header: #0b131b;
+      --text: #0b131b;
+      --muted: #4b5966;
+      --muted-2: #687482;
+      --line: rgba(11, 19, 27, .16);
+      --line-strong: rgba(11, 19, 27, .28);
       --accent: #85ff0a;
-      --accent-2: #b9ff72;
-      --danger: #ff6b6b;
+      --accent-soft: #f0fde6;
+      --accent-ink: #315f00;
+      --danger: #b42318;
+      --warning: #b54708;
       --radius-sm: 12px;
       --radius-md: 18px;
       --radius-lg: 26px;
-      --shadow: 0 24px 70px rgba(16,24,40,.10);
+      --shadow-sm: 0 8px 24px rgba(11, 19, 27, .06);
+      --shadow-lg: 0 24px 70px rgba(16, 24, 40, .10);
       --max: 1220px;
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
       background: var(--bg);
+      color-scheme: light;
     }
 
     body {
@@ -75,11 +84,12 @@
       min-height: 100vh;
       color: var(--text);
       background:
-        radial-gradient(circle at 84% 12%, rgba(133,255,10,.16), transparent 26rem),
-        radial-gradient(circle at 8% 32%, rgba(142,255,193,.12), transparent 25rem),
+        radial-gradient(circle at 84% 12%, rgba(133,255,10,.13), transparent 26rem),
+        radial-gradient(circle at 8% 32%, rgba(142,255,193,.09), transparent 25rem),
         var(--bg);
-      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font: 400 16px/1.55 "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
 
@@ -87,44 +97,43 @@
       content: "";
       position: fixed;
       inset: 0;
-      pointer-events: none;
-      opacity: .2;
       z-index: -1;
+      pointer-events: none;
+      opacity: .16;
       background-image:
-        linear-gradient(rgba(17,19,24,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(17,19,24,.025) 1px, transparent 1px);
+        linear-gradient(rgba(11,19,27,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11,19,27,.025) 1px, transparent 1px);
       background-size: 48px 48px;
+      -webkit-mask-image: linear-gradient(to bottom, #000, transparent 78%);
       mask-image: linear-gradient(to bottom, #000, transparent 78%);
     }
 
     a { color: inherit; text-decoration: none; }
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
+    img, svg { display: block; }
+    [hidden] { display: none !important; }
 
-    ::selection {
-      background: var(--accent);
-      color: #050605;
+    ::selection { background: var(--accent); color: #050605; }
+
+    :focus-visible {
+      outline: 3px solid rgba(133,255,10,.55);
+      outline-offset: 3px;
     }
 
     .topbar {
       position: sticky;
       top: 0;
       z-index: 50;
-      border-bottom: 1px solid rgba(133,255,10,.16);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.018), transparent 100%),
-        #0b131b;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow:
-        0 10px 34px rgba(0,0,0,.18),
-        inset 0 -1px 0 rgba(255,255,255,.025);
+      border-bottom: 1px solid rgba(133,255,10,.15);
+      background: var(--header);
+      box-shadow: 0 10px 34px rgba(0,0,0,.16);
     }
 
     .nav {
-      max-width: var(--max);
-      margin: 0 auto;
+      width: min(100%, var(--max));
       min-height: 92px;
+      margin: 0 auto;
       padding: 12px 24px;
       display: flex;
       align-items: center;
@@ -137,20 +146,16 @@
       align-items: center;
       gap: 18px;
       min-width: 0;
-      font-family: "Manrope", sans-serif;
-      font-weight: 800;
-      letter-spacing: -.02em;
     }
 
     .brand-logo {
-      display: block;
       width: 154px;
       height: 66px;
       object-fit: contain;
       object-position: left center;
       flex: 0 0 auto;
       border-radius: 12px;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,.28));
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,.26));
     }
 
     .brand-context {
@@ -158,17 +163,15 @@
       align-items: center;
       min-width: 0;
       padding-left: 18px;
-      border-left: 1px solid rgba(255,255,255,.16);
+      border-left: 1px solid rgba(255,255,255,.17);
     }
 
     .brand small {
-      display: block;
-      color: #f3f7fa;
-      font: 700 11px/1.2 "DM Sans", sans-serif;
+      color: #f5f7fa;
+      font: 700 11px/1.25 "DM Sans", sans-serif;
       letter-spacing: .14em;
       text-transform: uppercase;
       white-space: nowrap;
-      text-shadow: 0 1px 10px rgba(0,0,0,.35);
     }
 
     .nav-actions {
@@ -179,76 +182,82 @@
     }
 
     .status-pill {
-      color: #eaf0f5;
-      border: 1px solid rgba(255,255,255,.16);
+      min-height: 40px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #edf2f6;
       background: rgba(255,255,255,.075);
-      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,.16);
       border-radius: 999px;
       font-size: 13px;
       font-weight: 600;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+      white-space: nowrap;
     }
 
     .status-dot {
       width: 8px;
       height: 8px;
+      flex: 0 0 auto;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow:
-        0 0 0 4px rgba(133,255,10,.12),
-        0 0 15px rgba(133,255,10,.55);
-      flex: 0 0 auto;
+      box-shadow: 0 0 0 4px rgba(133,255,10,.12), 0 0 15px rgba(133,255,10,.45);
     }
+
+    .status-pill[data-state="saving"] .status-dot { animation: pulse 1s ease-in-out infinite; }
+    .status-pill[data-state="error"] .status-dot { background: #ff7a70; box-shadow: 0 0 0 4px rgba(255,122,112,.12); }
+
+    @keyframes pulse { 50% { opacity: .45; transform: scale(.85); } }
 
     .ghost-btn,
     .primary-btn {
       appearance: none;
-      border: 0;
       min-height: 44px;
       border-radius: 12px;
       padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid transparent;
       font-weight: 700;
-      transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease;
+      font-size: 14px;
+      line-height: 1;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+    }
+
+    .ghost-btn:disabled,
+    .primary-btn:disabled {
+      cursor: not-allowed;
+      opacity: .62;
+      transform: none !important;
     }
 
     .topbar .ghost-btn {
-      color: #ffffff;
+      color: #fff;
       background: rgba(255,255,255,.085);
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.18);
     }
 
-    .topbar .ghost-btn:hover {
-      color: #0b131b;
+    .topbar .ghost-btn:hover:not(:disabled) {
+      color: var(--header);
       background: var(--accent);
       border-color: var(--accent);
       transform: translateY(-1px);
     }
 
-    .topbar .ghost-btn svg {
-      color: currentColor;
-      opacity: .96;
-    }
-
     .primary-btn {
-      color: #0a0c08;
+      color: #071007;
       background: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 10px 32px rgba(133,255,10,.16);
+      box-shadow: 0 10px 30px rgba(133,255,10,.16);
     }
 
-    .primary-btn:hover { transform: translateY(-2px); }
+    .primary-btn:hover:not(:disabled) { transform: translateY(-2px); }
     .primary-btn svg, .ghost-btn svg { width: 17px; height: 17px; }
 
     .page {
-      max-width: var(--max);
+      width: min(100%, var(--max));
       margin: 0 auto;
       padding: 0 24px 90px;
     }
@@ -260,44 +269,38 @@
       gap: 70px;
       align-items: center;
       padding: 74px 0 58px;
-      border-bottom: 1px solid rgba(17,19,24,.08);
+      border-bottom: 1px solid rgba(11,19,27,.09);
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 9px;
+      margin-bottom: 22px;
       color: #3f5f00;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: .1em;
       text-transform: uppercase;
-      margin-bottom: 22px;
     }
 
     .eyebrow::before {
       content: "";
       width: 26px;
-      height: 1px;
+      height: 2px;
       background: var(--accent);
     }
 
-    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3, h4, p { margin-top: 0; }
 
     h1 {
       max-width: 790px;
       margin-bottom: 22px;
-      font-family: "Manrope", sans-serif;
-      font-size: clamp(52px, 7vw, 96px);
-      line-height: .97;
+      font: 800 clamp(52px, 7vw, 96px)/.97 "Manrope", sans-serif;
       letter-spacing: -.065em;
-      font-weight: 800;
     }
 
-    .hero-highlight {
-      color: #365200;
-      -webkit-text-stroke: 0;
-    }
+    .hero-highlight { color: #365200; }
 
     .hero-copy {
       max-width: 610px;
@@ -310,29 +313,21 @@
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
       align-items: center;
+      gap: 12px;
     }
 
-    .hero-actions .primary-btn {
-      min-height: 52px;
-      padding: 0 22px;
-    }
-
-    .mini-note {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .hero-actions .primary-btn { min-height: 52px; padding: 0 22px; }
+    .mini-note { color: var(--muted); font-size: 13px; }
 
     .hero-card {
       position: relative;
-      padding: 24px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.98), rgba(247,248,250,.96));
-      box-shadow: var(--shadow);
       overflow: hidden;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,.99), rgba(247,249,251,.98));
+      box-shadow: var(--shadow-lg);
     }
 
     .hero-card::after {
@@ -340,12 +335,12 @@
       position: absolute;
       width: 160px;
       height: 160px;
-      border-radius: 50%;
       right: -60px;
       top: -70px;
+      border-radius: 50%;
       background: var(--accent);
       filter: blur(70px);
-      opacity: .17;
+      opacity: .16;
       pointer-events: none;
     }
 
@@ -358,6 +353,7 @@
     }
 
     .progress-row strong {
+      display: block;
       font: 800 42px/1 "Manrope", sans-serif;
       letter-spacing: -.04em;
     }
@@ -371,33 +367,29 @@
 
     .progress-track {
       height: 8px;
-      background: rgba(17,19,24,.08);
-      border-radius: 999px;
-      overflow: hidden;
       margin-bottom: 26px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(11,19,27,.08);
     }
 
     .progress-bar {
-      width: 0%;
+      width: 0;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transition: width .35s ease;
+      background: linear-gradient(90deg, var(--accent), #b9ff72);
+      transition: width .3s ease;
     }
 
-    .quick-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
+    .quick-list { display: grid; gap: 10px; margin-top: 16px; }
 
     .quick-item {
       display: grid;
-      grid-template-columns: 36px 1fr auto;
+      grid-template-columns: 36px minmax(0,1fr) auto;
       gap: 12px;
       align-items: center;
       padding: 12px 0;
-      border-bottom: 1px solid rgba(17,19,24,.07);
+      border-bottom: 1px solid rgba(11,19,27,.07);
     }
 
     .quick-item:last-child { border-bottom: 0; }
@@ -405,19 +397,19 @@
     .quick-num {
       width: 36px;
       height: 36px;
-      border-radius: 11px;
-      background: rgba(17,19,24,.055);
-      border: 1px solid rgba(17,19,24,.08);
       display: grid;
       place-items: center;
+      border: 1px solid rgba(11,19,27,.09);
+      border-radius: 11px;
+      background: rgba(11,19,27,.055);
+      color: #303740;
       font-size: 12px;
       font-weight: 800;
-      color: #303740;
     }
 
-    .quick-item b { display: block; font-size: 14px; margin-bottom: 2px; }
-    .quick-item small { color: var(--muted); font-size: 12px; }
-    .quick-state { color: #454c55; font-size: 12px; }
+    .quick-item b { display: block; margin-bottom: 2px; font-size: 14px; }
+    .quick-item small { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .quick-state { color: #4c5864; font-size: 12px; }
 
     .section-intro {
       padding: 82px 0 34px;
@@ -434,11 +426,11 @@
     }
 
     .section-intro p {
+      max-width: 560px;
+      margin: 0 0 4px;
+      justify-self: end;
       color: var(--muted);
       line-height: 1.7;
-      margin-bottom: 4px;
-      max-width: 560px;
-      justify-self: end;
     }
 
     .process-grid {
@@ -453,30 +445,26 @@
       padding: 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      background: #ffffff;
-      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+      background: var(--surface);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
 
-    .process-card:hover {
-      transform: translateY(-5px);
-      background: #f8f9fa;
-      border-color: var(--line-strong);
-    }
+    .process-card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-sm); }
 
     .process-card .icon-box {
       width: 42px;
       height: 42px;
       margin-bottom: 34px;
-      border-radius: 12px;
       display: grid;
       place-items: center;
-      background: rgba(133,255,10,.10);
+      border-radius: 12px;
+      background: rgba(133,255,10,.11);
       color: var(--accent-ink);
     }
 
     .process-card svg { width: 20px; height: 20px; }
     .process-card h3 { margin-bottom: 8px; font: 700 18px/1.3 "Manrope", sans-serif; }
-    .process-card p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
+    .process-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 
     .workspace {
       display: grid;
@@ -485,58 +473,53 @@
       align-items: start;
     }
 
-    .form-shell {
-      min-width: 0;
-    }
+    .form-shell { min-width: 0; }
 
     .form-section {
-      scroll-margin-top: 104px;
-      padding: 34px;
+      scroll-margin-top: 112px;
       margin-bottom: 18px;
+      padding: 38px;
+      border: 1px solid rgba(11,19,27,.13);
       border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
-      background: #ffffff;
+      background: var(--surface);
+      box-shadow: 0 10px 30px rgba(11,19,27,.035);
     }
 
     .form-section-head {
       display: grid;
-      grid-template-columns: 50px 1fr;
+      grid-template-columns: 50px minmax(0,1fr);
       gap: 15px;
       align-items: start;
-      padding-bottom: 24px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid rgba(17,19,24,.08);
+      padding-bottom: 26px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid rgba(11,19,27,.08);
     }
 
     .step-badge {
       width: 50px;
       height: 50px;
-      border-radius: 14px;
       display: grid;
       place-items: center;
-      background: #f3f5f7;
       border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f3f5f7;
       color: var(--accent-ink);
       font: 800 13px/1 "Manrope", sans-serif;
     }
 
     .form-section h3 {
       margin: 2px 0 6px;
-      font: 800 24px/1.2 "Manrope", sans-serif;
+      color: var(--text);
+      font: 800 26px/1.2 "Manrope", sans-serif;
       letter-spacing: -.025em;
     }
 
-    .form-section-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .form-section-head p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
 
     .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      gap: 22px 20px;
     }
 
     .field { min-width: 0; }
@@ -547,94 +530,112 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      margin-bottom: 9px;
-      color: #20242a;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 10px;
+      color: #111b24;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
     }
 
-    .required { color: #a33a2b; }
+    .required { color: var(--danger); font-weight: 800; }
 
     input,
     textarea,
     select {
       width: 100%;
+      min-height: 54px;
       outline: none;
+      padding: 0 15px;
       color: var(--text);
-      background: #ffffff;
-      border: 1px solid rgba(17,19,24,.18);
+      background: #fff;
+      border: 1px solid rgba(11,19,27,.22);
       border-radius: var(--radius-sm);
-      min-height: 50px;
-      padding: 0 14px;
-      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+      font-size: 15.5px;
+      font-weight: 500;
+      line-height: 1.5;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
     textarea {
       min-height: 128px;
-      padding-top: 14px;
+      padding-top: 15px;
+      padding-bottom: 15px;
       resize: vertical;
-      line-height: 1.55;
+      line-height: 1.65;
     }
 
+    .compact-textarea { min-height: 118px; }
+
     input::placeholder,
-    textarea::placeholder { color: #6b7280; opacity: 1; }
+    textarea::placeholder { color: var(--muted-2); opacity: 1; font-weight: 400; }
+
+    input:hover,
+    textarea:hover,
+    select:hover { border-color: rgba(11,19,27,.34); }
 
     input:focus,
     textarea:focus,
     select:focus {
-      border-color: rgba(133,255,10,.72);
-      box-shadow: 0 0 0 4px rgba(133,255,10,.10);
-      background: #fbfcfd;
+      border-color: #73dc0b;
+      box-shadow: 0 0 0 4px rgba(133,255,10,.14);
+      background: #fff;
+    }
+
+    input.is-invalid,
+    textarea.is-invalid,
+    select.is-invalid {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 4px rgba(180,35,24,.10);
     }
 
     select {
       appearance: none;
+      padding-right: 46px;
       background-image:
-        linear-gradient(45deg, transparent 50%, #9da2aa 50%),
-        linear-gradient(135deg, #9da2aa 50%, transparent 50%);
-      background-position:
-        calc(100% - 18px) 21px,
-        calc(100% - 13px) 21px;
+        linear-gradient(45deg, transparent 50%, #7b8794 50%),
+        linear-gradient(135deg, #7b8794 50%, transparent 50%);
+      background-position: calc(100% - 20px) 23px, calc(100% - 15px) 23px;
       background-size: 5px 5px, 5px 5px;
       background-repeat: no-repeat;
     }
 
-    option { background: #ffffff; color: var(--text); }
+    option { color: var(--text); background: #fff; }
 
     .helper {
       display: block;
-      color: #59616c;
-      font-size: 12px;
-      margin-top: 7px;
-      line-height: 1.5;
+      margin-top: 8px;
+      color: #596674;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    .option-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
+    .option-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
     .option-card {
       position: relative;
       min-height: 94px;
       padding: 14px;
+      border: 1px solid rgba(11,19,27,.12);
       border-radius: 14px;
-      border: 1px solid rgba(17,19,24,.10);
-      background: #ffffff;
+      background: #fff;
       cursor: pointer;
-      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
 
-    .option-card:hover { transform: translateY(-2px); border-color: rgba(17,19,24,.20); }
+    .option-card:hover { transform: translateY(-2px); border-color: var(--line-strong); }
     .option-card input { position: absolute; opacity: 0; pointer-events: none; }
     .option-card strong { display: block; margin-bottom: 4px; font-size: 13px; }
-    .option-card small { color: #59616c; font-size: 12px; line-height: 1.45; display: block; }
+    .option-card small { display: block; color: #596674; font-size: 12px; line-height: 1.45; }
+
+    .option-card:has(input:focus-visible) {
+      outline: 3px solid rgba(133,255,10,.55);
+      outline-offset: 3px;
+    }
 
     .option-card:has(input:checked) {
-      border-color: rgba(133,255,10,.78);
-      background: rgba(133,255,10,.075);
-      box-shadow: inset 0 0 0 1px rgba(133,255,10,.12);
+      border-color: #75dc12;
+      background: #f2fde8;
+      box-shadow: inset 0 0 0 1px rgba(117,220,18,.22), 0 8px 22px rgba(71,130,15,.06);
     }
 
     .option-card:has(input:checked)::after {
@@ -644,39 +645,87 @@
       right: 10px;
       width: 20px;
       height: 20px;
-      border-radius: 50%;
       display: grid;
       place-items: center;
+      border-radius: 50%;
       color: #060705;
       background: var(--accent);
       font-size: 11px;
       font-weight: 900;
     }
 
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .service-card { min-height: 132px; padding: 20px; }
+    .service-card .package-name { display: block; padding-right: 28px; margin-bottom: 10px; color: var(--text); font: 800 16px/1.4 "Manrope", sans-serif; }
+    .service-card .package-price-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .service-card .package-price { color: var(--accent-ink); font: 800 19px/1 "Manrope", sans-serif; }
+    .service-card .package-timeline { color: #536170; font-size: 12px; font-weight: 600; line-height: 1.45; }
+    .service-card .package-desc { display: block; color: #4d5a67; font-size: 13px; line-height: 1.6; }
+
+    .service-panel {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+      padding: 26px;
+      border: 1px solid rgba(11,19,27,.13);
+      border-radius: var(--radius-md);
+      background: var(--surface-soft);
+    }
+
+    .service-panel-head { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(11,19,27,.08); }
+    .service-panel-head h4 { margin: 0 0 6px; color: var(--text); font: 800 20px/1.3 "Manrope", sans-serif; letter-spacing: -.02em; }
+    .service-panel-head p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+
+    .package-scope-note,
+    .inline-note {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 15px 16px;
+      border: 1px solid rgba(108,205,15,.42);
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: #254300;
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+
+    .package-scope-note strong,
+    .inline-note strong { color: #173000; font-weight: 800; }
+
     .upload-zone {
       position: relative;
-      border: 1px dashed rgba(17,19,24,.20);
-      border-radius: var(--radius-md);
-      min-height: 180px;
+      min-height: 190px;
+      padding: 28px;
       display: grid;
       place-items: center;
       text-align: center;
-      padding: 24px;
+      border: 1px dashed rgba(11,19,27,.28);
+      border-radius: var(--radius-md);
       background: #fbfcfd;
-      transition: border-color .2s ease, background .2s ease;
+      transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
 
     .upload-zone.dragover {
-      border-color: var(--accent);
-      background: rgba(133,255,10,.06);
+      border-color: #73dc0b;
+      background: #f4fde9;
+      box-shadow: 0 0 0 4px rgba(133,255,10,.10);
     }
 
     .upload-zone input {
       position: absolute;
       inset: 0;
+      min-height: 100%;
       opacity: 0;
       cursor: pointer;
-      min-height: 100%;
+    }
+
+    .upload-zone:has(input:focus-visible) {
+      outline: 3px solid rgba(133,255,10,.55);
+      outline-offset: 3px;
     }
 
     .upload-icon {
@@ -685,149 +734,106 @@
       margin: 0 auto 12px;
       display: grid;
       place-items: center;
+      border: 1px solid rgba(133,255,10,.18);
       border-radius: 14px;
       color: var(--accent-ink);
-      background: rgba(198,255,63,.14);
-      border: 1px solid rgba(133,255,10,.12);
+      background: rgba(198,255,63,.16);
     }
 
     .upload-icon svg { width: 20px; height: 20px; }
-    .upload-zone b { display: block; font-size: 14px; margin-bottom: 5px; }
-    .upload-zone span { color: var(--muted); font-size: 12px; }
+    .upload-zone b { display: block; margin-bottom: 5px; color: #111b24; font-size: 15px; line-height: 1.4; }
+    .upload-zone span { color: #596674; font-size: 13px; line-height: 1.55; }
+    .sop-upload-zone { min-height: 165px; background: #fff; }
 
-    .file-list {
-      margin-top: 12px;
-      display: grid;
-      gap: 7px;
-    }
+    .file-list { margin-top: 12px; display: grid; gap: 7px; }
 
     .file-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      border: 1px solid rgba(17,19,24,.08);
-      background: rgba(17,19,24,.025);
+      padding: 10px 12px;
+      border: 1px solid rgba(11,19,27,.09);
       border-radius: 10px;
-      padding: 9px 11px;
-      color: #3f454d;
-      font-size: 12px;
+      background: rgba(11,19,27,.025);
+      color: #27323d;
+      font-size: 13px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .file-item small { color: var(--muted); white-space: nowrap; }
+    .sop-details-panel { grid-column: 1 / -1; }
 
     .sidebar {
       position: sticky;
-      top: 96px;
+      top: 112px;
       display: grid;
       gap: 14px;
     }
 
     .side-card {
+      padding: 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      background: #ffffff;
-      padding: 20px;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(11,19,27,.025);
     }
 
-    .side-card h4 {
-      margin: 0 0 15px;
-      font: 700 14px/1.3 "Manrope", sans-serif;
-      color: #20242a;
-    }
-
-    .side-progress {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
+    .side-card h4 { margin: 0 0 15px; color: #111b24; font: 700 15px/1.3 "Manrope", sans-serif; }
+    .side-progress { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 
     .ring {
       --value: 0;
+      position: relative;
       width: 64px;
       height: 64px;
-      border-radius: 50%;
+      flex: 0 0 auto;
       display: grid;
       place-items: center;
-      background: conic-gradient(var(--accent) calc(var(--value) * 1%), rgba(17,19,24,.08) 0);
-      position: relative;
-      flex: 0 0 auto;
-    }
-
-    .ring::after {
-      content: "";
-      position: absolute;
-      inset: 6px;
       border-radius: 50%;
-      background: #ffffff;
+      background: conic-gradient(var(--accent) calc(var(--value) * 1%), rgba(11,19,27,.08) 0);
     }
 
-    .ring span {
-      position: relative;
-      z-index: 1;
-      font-weight: 800;
-      font-size: 13px;
-    }
+    .ring::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: #fff; }
+    .ring span { position: relative; z-index: 1; font-size: 13px; font-weight: 800; }
+    .side-progress b { display: block; margin-bottom: 3px; color: #111b24; font-size: 14px; }
+    .side-progress small { display: block; color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-    .side-progress b { display: block; margin-bottom: 3px; font-size: 13px; }
-    .side-progress small { color: var(--muted); font-size: 12px; line-height: 1.45; display: block; }
-
-    .jump-list {
-      display: grid;
-      gap: 4px;
-    }
+    .jump-list { display: grid; gap: 4px; }
 
     .jump-link {
       padding: 10px 11px;
-      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-radius: 10px;
       color: var(--muted);
-      font-size: 12px;
-      transition: background .2s ease, color .2s ease;
+      font-size: 13px;
+      transition: background .18s ease, color .18s ease;
     }
 
     .jump-link:hover,
-    .jump-link.active {
-      color: var(--text);
-      background: rgba(17,19,24,.055);
-    }
+    .jump-link.active { color: var(--text); background: rgba(11,19,27,.055); }
+    .jump-link span:last-child { width: 7px; height: 7px; border-radius: 50%; background: rgba(11,19,27,.16); }
+    .jump-link.done span:last-child { background: #6edb00; box-shadow: 0 0 0 3px rgba(110,219,0,.10); }
 
-    .jump-link span:last-child {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(17,19,24,.16);
-    }
-
-    .jump-link.done span:last-child { background: var(--accent); }
-
-    .secure-note {
-      display: flex;
-      gap: 11px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
+    .secure-note { display: flex; gap: 11px; color: var(--muted); font-size: 13px; line-height: 1.55; }
     .secure-note svg { width: 17px; height: 17px; flex: 0 0 auto; color: #343a40; }
     .secure-note b { color: #20242a; }
 
     .submit-panel {
+      position: relative;
+      overflow: hidden;
       margin-top: 18px;
       padding: 28px 30px;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(133,255,10,.16);
-      background:
-        linear-gradient(135deg, rgba(133,255,10,.16), rgba(255,255,255,.96) 48%);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      overflow: hidden;
-      position: relative;
+      border: 1px solid rgba(133,255,10,.22);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(133,255,10,.16), rgba(255,255,255,.98) 48%);
     }
 
     .submit-panel::before {
@@ -840,21 +846,22 @@
       border-radius: 50%;
       background: rgba(133,255,10,.10);
       filter: blur(10px);
+      pointer-events: none;
     }
 
-    .submit-panel h3 { margin-bottom: 6px; font: 800 22px/1.2 "Manrope", sans-serif; }
-    .submit-panel p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .submit-panel h3 { margin-bottom: 6px; color: var(--text); font: 800 24px/1.2 "Manrope", sans-serif; }
+    .submit-panel p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
     .submit-panel .primary-btn { position: relative; z-index: 1; min-width: 184px; min-height: 50px; }
 
     .footer {
       margin-top: 68px;
       padding: 28px 0 4px;
-      border-top: 1px solid rgba(17,19,24,.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      color: #545b65;
+      border-top: 1px solid rgba(11,19,27,.08);
+      color: #545f6a;
       font-size: 12px;
     }
 
@@ -862,68 +869,60 @@
       position: fixed;
       left: 50%;
       bottom: 26px;
-      transform: translate(-50%, 20px);
       z-index: 100;
+      transform: translate(-50%, 18px);
+      max-width: min(92vw, 520px);
+      padding: 12px 15px;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 15px;
+      border: 1px solid rgba(11,19,27,.18);
       border-radius: 12px;
-      border: 1px solid rgba(17,19,24,.18);
-      background: rgba(255,255,255,.96);
-      backdrop-filter: blur(15px);
+      background: rgba(255,255,255,.98);
       color: #20242a;
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      box-shadow: 0 16px 40px rgba(0,0,0,.20);
       font-size: 13px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .25s ease, transform .25s ease;
+      transition: opacity .2s ease, transform .2s ease;
     }
 
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
-    .toast .check {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #060705;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 11px;
-    }
+    .toast .check { width: 22px; height: 22px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: #060705; font-size: 11px; font-weight: 900; }
 
     .modal {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(12,21,29,.62);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 20px;
       display: grid;
       place-items: center;
-      padding: 20px;
+      background: rgba(12,21,29,.64);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity .25s ease;
+      transition: opacity .2s ease;
     }
 
     .modal.open { opacity: 1; pointer-events: auto; }
 
     .modal-card {
+      position: relative;
+      overflow: hidden;
       width: min(680px, 100%);
       min-height: 420px;
       padding: clamp(30px, 5vw, 54px);
-      border-radius: 30px;
       border: 1px solid rgba(12,21,29,.12);
-      background: #ffffff;
+      border-radius: 30px;
+      background: #fff;
       box-shadow: 0 34px 120px rgba(12,21,29,.28);
-      transform: translateY(18px) scale(.97);
-      transition: transform .25s ease;
       text-align: center;
-      position: relative;
-      overflow: hidden;
+      transform: translateY(18px) scale(.98);
+      transition: transform .2s ease;
     }
+
+    .modal.open .modal-card { transform: none; }
 
     .modal-card::before {
       content: "";
@@ -939,121 +938,44 @@
       pointer-events: none;
     }
 
-    .modal.open .modal-card { transform: translateY(0) scale(1); }
-
     .modal-icon {
+      position: relative;
+      z-index: 1;
       width: 92px;
       height: 92px;
-      border-radius: 28px;
       margin: 0 auto 28px;
       display: grid;
       place-items: center;
+      border-radius: 28px;
       background: var(--accent);
       color: #080a07;
       box-shadow: 0 16px 50px rgba(133,255,10,.24);
-      position: relative;
-      z-index: 1;
     }
 
     .modal-icon svg { width: 44px; height: 44px; }
-
-    .modal-card h3 {
-      font: 800 clamp(32px, 6vw, 46px)/1.05 "Manrope", sans-serif;
-      letter-spacing: -.045em;
-      margin: 0 0 14px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .modal-card p {
-      max-width: 540px;
-      margin: 0 auto 24px;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 15px;
-      position: relative;
-      z-index: 1;
-    }
+    .modal-card h3 { position: relative; z-index: 1; margin: 0 0 14px; font: 800 clamp(32px, 6vw, 46px)/1.05 "Manrope", sans-serif; letter-spacing: -.045em; }
+    .modal-card p { position: relative; z-index: 1; max-width: 540px; margin: 0 auto 24px; color: var(--muted); font-size: 15px; line-height: 1.7; }
 
     .modal-meta {
-      display: grid;
-      gap: 8px;
       max-width: 540px;
       margin: 0 auto 26px;
       padding: 16px 18px;
       border: 1px solid rgba(12,21,29,.09);
       border-radius: 16px;
       background: #f8fafb;
-      text-align: left;
       color: #344054;
       font-size: 13px;
       line-height: 1.55;
-      word-break: break-word;
+      text-align: left;
+      white-space: pre-line;
+      overflow-wrap: anywhere;
     }
 
     .modal-meta:empty { display: none; }
-
-    .modal-actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-
-    .modal-actions .primary-btn,
-    .modal-actions .ghost-btn {
-      min-width: 180px;
-      min-height: 52px;
-    }
-
-    .modal [hidden] {
-      display: none !important;
-    }
-
-    .modal.error .modal-card::before {
-      background: rgba(255,107,107,.18);
-    }
-
-    .modal.error .modal-icon {
-      background: #ffe4e4;
-      color: #9b1c1c;
-      box-shadow: 0 16px 50px rgba(255,107,107,.18);
-    }
-
-    .modal.warning .modal-card::before {
-      background: rgba(245,158,11,.18);
-    }
-
-    .modal.warning .modal-icon {
-      background: #fff4d6;
-      color: #8a4b00;
-      box-shadow: 0 16px 50px rgba(245,158,11,.16);
-    }
-
-    .modal.warning .modal-status-dot {
-      background: #f59e0b;
-      box-shadow: 0 0 0 5px rgba(245,158,11,.12);
-    }
-
-    .modal.sending .modal-icon {
-      background: #eefbdc;
-      color: #315f00;
-    }
-
-    .modal-spinner {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 4px solid rgba(49,95,0,.14);
-      border-top-color: #315f00;
-      animation: modalSpin .8s linear infinite;
-    }
-
-    @keyframes modalSpin {
-      to { transform: rotate(360deg); }
-    }
+    .modal-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .modal-actions .primary-btn, .modal-actions .ghost-btn { min-width: 180px; min-height: 52px; }
+    .modal-actions .ghost-btn { color: var(--text); background: #f4f6f8; border-color: var(--line); }
+    .modal-actions .ghost-btn:hover { background: #eceff2; }
 
     .modal-status-line {
       display: flex;
@@ -1064,47 +986,34 @@
       color: #52606b;
       font-size: 13px;
       font-weight: 700;
-      text-transform: uppercase;
       letter-spacing: .08em;
+      text-transform: uppercase;
     }
 
-    .modal-status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(133,255,10,.12);
+    .modal-status-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 5px rgba(133,255,10,.12); }
+    .modal.error .modal-card::before { background: rgba(255,107,107,.18); }
+    .modal.error .modal-icon { background: #ffe4e4; color: #9b1c1c; box-shadow: 0 16px 50px rgba(255,107,107,.18); }
+    .modal.error .modal-status-dot { background: #ff6b6b; box-shadow: 0 0 0 5px rgba(255,107,107,.12); }
+    .modal.warning .modal-card::before { background: rgba(245,158,11,.18); }
+    .modal.warning .modal-icon { background: #fff4d6; color: #8a4b00; box-shadow: 0 16px 50px rgba(245,158,11,.16); }
+    .modal.warning .modal-status-dot { background: #f59e0b; box-shadow: 0 0 0 5px rgba(245,158,11,.12); }
+    .modal.sending .modal-icon { background: #eefbdc; color: var(--accent-ink); }
+
+    .modal-spinner {
+      width: 42px;
+      height: 42px;
+      border: 4px solid rgba(49,95,0,.14);
+      border-top-color: var(--accent-ink);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
     }
 
-    .modal.error .modal-status-dot {
-      background: var(--danger);
-      box-shadow: 0 0 0 5px rgba(255,107,107,.12);
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @media (max-width: 620px) {
-      .modal-card { min-height: 0; padding: 30px 20px; }
-      .modal-icon { width: 76px; height: 76px; border-radius: 22px; }
-      .modal-icon svg { width: 36px; height: 36px; }
-      .modal-actions { flex-direction: column; }
-      .modal-actions .primary-btn,
-      .modal-actions .ghost-btn { width: 100%; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-
-    .reveal.visible { opacity: 1; transform: none; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
+    .reveal { opacity: 1; transform: none; }
 
     @media (max-width: 1020px) {
-      .hero { grid-template-columns: 1fr; gap: 44px; min-height: auto; }
+      .hero { min-height: auto; grid-template-columns: 1fr; gap: 44px; }
       .hero-card { max-width: 680px; }
       .process-grid { grid-template-columns: repeat(2, 1fr); }
       .workspace { grid-template-columns: 1fr; }
@@ -1114,523 +1023,67 @@
 
     @media (max-width: 720px) {
       .page, .nav { padding-left: 16px; padding-right: 16px; }
-      .nav {
-        min-height: 76px;
-        padding-top: 9px;
-        padding-bottom: 9px;
-        gap: 12px;
-      }
+      .nav { min-height: 76px; padding-top: 9px; padding-bottom: 9px; gap: 12px; }
       .brand { gap: 10px; }
       .brand-context, .status-pill { display: none; }
       .brand-logo { width: 118px; height: 54px; }
       .nav-actions { gap: 8px; }
       .ghost-btn { padding: 0 12px; font-size: 12px; }
-      .hero { padding-top: 54px; padding-bottom: 45px; }
+      .nav-actions .ghost-btn span { display: none; }
+
+      .hero { padding: 54px 0 45px; }
       h1 { font-size: clamp(49px, 15vw, 72px); }
       .hero-copy { font-size: 16px; }
       .hero-card { padding: 20px; }
-      .section-intro { grid-template-columns: 1fr; padding-top: 64px; gap: 14px; }
+      .section-intro { grid-template-columns: 1fr; gap: 14px; padding-top: 64px; }
       .section-intro p { justify-self: start; }
       .process-grid { grid-template-columns: 1fr; margin-bottom: 58px; }
       .process-card { min-height: 0; }
       .process-card .icon-box { margin-bottom: 25px; }
-      .form-section { padding: 22px 17px; border-radius: 20px; }
-      .form-section-head { grid-template-columns: 42px 1fr; }
+
+      .form-section { padding: 26px 18px; border-radius: 20px; }
+      .form-section-head { grid-template-columns: 42px 1fr; padding-bottom: 20px; margin-bottom: 22px; }
       .step-badge { width: 42px; height: 42px; border-radius: 12px; }
-      .form-section h3 { font-size: 20px; }
-      .field-grid, .option-grid { grid-template-columns: 1fr; }
+      .form-section h3 { font-size: 22px; }
+      .form-section-head p { font-size: 14px; }
+      .field-grid, .option-grid, .service-grid { grid-template-columns: 1fr; gap: 18px; }
+      label, .label { font-size: 14px; }
+      input, textarea, select { min-height: 56px; font-size: 16px; }
+      textarea, .compact-textarea { min-height: 124px; }
+      .service-panel { padding: 20px 16px; }
+      .service-card { min-height: 0; padding: 18px; }
+      .upload-zone { min-height: 170px; padding: 24px 16px; }
+
       .sidebar { grid-template-columns: 1fr; }
       .side-card:first-child { grid-column: auto; }
       .submit-panel { flex-direction: column; align-items: stretch; padding: 23px 20px; }
       .submit-panel .primary-btn { width: 100%; }
       .footer { align-items: flex-start; flex-direction: column; }
-      .nav-actions .ghost-btn span { display: none; }
     }
 
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .service-card {
-      min-height: 112px;
-      padding: 18px;
-    }
-
-    .service-card strong {
-      padding-right: 28px;
-      font: 800 15px/1.35 "Manrope", sans-serif;
-      color: var(--text);
-    }
-
-    .service-card small {
-      max-width: 38ch;
-      color: #52606b;
-    }
-
-    .service-card .package-name {
-      display: block;
-      padding-right: 28px;
-      font: 800 15px/1.3 "Manrope", sans-serif;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .service-card .package-price-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 7px;
-    }
-
-    .service-card .package-price {
-      font: 800 18px/1 "Manrope", sans-serif;
-      color: #315f00;
-    }
-
-    .service-card .package-timeline {
-      color: #667085;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    .service-card .package-desc {
-      display: block;
-      color: #52606b;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .package-scope-note {
-      grid-column: 1 / -1;
-      margin: 0;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(133,255,10,.08);
-      border: 1px solid rgba(133,255,10,.28);
-      color: #294700;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .service-panel {
-      grid-column: 1 / -1;
-      margin-top: 4px;
-      padding: 22px;
-      border-radius: 18px;
-      border: 1px solid rgba(12,21,29,.10);
-      background: #f8fafb;
-    }
-
-    .service-panel[hidden] { display: none !important; }
-
-    .service-panel-head {
-      margin-bottom: 18px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(12,21,29,.08);
-    }
-
-    .service-panel-head h4 {
-      margin: 0 0 5px;
-      font: 800 18px/1.3 "Manrope", sans-serif;
-      letter-spacing: -.02em;
-      color: var(--text);
-    }
-
-    .service-panel-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .inline-note {
-      grid-column: 1 / -1;
-      padding: 13px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(133,255,10,.38);
-      background: rgba(133,255,10,.09);
-      color: #294700;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .compact-textarea { min-height: 104px; }
-
-    .sop-details-panel {
-      grid-column: 1 / -1;
-    }
-
-    .sop-details-panel[hidden],
-    .sop-upload-panel[hidden] {
-      display: none !important;
-    }
-
-    .sop-upload-zone {
-      min-height: 155px;
-      background: #ffffff;
-    }
-
-
-    @media (max-width: 720px) {
-      .service-grid { grid-template-columns: 1fr; }
-      .service-panel { padding: 18px 14px; }
-    }
-
-  
     @media (max-width: 520px) {
       .nav { padding-left: 14px; padding-right: 14px; }
       .brand-logo { width: 108px; height: 50px; }
-      .nav-actions .ghost-btn {
-        min-width: 44px;
-        width: 44px;
-        padding: 0;
-      }
+      .nav-actions .ghost-btn { width: 44px; min-width: 44px; padding: 0; }
       .nav-actions .ghost-btn svg { width: 19px; height: 19px; }
-    }
-
-  
-    /* =========================================================
-       FORM READABILITY PASS
-       Higher contrast, larger type, clearer spacing, better mobile
-       ========================================================= */
-
-    :root {
-      --text: #0b131b;
-      --muted: #465361;
-      --line: rgba(11,19,27,.16);
-      --line-strong: rgba(11,19,27,.28);
-    }
-
-    body {
-      font-size: 16px;
-      line-height: 1.55;
-    }
-
-    .form-section {
-      padding: 38px;
-      border-color: rgba(11,19,27,.13);
-      box-shadow: 0 10px 30px rgba(11,19,27,.035);
-    }
-
-    .form-section-head {
-      padding-bottom: 26px;
-      margin-bottom: 28px;
-    }
-
-    .form-section h3 {
-      font-size: 26px;
-      line-height: 1.2;
-      color: #0b131b;
-    }
-
-    .form-section-head p {
-      color: #465361;
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    .field-grid {
-      gap: 22px 20px;
-    }
-
-    label,
-    .label {
-      margin-bottom: 10px;
-      color: #111b24;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.45;
-    }
-
-    .required {
-      color: #b42318;
-      font-weight: 800;
-    }
-
-    input,
-    textarea,
-    select {
-      min-height: 54px;
-      padding-left: 15px;
-      padding-right: 15px;
-      color: #0b131b;
-      background: #ffffff;
-      border: 1px solid rgba(11,19,27,.22);
-      border-radius: 12px;
-      font-size: 15.5px;
-      font-weight: 500;
-      line-height: 1.5;
-    }
-
-    select {
-      padding-right: 46px;
-      background-position:
-        calc(100% - 20px) 23px,
-        calc(100% - 15px) 23px;
-    }
-
-    textarea,
-    .compact-textarea {
-      min-height: 118px;
-      padding-top: 15px;
-      padding-bottom: 15px;
-      line-height: 1.65;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #687482;
-      opacity: 1;
-      font-weight: 400;
-    }
-
-    input:hover,
-    textarea:hover,
-    select:hover {
-      border-color: rgba(11,19,27,.34);
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #73dc0b;
-      box-shadow: 0 0 0 4px rgba(133,255,10,.14);
-      background: #ffffff;
-    }
-
-    .helper {
-      margin-top: 8px;
-      color: #596674;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .service-panel {
-      padding: 26px;
-      background: #fbfcfd;
-      border-color: rgba(11,19,27,.13);
-    }
-
-    .service-panel-head {
-      margin-bottom: 22px;
-      padding-bottom: 18px;
-    }
-
-    .service-panel-head h4 {
-      font-size: 20px;
-      line-height: 1.3;
-      color: #0b131b;
-    }
-
-    .service-panel-head p {
-      color: #4b5966;
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .package-scope-note,
-    .inline-note {
-      padding: 15px 16px;
-      color: #254300;
-      font-size: 13.5px;
-      line-height: 1.65;
-      background: #f0fde6;
-      border-color: rgba(108,205,15,.42);
-    }
-
-    .package-scope-note strong,
-    .inline-note strong {
-      color: #173000;
-      font-weight: 800;
-    }
-
-    .service-grid {
-      gap: 14px;
-    }
-
-    .service-card {
-      min-height: 132px;
-      padding: 20px;
-      border-color: rgba(11,19,27,.14);
-      box-shadow: 0 3px 10px rgba(11,19,27,.025);
-    }
-
-    .service-card .package-name {
-      margin-bottom: 10px;
-      color: #0b131b;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-
-    .service-card .package-price {
-      font-size: 19px;
-      color: #315f00;
-    }
-
-    .service-card .package-timeline {
-      color: #536170;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .service-card .package-desc {
-      color: #4d5a67;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .option-card:has(input:checked) {
-      border-color: #75dc12;
-      background: #f2fde8;
-      box-shadow:
-        inset 0 0 0 1px rgba(117,220,18,.22),
-        0 8px 22px rgba(71,130,15,.06);
-    }
-
-    .upload-zone {
-      min-height: 190px;
-      padding: 28px;
-      background: #fbfcfd;
-      border-color: rgba(11,19,27,.28);
-    }
-
-    .upload-zone b {
-      color: #111b24;
-      font-size: 15px;
-      line-height: 1.4;
-    }
-
-    .upload-zone span {
-      color: #596674;
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .file-item {
-      color: #27323d;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .side-card h4 {
-      font-size: 15px;
-      color: #111b24;
-    }
-
-    .side-progress b {
-      font-size: 14px;
-      color: #111b24;
-    }
-
-    .side-progress small,
-    .jump-link,
-    .secure-note {
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .submit-panel h3 {
-      font-size: 24px;
-      color: #0b131b;
-    }
-
-    .submit-panel p {
-      color: #4a5865;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .primary-btn,
-    .ghost-btn {
-      font-size: 14px;
-      letter-spacing: .005em;
-    }
-
-    @media (max-width: 720px) {
-      .form-section {
-        padding: 26px 18px;
-      }
-
-      .form-section-head {
-        padding-bottom: 20px;
-        margin-bottom: 22px;
-      }
-
-      .form-section h3 {
-        font-size: 22px;
-      }
-
-      .form-section-head p {
-        font-size: 14px;
-      }
-
-      .field-grid {
-        gap: 18px;
-      }
-
-      label,
-      .label {
-        font-size: 14px;
-      }
-
-      input,
-      textarea,
-      select {
-        min-height: 56px;
-        font-size: 16px; /* prevents iOS input zoom and improves legibility */
-      }
-
-      textarea,
-      .compact-textarea {
-        min-height: 124px;
-      }
-
-      .helper {
-        font-size: 13px;
-      }
-
-      .service-panel {
-        padding: 20px 16px;
-      }
-
-      .service-card {
-        min-height: 0;
-        padding: 18px;
-      }
-
-      .package-scope-note,
-      .inline-note {
-        font-size: 13px;
-      }
-
-      .submit-panel h3 {
-        font-size: 22px;
-      }
+      .modal { padding: 14px; }
+      .modal-card { min-height: 0; padding: 30px 20px; border-radius: 24px; }
+      .modal-icon { width: 76px; height: 76px; border-radius: 22px; }
+      .modal-icon svg { width: 36px; height: 36px; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .primary-btn, .modal-actions .ghost-btn { width: 100%; }
     }
 
     @media (max-width: 420px) {
-      .page {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
+      .page { padding-left: 12px; padding-right: 12px; }
+      .form-section { padding: 22px 14px; border-radius: 18px; }
+      .service-panel { padding: 18px 12px; }
+      .upload-zone { min-height: 165px; padding: 22px 14px; }
+    }
 
-      .form-section {
-        padding: 22px 14px;
-        border-radius: 18px;
-      }
-
-      .service-panel {
-        padding: 18px 12px;
-      }
-
-      .upload-zone {
-        min-height: 165px;
-        padding: 22px 14px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
 
   </style>
@@ -1653,9 +1106,9 @@
       </a>
 
       <div class="nav-actions">
-        <div class="status-pill" aria-label="Autosave status">
-          <span class="status-dot"></span>
-          Progress saved locally
+        <div class="status-pill" data-state="saved" aria-label="Autosave status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="autosaveStatusText">Progress saved locally</span>
         </div>
         <button class="ghost-btn" id="saveBtn" type="button" aria-label="Save form progress">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
@@ -1723,7 +1176,7 @@
         <p>Select the package you purchased. You’ll only see the questions needed for that build.</p>
       </div>
 
-      <form id="clientForm" novalidate>
+      <form id="clientForm" action="https://wild-hat-8199.jhimrickofficial.workers.dev/" method="post" enctype="multipart/form-data">
         <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
           <label for="company_website">Leave this field empty</label>
           <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
@@ -1915,7 +1368,7 @@
                 <div class="field full">
                   <div class="inline-note">
                     <strong>SOP / Process Documentation</strong><br>
-                    Share the current process so I can understand how the work should operate before I build or automate it.
+                    If you already have an SOP, upload it. Otherwise, add a link to any process documentation you have.
                   </div>
                 </div>
 
@@ -1951,12 +1404,12 @@
                     </div>
                   </div>
                   <div class="file-list" id="sopFileList" aria-live="polite"></div>
-                  <small class="helper">If you already have a documented SOP, you do not need to complete the process questions below.</small>
+                  <small class="helper">Your SOP file will be included with this onboarding submission.</small>
                 </div>
 
                 <div class="field-grid sop-details-panel" id="sopDetailsPanel">
                   <div class="field full">
-                    <label for="sopLink">SOP / process document link</label>
+                    <label for="sopLink">SOP / process document link <span style="font-weight:500;color:#687482;">(optional)</span></label>
                     <input id="sopLink" name="sopLink" type="text" inputmode="url" placeholder="Google Drive, Notion, Loom, PDF, etc." />
                   </div>
 
@@ -2066,7 +1519,7 @@
       <div class="modal-meta" id="statusMeta"></div>
 
       <div class="modal-actions">
-        <a class="primary-btn" id="driveFolderBtn" href="#" target="_blank" rel="noopener" hidden>
+        <a class="primary-btn" id="driveFolderBtn" href="#" target="_blank" rel="noopener noreferrer" hidden>
           Open Google Drive Folder
         </a>
         <button class="primary-btn" id="statusCloseBtn" type="button" hidden>Done</button>
@@ -2076,118 +1529,220 @@
   </div>
 
   <script>
-    (() => {
-      const form = document.getElementById('clientForm');
-      const heroPercent = document.getElementById('heroPercent');
-      const heroProgress = document.getElementById('heroProgress');
-      const completionLabel = document.getElementById('completionLabel');
-      const ring = document.getElementById('progressRing');
-      const ringPercent = document.getElementById('ringPercent');
-      const progressHeadline = document.getElementById('progressHeadline');
-      const saveBtn = document.getElementById('saveBtn');
-      const toast = document.getElementById('toast');
-      const toastText = document.getElementById('toastText');
-      const statusModal = document.getElementById('statusModal');
-      const statusEyebrow = document.getElementById('statusEyebrow');
-      const statusIcon = document.getElementById('statusIcon');
-      const statusTitle = document.getElementById('statusTitle');
-      const statusMessage = document.getElementById('statusMessage');
-      const statusMeta = document.getElementById('statusMeta');
-      const statusCloseBtn = document.getElementById('statusCloseBtn');
-      const statusRetryBtn = document.getElementById('statusRetryBtn');
-      const driveFolderBtn = document.getElementById('driveFolderBtn');
-      const uploadZone = document.getElementById('uploadZone');
-      const assetFiles = document.getElementById('assetFiles');
-      const fileList = document.getElementById('fileList');
-      const sopStatus = document.getElementById('sopStatus');
-      const sopUploadPanel = document.getElementById('sopUploadPanel');
-      const sopDetailsPanel = document.getElementById('sopDetailsPanel');
-      const sopFile = document.getElementById('sopFile');
-      const sopUploadZone = document.getElementById('sopUploadZone');
-      const sopFileList = document.getElementById('sopFileList');
-      const serviceRadios = [...form.querySelectorAll('input[name="service"]')];
-      const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
-      const storageKey = 'jrmrcClientOnboarding_v3';
-      const pendingSubmissionKey = 'jrmrcClientOnboarding_pendingSubmission_v1';
-      const WORKER_URL = 'https://wild-hat-8199.jhimrickofficial.workers.dev/';
-      const MAX_FILE_SIZE = 10 * 1024 * 1024;
-      const MAX_TOTAL_FILE_SIZE = 25 * 1024 * 1024;
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalSubmitHtml = submitBtn.innerHTML;
-      const BUILD_VERSION = 'JRMRC-ONBOARDING-2026-09-03-PROD-V6';
-      let toastTimer;
 
-      console.info(`[JRMRC Onboarding] Build loaded: ${BUILD_VERSION}`);
+    (() => {
+      'use strict';
+
+      const CONFIG = Object.freeze({
+        workerUrl: 'https://wild-hat-8199.jhimrickofficial.workers.dev/',
+        storageKey: 'jrmDigitalOnboarding:v1',
+        legacyStorageKey: 'jrmrcClientOnboarding_v3',
+        pendingSubmissionKey: 'jrmrcClientOnboarding_pendingSubmission_v1',
+        maxFileSize: 10 * 1024 * 1024,
+        maxTotalFileSize: 25 * 1024 * 1024,
+        requestTimeoutMs: 90_000,
+        autosaveDelayMs: 350,
+        buildVersion: 'JRM-ONBOARDING-2026-09-03-PROD-V7'
+      });
+
+      const form = document.getElementById('clientForm');
+      if (!form) return;
+
+      // Keep native validation as a no-JS fallback, but use controlled validation
+      // while this script is active so errors can be surfaced consistently.
+      form.noValidate = true;
+
+      const dom = {
+        heroPercent: document.getElementById('heroPercent'),
+        heroProgress: document.getElementById('heroProgress'),
+        completionLabel: document.getElementById('completionLabel'),
+        ring: document.getElementById('progressRing'),
+        ringPercent: document.getElementById('ringPercent'),
+        progressHeadline: document.getElementById('progressHeadline'),
+        saveBtn: document.getElementById('saveBtn'),
+        statusPill: document.querySelector('.status-pill'),
+        autosaveStatusText: document.getElementById('autosaveStatusText'),
+        toast: document.getElementById('toast'),
+        toastText: document.getElementById('toastText'),
+        statusModal: document.getElementById('statusModal'),
+        statusCard: document.querySelector('#statusModal .modal-card'),
+        statusEyebrow: document.getElementById('statusEyebrow'),
+        statusIcon: document.getElementById('statusIcon'),
+        statusTitle: document.getElementById('statusTitle'),
+        statusMessage: document.getElementById('statusMessage'),
+        statusMeta: document.getElementById('statusMeta'),
+        statusCloseBtn: document.getElementById('statusCloseBtn'),
+        statusRetryBtn: document.getElementById('statusRetryBtn'),
+        driveFolderBtn: document.getElementById('driveFolderBtn'),
+        uploadZone: document.getElementById('uploadZone'),
+        assetFiles: document.getElementById('assetFiles'),
+        fileList: document.getElementById('fileList'),
+        sopStatus: document.getElementById('sopStatus'),
+        sopUploadPanel: document.getElementById('sopUploadPanel'),
+        sopDetailsPanel: document.getElementById('sopDetailsPanel'),
+        sopFile: document.getElementById('sopFile'),
+        sopUploadZone: document.getElementById('sopUploadZone'),
+        sopFileList: document.getElementById('sopFileList'),
+        submitBtn: form.querySelector('button[type="submit"]')
+      };
+
+      const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
+      const originalSubmitHtml = dom.submitBtn?.innerHTML || 'Submit onboarding';
+
+      const state = {
+        isSubmitting: false,
+        toastTimer: 0,
+        autosaveTimer: 0,
+        storageAvailable: true,
+        lastFocusedElement: null,
+        submissionCompleted: false
+      };
+
+      const PACKAGE_LABELS = Object.freeze({
+        'custom-coded-website': 'Custom Coded Website — $499',
+        foundation: 'GoHighLevel Setup — Foundation — $799',
+        'ai-receptionist': 'GHL + AI Receptionist — $1,799',
+        'revenue-system': 'GHL AI Revenue System — $2,999'
+      });
+
+      const SOP_STATUS_LABELS = Object.freeze({
+        yes: 'Yes — documented SOP exists',
+        partial: 'Partially documented',
+        no: 'No — process is currently informal',
+        unsure: 'Not sure'
+      });
+
+      const FIELD_LABELS = Object.freeze({
+        name: 'Your name',
+        email: 'Email',
+        company: 'Business / Company Name',
+        service: 'Package booked',
+        foundationAccount: 'GoHighLevel account status',
+        aiAccount: 'GoHighLevel account status',
+        revAccount: 'GoHighLevel account status',
+        sopFile: 'SOP file',
+        channel: 'Preferred communication'
+      });
+
+      function safeStorageGet(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch {
+          state.storageAvailable = false;
+          updateAutosaveStatus('Autosave unavailable', 'error');
+          return null;
+        }
+      }
+
+      function safeStorageSet(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+          state.storageAvailable = true;
+          return true;
+        } catch {
+          state.storageAvailable = false;
+          updateAutosaveStatus('Autosave unavailable', 'error');
+          return false;
+        }
+      }
+
+      function safeStorageRemove(key) {
+        try {
+          window.localStorage.removeItem(key);
+        } catch {
+          // Storage can be blocked by privacy settings. Submission still works.
+        }
+      }
+
+      function updateAutosaveStatus(message, status = 'saved') {
+        if (dom.autosaveStatusText) dom.autosaveStatusText.textContent = message;
+        if (dom.statusPill) dom.statusPill.dataset.state = status;
+      }
 
       function showToast(message) {
-        toastText.textContent = message;
-        toast.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+        if (!dom.toast || !dom.toastText) return;
+        dom.toastText.textContent = message;
+        dom.toast.classList.add('show');
+        window.clearTimeout(state.toastTimer);
+        state.toastTimer = window.setTimeout(() => dom.toast.classList.remove('show'), 2200);
       }
 
+      function savableFields() {
+        return [...form.querySelectorAll('input:not([type="file"]), textarea, select')]
+          .filter(field => field.name && field.name !== 'company_website');
+      }
 
-      function openStatusModal(mode, options = {}) {
-        const {
-          eyebrow = '',
-          title = '',
-          message = '',
-          meta = '',
-          driveUrl = ''
-        } = options;
+      function collectProgressData() {
+        const fields = {};
 
-        statusModal.classList.remove('sending', 'success', 'warning', 'error');
-        statusModal.classList.add(mode);
-
-        statusEyebrow.textContent = eyebrow;
-        statusTitle.textContent = title;
-        statusMessage.textContent = message;
-        statusMeta.textContent = meta;
-
-        statusCloseBtn.hidden = !['success', 'warning'].includes(mode);
-        statusRetryBtn.hidden = mode !== 'error';
-
-        driveFolderBtn.hidden = !(['success', 'warning'].includes(mode) && driveUrl);
-        if (driveUrl) {
-          driveFolderBtn.href = driveUrl;
-        } else {
-          driveFolderBtn.removeAttribute('href');
+        for (const field of savableFields()) {
+          if (field.type === 'radio') {
+            if (field.checked) fields[field.name] = field.value;
+            continue;
+          }
+          fields[field.name] = field.value;
         }
 
-        if (mode === 'sending') {
-          statusIcon.innerHTML = '<div class="modal-spinner"></div>';
-        } else if (mode === 'success') {
-          statusIcon.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5"/>
-            </svg>
-          `;
-        } else {
-          statusIcon.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <path d="M12 9v4"/>
-              <path d="M12 17h.01"/>
-              <path d="M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/>
-            </svg>
-          `;
+        return {
+          version: 1,
+          savedAt: new Date().toISOString(),
+          fields
+        };
+      }
+
+      function saveProgress({ silent = true } = {}) {
+        if (state.submissionCompleted) return false;
+        updateAutosaveStatus('Saving…', 'saving');
+
+        const saved = safeStorageSet(CONFIG.storageKey, JSON.stringify(collectProgressData()));
+        if (!saved) {
+          if (!silent) showToast('This browser blocked local progress saving.');
+          return false;
         }
 
-        statusModal.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        updateAutosaveStatus('Progress saved locally', 'saved');
+        if (!silent) showToast('Progress saved on this browser.');
+        return true;
       }
 
-      function closeStatusModal() {
-        if (statusModal.classList.contains('sending')) return;
-        statusModal.classList.remove('open', 'sending', 'success', 'warning', 'error');
-        document.body.style.overflow = '';
+      function scheduleAutosave() {
+        window.clearTimeout(state.autosaveTimer);
+        updateAutosaveStatus('Saving…', 'saving');
+        state.autosaveTimer = window.setTimeout(() => saveProgress({ silent: true }), CONFIG.autosaveDelayMs);
       }
 
-      function debugGroup(label, callback) {
-        try {
-          console.groupCollapsed(`[JRMRC Onboarding] ${label}`);
-          callback();
-        } finally {
-          console.groupEnd();
+      function restoreProgress() {
+        let raw = safeStorageGet(CONFIG.storageKey);
+        let payload = null;
+
+        if (raw) {
+          try { payload = JSON.parse(raw); } catch { payload = null; }
+        }
+
+        if (!payload) {
+          const legacyRaw = safeStorageGet(CONFIG.legacyStorageKey);
+          if (legacyRaw) {
+            try {
+              const legacyFields = JSON.parse(legacyRaw);
+              payload = { version: 0, fields: legacyFields };
+            } catch {
+              payload = null;
+            }
+          }
+        }
+
+        const fields = payload?.fields || (payload && !('fields' in payload) ? payload : {});
+        if (!fields || typeof fields !== 'object') return;
+
+        for (const field of savableFields()) {
+          if (!(field.name in fields)) continue;
+          if (field.type === 'radio') field.checked = field.value === fields[field.name];
+          else field.value = fields[field.name] ?? '';
+        }
+
+        if (payload?.version === 0 && state.storageAvailable) {
+          saveProgress({ silent: true });
+          safeStorageRemove(CONFIG.legacyStorageKey);
         }
       }
 
@@ -2197,236 +1752,176 @@
       }
 
       function getPendingSubmission() {
-        try {
-          const existing = JSON.parse(localStorage.getItem(pendingSubmissionKey) || 'null');
-          if (existing?.id && existing?.createdAt) return existing;
-        } catch (error) {
-          console.warn('[JRMRC Onboarding] Could not read pending submission ID.', error);
+        const raw = safeStorageGet(CONFIG.pendingSubmissionKey);
+        if (raw) {
+          try {
+            const existing = JSON.parse(raw);
+            if (existing?.id && existing?.createdAt) return existing;
+          } catch {
+            // Create a fresh id below.
+          }
         }
 
-        const created = {
-          id: createSubmissionId(),
-          createdAt: new Date().toISOString()
-        };
-        localStorage.setItem(pendingSubmissionKey, JSON.stringify(created));
+        const created = { id: createSubmissionId(), createdAt: new Date().toISOString() };
+        safeStorageSet(CONFIG.pendingSubmissionKey, JSON.stringify(created));
         return created;
       }
 
       function clearPendingSubmission() {
-        localStorage.removeItem(pendingSubmissionKey);
+        safeStorageRemove(CONFIG.pendingSubmissionKey);
       }
 
-      function savableFields() {
-        return [...form.querySelectorAll('input:not([type="file"]), textarea, select')];
-      }
-
-      function saveProgress(silent = true) {
-        const data = {};
-        savableFields().forEach(field => {
-          if (field.type === 'radio') {
-            if (field.checked) data[field.name] = field.value;
-          } else {
-            data[field.name] = field.value;
-          }
-        });
-        localStorage.setItem(storageKey, JSON.stringify(data));
-        if (!silent) showToast('Progress saved on this browser.');
-      }
-
-      function restoreProgress() {
-        let data;
-        try { data = JSON.parse(localStorage.getItem(storageKey) || '{}'); }
-        catch { data = {}; }
-
-        savableFields().forEach(field => {
-          if (!(field.name in data)) return;
-          if (field.type === 'radio') field.checked = field.value === data[field.name];
-          else field.value = data[field.name] || '';
-        });
-      }
-
-      function updateServicePanel() {
+      function updateServicePanels() {
         const selected = form.querySelector('input[name="service"]:checked')?.value || '';
 
-        servicePanels.forEach(panel => {
+        for (const panel of servicePanels) {
           const active = panel.dataset.servicePanel === selected;
           panel.hidden = !active;
-          panel.querySelectorAll('input, textarea, select').forEach(field => {
+
+          for (const field of panel.querySelectorAll('input, textarea, select')) {
             field.disabled = !active;
             if (field.hasAttribute('data-conditional-required')) field.required = active;
-          });
-        });
+          }
+        }
       }
 
       function updateSopFields() {
-        const hasDocumentedSop = sopStatus?.value === 'yes';
+        const hasDocumentedSop = dom.sopStatus?.value === 'yes';
 
-        if (sopUploadPanel) sopUploadPanel.hidden = !hasDocumentedSop;
-        if (sopDetailsPanel) sopDetailsPanel.hidden = hasDocumentedSop;
+        if (dom.sopUploadPanel) dom.sopUploadPanel.hidden = !hasDocumentedSop;
+        if (dom.sopDetailsPanel) dom.sopDetailsPanel.hidden = hasDocumentedSop;
 
-        if (sopFile) {
-          sopFile.required = hasDocumentedSop;
-          sopFile.disabled = !hasDocumentedSop;
+        if (dom.sopFile) {
+          dom.sopFile.required = hasDocumentedSop;
+          dom.sopFile.disabled = !hasDocumentedSop;
         }
 
         const sopLink = document.getElementById('sopLink');
         if (sopLink) sopLink.disabled = hasDocumentedSop;
-
-        // Prevent stale data from a previous choice from being submitted.
-        if (hasDocumentedSop) {
-          if (sopLink) sopLink.value = '';
-        } else if (sopFile) {
-          sopFile.value = '';
-          if (sopFileList) sopFileList.innerHTML = '';
-        }
       }
 
-      function getRequiredGroups() {
+      function requiredGroups() {
         const required = [...form.querySelectorAll('[required]:not(:disabled)')];
         const groups = new Map();
-        required.forEach(field => {
+
+        for (const field of required) {
           const key = field.type === 'radio' ? `radio:${field.name}` : `field:${field.name || field.id}`;
           if (!groups.has(key)) groups.set(key, []);
           groups.get(key).push(field);
-        });
+        }
+
         return [...groups.values()];
       }
 
       function groupComplete(group) {
         const first = group[0];
-
-        if (first.type === 'radio') {
-          return group.some(x => x.checked);
-        }
-
-        return first.value.trim() !== '' && first.checkValidity();
+        if (!first) return true;
+        if (first.type === 'radio') return group.some(field => field.checked);
+        if (first.type === 'file') return Boolean(first.files?.length) && first.checkValidity();
+        return String(first.value || '').trim() !== '' && first.checkValidity();
       }
 
       function sectionComplete(section) {
-        const required = [...section.querySelectorAll('[required]:not(:disabled)')];
-        if (!required.length) return true;
-        const keys = new Set();
-        const groups = [];
-        required.forEach(field => {
+        const fields = [...section.querySelectorAll('[required]:not(:disabled)')];
+        if (!fields.length) return true;
+
+        const groups = new Map();
+        for (const field of fields) {
           const key = field.type === 'radio' ? `radio:${field.name}` : `field:${field.name || field.id}`;
-          if (!keys.has(key)) {
-            keys.add(key);
-            groups.push(required.filter(x => (x.type === 'radio' ? `radio:${x.name}` : `field:${x.name || x.id}`) === key));
-          }
-        });
-        return groups.every(groupComplete);
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(field);
+        }
+        return [...groups.values()].every(groupComplete);
       }
 
       function updateProgress() {
-        const groups = getRequiredGroups();
+        const groups = requiredGroups();
         const complete = groups.filter(groupComplete).length;
         const percent = groups.length ? Math.round((complete / groups.length) * 100) : 0;
 
-        heroPercent.textContent = `${percent}%`;
-        heroProgress.style.width = `${percent}%`;
-        ring.style.setProperty('--value', percent);
-        ringPercent.textContent = `${percent}%`;
+        if (dom.heroPercent) dom.heroPercent.textContent = `${percent}%`;
+        if (dom.heroProgress) dom.heroProgress.style.width = `${percent}%`;
+        if (dom.ring) dom.ring.style.setProperty('--value', percent);
+        if (dom.ringPercent) dom.ringPercent.textContent = `${percent}%`;
 
         if (percent === 100) {
-          completionLabel.textContent = 'Ready to submit';
-          progressHeadline.textContent = 'Ready to start';
+          if (dom.completionLabel) dom.completionLabel.textContent = 'Ready to submit';
+          if (dom.progressHeadline) dom.progressHeadline.textContent = 'Ready to start';
         } else if (percent >= 70) {
-          completionLabel.textContent = 'Almost there';
-          progressHeadline.textContent = 'Almost complete';
+          if (dom.completionLabel) dom.completionLabel.textContent = 'Almost there';
+          if (dom.progressHeadline) dom.progressHeadline.textContent = 'Almost complete';
         } else if (percent >= 35) {
-          completionLabel.textContent = 'In progress';
-          progressHeadline.textContent = 'Good progress';
+          if (dom.completionLabel) dom.completionLabel.textContent = 'In progress';
+          if (dom.progressHeadline) dom.progressHeadline.textContent = 'Good progress';
         } else {
-          completionLabel.textContent = percent ? 'Started' : 'Let’s begin';
-          progressHeadline.textContent = percent ? 'Keep going' : 'Just getting started';
+          if (dom.completionLabel) dom.completionLabel.textContent = percent ? 'Started' : 'Let’s begin';
+          if (dom.progressHeadline) dom.progressHeadline.textContent = percent ? 'Keep going' : 'Just getting started';
         }
 
-        document.querySelectorAll('[data-section]').forEach(section => {
+        for (const section of document.querySelectorAll('[data-section]')) {
           const link = document.querySelector(`[data-link="${section.id}"]`);
-          if (link) link.classList.toggle('done', sectionComplete(section));
-        });
+          link?.classList.toggle('done', sectionComplete(section));
+        }
       }
 
       function formatBytes(bytes) {
-        if (bytes === 0) return '0 B';
+        if (!bytes) return '0 B';
         const units = ['B', 'KB', 'MB', 'GB'];
         const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
         return `${(bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0)} ${units[i]}`;
       }
 
-      function renderFiles(files) {
-        fileList.innerHTML = '';
-        [...files].slice(0, 8).forEach(file => {
+      function renderFileList(files, container, limit = 10) {
+        if (!container) return;
+        container.replaceChildren();
+
+        const list = [...(files || [])];
+        for (const file of list.slice(0, limit)) {
           const row = document.createElement('div');
           row.className = 'file-item';
+
           const name = document.createElement('span');
           name.textContent = file.name;
+
           const size = document.createElement('small');
           size.textContent = formatBytes(file.size);
+
           row.append(name, size);
-          fileList.appendChild(row);
-        });
+          container.appendChild(row);
+        }
+
+        if (list.length > limit) {
+          const more = document.createElement('div');
+          more.className = 'file-item';
+          more.textContent = `+${list.length - limit} more file${list.length - limit === 1 ? '' : 's'}`;
+          container.appendChild(more);
+        }
       }
 
-      ['input', 'change'].forEach(evt => {
-        form.addEventListener(evt, e => {
-          if (e.target.matches('input[name="service"]')) updateServicePanel();
-          if (e.target === sopStatus) updateSopFields();
-          updateProgress();
-          saveProgress(true);
-        });
-      });
-
-      saveBtn.addEventListener('click', () => saveProgress(false));
-
-      assetFiles.addEventListener('change', () => renderFiles(assetFiles.files));
-
-      sopFile?.addEventListener('change', () => {
-        if (!sopFileList) return;
-        sopFileList.innerHTML = '';
-        const file = sopFile.files?.[0];
-        if (!file) return;
-
-        const row = document.createElement('div');
-        row.className = 'file-item';
-        const name = document.createElement('span');
-        name.textContent = file.name;
-        const size = document.createElement('small');
-        size.textContent = formatBytes(file.size);
-        row.append(name, size);
-        sopFileList.appendChild(row);
-      });
-
-      ['dragenter', 'dragover'].forEach(evt => sopUploadZone?.addEventListener(evt, e => {
-        e.preventDefault();
-        sopUploadZone.classList.add('dragover');
-      }));
-      ['dragleave', 'drop'].forEach(evt => sopUploadZone?.addEventListener(evt, e => {
-        e.preventDefault();
-        sopUploadZone.classList.remove('dragover');
-      }));
-      ['dragenter', 'dragover'].forEach(evt => uploadZone.addEventListener(evt, e => {
-        e.preventDefault();
-        uploadZone.classList.add('dragover');
-      }));
-      ['dragleave', 'drop'].forEach(evt => uploadZone.addEventListener(evt, e => {
-        e.preventDefault();
-        uploadZone.classList.remove('dragover');
-      }));
+      function bindDropState(zone) {
+        if (!zone) return;
+        for (const eventName of ['dragenter', 'dragover']) {
+          zone.addEventListener(eventName, event => {
+            event.preventDefault();
+            zone.classList.add('dragover');
+          });
+        }
+        for (const eventName of ['dragleave', 'drop']) {
+          zone.addEventListener(eventName, event => {
+            event.preventDefault();
+            zone.classList.remove('dragover');
+          });
+        }
+      }
 
       function normalizeOptionalUrlField(field) {
-        if (!field) return;
-
+        if (!field || field.disabled) return;
         const raw = String(field.value || '').trim();
         if (!raw) return;
-
-        // Leave URLs and other explicit schemes alone.
         if (/^[a-z][a-z0-9+.-]*:\/\//i.test(raw)) {
           field.value = raw;
           return;
         }
-
-        // Common client input: example.com or www.example.com
         if (/^(www\.)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(raw)) {
           field.value = `https://${raw}`;
         }
@@ -2435,22 +1930,12 @@
       function getValue(name) {
         const field = form.elements[name];
         if (!field) return '';
-
-        if (field instanceof RadioNodeList) {
-          return field.value || '';
-        }
-
+        if (field instanceof RadioNodeList) return field.value || '';
         return String(field.value || '').trim();
       }
 
       function serviceLabel(service) {
-        const labels = {
-          'custom-coded-website': 'Custom Coded Website — $499',
-          foundation: 'GoHighLevel Setup — Foundation — $799',
-          'ai-receptionist': 'GHL + AI Receptionist — $1,799',
-          'revenue-system': 'GHL AI Revenue System — $2,999'
-        };
-        return labels[service] || service;
+        return PACKAGE_LABELS[service] || service;
       }
 
       function workerServiceKey(service) {
@@ -2470,20 +1955,20 @@
           lines.push(`Existing GHL account: ${getValue('revAccount')}`);
         }
 
-        return lines.filter(line => !line.endsWith(': ')).join('\n');
+        return lines.filter(Boolean).join('\n');
       }
 
       function appendWorkerCompatibilityFields(formData, submission) {
         const selectedPackage = form.querySelector('input[name="service"]:checked')?.value || '';
-        const summary = buildServiceSummary(selectedPackage);
         const packageName = serviceLabel(selectedPackage);
+        const summary = buildServiceSummary(selectedPackage);
+        const sopStatusValue = getValue('sopStatus');
+        const sopStatusText = SOP_STATUS_LABELS[sopStatusValue] || sopStatusValue;
+        const sopLink = getValue('sopLink');
+        const notes = getValue('notes');
 
-        // Stable idempotency identity. Retries keep the same values until a
-        // successful backend response, so Drive and email side effects are safe.
         formData.set('submission_id', submission.id);
         formData.set('submission_created_at', submission.createdAt);
-
-        // Common fields used by the Worker.
         formData.set('business_name', getValue('company'));
         formData.set('primary_contact', getValue('name'));
         formData.set('client_email', getValue('email'));
@@ -2492,41 +1977,27 @@
         formData.set('content_notes', getValue('accessNotes'));
         formData.set('communication', getValue('channel'));
         formData.set('business_description', `${packageName} onboarding`);
+        formData.set('project_goal', `${packageName} onboarding`);
         formData.set('required_features', summary);
-
-        const notes = getValue('notes');
-        const sopStatusValue = getValue('sopStatus');
-        const sopStatusLabels = {
-          yes: 'Yes — documented SOP exists',
-          partial: 'Partially documented',
-          no: 'No — process is currently informal',
-          unsure: 'Not sure'
-        };
-        const sopStatusText = sopStatusLabels[sopStatusValue] || sopStatusValue;
-        const sopLink = getValue('sopLink');
-
-        // SOP fields are sent individually and also mirrored into additional_notes
-        // so the existing Worker can preserve them even if it ignores new keys.
         formData.set('sop_status', sopStatusText);
         formData.set('sop_link', sopLink);
-
-        formData.set(
-          'additional_notes',
-          [
-            `Package booked: ${packageName}`,
-            notes,
-            sopStatusText ? `SOP status: ${sopStatusText}` : '',
-            (sopStatusValue === 'yes' && sopFile?.files?.[0]) ? `SOP file uploaded: ${sopFile.files[0].name}` : '',
-            sopLink ? `SOP / process link: ${sopLink}` : ''
-          ].filter(Boolean).join('\n\n')
-        );
-
-        // Keep the existing Worker compatible: coded website -> website,
-        // all three GoHighLevel packages -> ghl.
         formData.set('service', workerServiceKey(selectedPackage));
 
+        formData.set('additional_notes', [
+          `Package booked: ${packageName}`,
+          notes,
+          sopStatusText ? `SOP status: ${sopStatusText}` : '',
+          (sopStatusValue === 'yes' && dom.sopFile?.files?.[0]) ? `SOP file uploaded: ${dom.sopFile.files[0].name}` : '',
+          sopLink ? `SOP / process link: ${sopLink}` : ''
+        ].filter(Boolean).join('\n\n'));
+
         if (selectedPackage === 'custom-coded-website') {
+          formData.set('webType', 'Custom Coded Website');
           formData.set('webPlatform', 'Custom HTML / CSS / JavaScript');
+          formData.set('webGoal', 'Custom coded marketing website');
+          formData.set('webPages', 'Up to 5 standard pages');
+          formData.set('webCopy', 'Per project scope / supplied assets');
+          formData.set('webDomain', getValue('website'));
           formData.set('webReferences', getValue('codedReferences'));
           formData.set('hosting_provider', 'Custom HTML / CSS / JavaScript');
           formData.set('reference_sites', getValue('codedReferences'));
@@ -2535,6 +2006,7 @@
         if (selectedPackage === 'foundation') {
           formData.set('ghlAccount', getValue('foundationAccount'));
           formData.set('ghlSetup', summary);
+          formData.set('ghlMessaging', 'GoHighLevel CRM / automation setup');
         }
 
         if (selectedPackage === 'ai-receptionist') {
@@ -2551,186 +2023,254 @@
       }
 
       function validateUploads() {
-        let total = 0;
-        const filesToValidate = [
-          ...assetFiles.files,
-          ...(sopFile?.files ? [...sopFile.files] : [])
+        const files = [
+          ...(dom.assetFiles?.files ? [...dom.assetFiles.files] : []),
+          ...(dom.sopFile?.files ? [...dom.sopFile.files] : [])
         ];
 
-        for (const file of filesToValidate) {
-          if (file.size > MAX_FILE_SIZE) {
+        let total = 0;
+        for (const file of files) {
+          if (file.size > CONFIG.maxFileSize) {
             throw new Error(`${file.name} is larger than 10 MB.`);
           }
           total += file.size;
         }
 
-        if (total > MAX_TOTAL_FILE_SIZE) {
+        if (total > CONFIG.maxTotalFileSize) {
           throw new Error('Total uploaded files cannot exceed 25 MB.');
         }
       }
 
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        updateServicePanel();
+      function fieldLabel(field) {
+        if (!field) return 'Required field';
+        if (FIELD_LABELS[field.name]) return FIELD_LABELS[field.name];
+        const explicit = field.id ? form.querySelector(`label[for="${CSS.escape(field.id)}"]`) : null;
+        if (explicit) return explicit.textContent.replace('*', '').trim();
+        return field.name || field.id || 'Required field';
+      }
 
-        console.info('[JRMRC Onboarding] Submit button pressed.');
+      function clearInvalidState(field) {
+        if (!field) return;
+        field.classList.remove('is-invalid');
+        field.removeAttribute('aria-invalid');
+      }
 
-        normalizeOptionalUrlField(document.getElementById('website'));
-        normalizeOptionalUrlField(document.getElementById('brandLink'));
-        if (sopStatus?.value !== 'yes') {
-          normalizeOptionalUrlField(document.getElementById('sopLink'));
+      function showValidationErrors() {
+        const invalidFields = [...form.querySelectorAll(':invalid:not(:disabled)')];
+        if (!invalidFields.length) return false;
+
+        for (const field of invalidFields) {
+          field.classList.add('is-invalid');
+          field.setAttribute('aria-invalid', 'true');
         }
 
-        if (!form.checkValidity()) {
+        const uniqueLabels = [...new Set(invalidFields.map(fieldLabel))];
+        const firstInvalid = invalidFields[0];
+        firstInvalid.closest('.form-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        window.setTimeout(() => {
+          try { firstInvalid.focus({ preventScroll: true }); } catch { firstInvalid.focus(); }
           form.reportValidity();
+        }, 350);
 
-          const firstInvalid = form.querySelector(':invalid:not(:disabled)');
-          const invalidFields = [...form.querySelectorAll(':invalid:not(:disabled)')]
-            .map(field => {
-              if (field.id === 'website') return 'Current website';
-              if (field.id === 'brandLink') return 'Files / Google Drive link';
-              return field.name || field.id || 'unknown';
-            });
+        openStatusModal('error', {
+          eyebrow: 'Form incomplete',
+          title: 'A few details are missing.',
+          message: 'Complete the required fields, then submit the onboarding form again.',
+          meta: uniqueLabels.length ? `Please review:\n• ${uniqueLabels.join('\n• ')}` : 'Please review the required fields.'
+        });
+        showToast('Complete the required fields.');
+        return true;
+      }
 
-          console.warn('[JRMRC Onboarding] Validation failed.', { invalidFields });
+      function safeHttpsUrl(raw) {
+        if (!raw) return '';
+        try {
+          const url = new URL(raw);
+          return url.protocol === 'https:' ? url.href : '';
+        } catch {
+          return '';
+        }
+      }
 
-          if (firstInvalid) {
-            firstInvalid.closest('.form-section')?.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
+      function openStatusModal(mode, { eyebrow = '', title = '', message = '', meta = '', driveUrl = '' } = {}) {
+        if (!dom.statusModal) return;
+
+        state.lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        dom.statusModal.classList.remove('sending', 'success', 'warning', 'error');
+        dom.statusModal.classList.add(mode, 'open');
+
+        if (dom.statusEyebrow) dom.statusEyebrow.textContent = eyebrow;
+        if (dom.statusTitle) dom.statusTitle.textContent = title;
+        if (dom.statusMessage) dom.statusMessage.textContent = message;
+        if (dom.statusMeta) dom.statusMeta.textContent = meta;
+
+        const canClose = mode === 'success' || mode === 'warning';
+        if (dom.statusCloseBtn) dom.statusCloseBtn.hidden = !canClose;
+        if (dom.statusRetryBtn) dom.statusRetryBtn.hidden = mode !== 'error';
+
+        const safeDriveUrl = safeHttpsUrl(driveUrl);
+        if (dom.driveFolderBtn) {
+          dom.driveFolderBtn.hidden = !(canClose && safeDriveUrl);
+          if (safeDriveUrl) dom.driveFolderBtn.href = safeDriveUrl;
+          else dom.driveFolderBtn.removeAttribute('href');
+        }
+
+        if (dom.statusIcon) {
+          if (mode === 'sending') {
+            dom.statusIcon.innerHTML = '<div class="modal-spinner" aria-hidden="true"></div>';
+          } else if (mode === 'success') {
+            dom.statusIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+          } else {
+            dom.statusIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.6 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/></svg>';
           }
+        }
 
-          showToast('Complete the required fields.');
+        document.body.style.overflow = 'hidden';
+        dom.statusCard?.setAttribute('tabindex', '-1');
+        window.requestAnimationFrame(() => {
+          if (mode === 'error' && dom.statusRetryBtn && !dom.statusRetryBtn.hidden) dom.statusRetryBtn.focus();
+          else if (canClose && dom.statusCloseBtn && !dom.statusCloseBtn.hidden) dom.statusCloseBtn.focus();
+          else dom.statusCard?.focus();
+        });
+      }
+
+      function closeStatusModal() {
+        if (!dom.statusModal || dom.statusModal.classList.contains('sending')) return;
+        dom.statusModal.classList.remove('open', 'sending', 'success', 'warning', 'error');
+        document.body.style.overflow = '';
+        state.lastFocusedElement?.focus?.();
+      }
+
+      async function parseWorkerResponse(response) {
+        const raw = await response.text();
+        if (!raw) return {};
+        try {
+          return JSON.parse(raw);
+        } catch {
+          const error = new Error('The server returned an invalid response. Please try again.');
+          error.code = 'INVALID_SERVER_RESPONSE';
+          throw error;
+        }
+      }
+
+      function setSubmitting(active) {
+        state.isSubmitting = active;
+        form.setAttribute('aria-busy', active ? 'true' : 'false');
+        if (dom.submitBtn) {
+          dom.submitBtn.disabled = active;
+          dom.submitBtn.innerHTML = active ? 'Sending onboarding…' : originalSubmitHtml;
+        }
+        if (dom.saveBtn) dom.saveBtn.disabled = active;
+      }
+
+      function resetAfterSuccess() {
+        state.submissionCompleted = true;
+        safeStorageRemove(CONFIG.storageKey);
+        safeStorageRemove(CONFIG.legacyStorageKey);
+        clearPendingSubmission();
+
+        form.reset();
+        renderFileList([], dom.fileList);
+        renderFileList([], dom.sopFileList);
+        updateServicePanels();
+        updateSopFields();
+        updateProgress();
+        updateAutosaveStatus('Progress saved locally', 'saved');
+      }
+
+      async function submitForm(event) {
+        event.preventDefault();
+        if (state.isSubmitting) return;
+
+        updateServicePanels();
+        updateSopFields();
+        normalizeOptionalUrlField(document.getElementById('website'));
+        normalizeOptionalUrlField(document.getElementById('brandLink'));
+        normalizeOptionalUrlField(document.getElementById('sopLink'));
+
+        if (!form.checkValidity()) {
+          showValidationErrors();
+          return;
+        }
+
+        try {
+          validateUploads();
+        } catch (error) {
           openStatusModal('error', {
-            eyebrow: 'Form incomplete',
-            title: 'A few details are missing.',
-            message: 'Please complete the highlighted required fields, then submit the onboarding form again.',
-            meta: invalidFields.length
-              ? `Required fields to review: ${invalidFields.join(', ')}`
-              : 'Please review the required fields in the form.'
+            eyebrow: 'File upload issue',
+            title: 'Please review your files.',
+            message: error.message || 'One or more files cannot be uploaded.'
           });
           return;
         }
 
-        const startedAt = performance.now();
-        const controller = new AbortController();
-        const requestTimeout = setTimeout(() => controller.abort(), 90000);
         const submission = getPendingSubmission();
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), CONFIG.requestTimeoutMs);
+
+        saveProgress({ silent: true });
+        setSubmitting(true);
+
+        const totalFileCount = (dom.assetFiles?.files?.length || 0) + (dom.sopFile?.files?.length || 0);
+        openStatusModal('sending', {
+          eyebrow: 'Secure submission',
+          title: 'Sending your onboarding…',
+          message: 'Your information is being saved to JRM Digital Solution project storage. Keep this page open until confirmation appears.',
+          meta: totalFileCount
+            ? `${totalFileCount} file${totalFileCount === 1 ? '' : 's'} included with this submission.`
+            : 'No files attached — that is okay.'
+        });
 
         try {
-          validateUploads();
-          saveProgress(true);
-
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = 'Sending onboarding…';
-
-          openStatusModal('sending', {
-            eyebrow: 'Secure submission',
-            title: 'Sending your onboarding…',
-            message: 'Your information is being saved to JRM Digital Solution project storage. Please keep this page open until confirmation appears.',
-            meta: (assetFiles.files.length + (sopFile?.files?.length || 0))
-              ? `${assetFiles.files.length + (sopFile?.files?.length || 0)} file${(assetFiles.files.length + (sopFile?.files?.length || 0)) === 1 ? '' : 's'} included with this submission.`
-              : 'No files attached — that is okay. Your client folder and empty asset folders will still be created.'
-          });
-
           const formData = new FormData(form);
 
-          // Keep compatibility with the current Worker: send the SOP document
-          // through the same assetFiles collection used for project uploads.
-          if (sopStatus?.value === 'yes' && sopFile?.files?.[0]) {
-            formData.append('assetFiles', sopFile.files[0], `SOP - ${sopFile.files[0].name}`);
+          // The current Worker stores uploaded project files under assetFiles.
+          // Avoid sending the same SOP under two field names.
+          formData.delete('sopFile');
+          if (dom.sopStatus?.value === 'yes' && dom.sopFile?.files?.[0]) {
+            const sop = dom.sopFile.files[0];
+            formData.append('assetFiles', sop, `SOP - ${sop.name}`);
           }
 
           appendWorkerCompatibilityFields(formData, submission);
 
-          console.info('[JRMRC Onboarding] Sending request.', {
-            build: BUILD_VERSION,
-            submissionId: submission.id,
-            package: form.querySelector('input[name="service"]:checked')?.value || '',
-            fileCount: assetFiles.files.length + (sopFile?.files?.length || 0)
-          });
-
-          const response = await fetch(WORKER_URL, {
+          const response = await fetch(CONFIG.workerUrl, {
             method: 'POST',
             body: formData,
-            signal: controller.signal
+            signal: controller.signal,
+            cache: 'no-store',
+            credentials: 'omit',
+            referrerPolicy: 'strict-origin-when-cross-origin'
           });
 
-          const elapsedMs = Math.round(performance.now() - startedAt);
-          const rawResponse = await response.text();
-          let result = {};
-
-          try {
-            result = rawResponse ? JSON.parse(rawResponse) : {};
-          } catch (parseError) {
-            console.error('[JRMRC Onboarding] Invalid Worker JSON.', {
-              status: response.status,
-              parseError,
-              responsePreview: rawResponse.slice(0, 1200),
-              submissionId: submission.id
-            });
-            throw new Error('The server returned an invalid response.');
-          }
-
-          console.info('[JRMRC Onboarding] Worker responded.', {
-            status: response.status,
-            ok: response.ok,
-            elapsedMs,
-            requestId: result.requestId || null,
-            submissionId: result.submissionId || submission.id,
-            resultStatus: result.status || null,
-            folderReused: Boolean(result.folderReused),
-            emailSent: result.emailSent
-          });
+          const result = await parseWorkerResponse(response);
 
           if (!response.ok || result.success === false) {
-            console.error('[JRMRC Onboarding] Backend rejected submission.', {
-              httpStatus: response.status,
-              code: result.code || null,
-              requestId: result.requestId || null,
-              technicalMessage: result.message || null,
-              submissionId: submission.id
-            });
-
             const error = new Error(
               result.userMessage ||
               'We could not complete your onboarding submission. Your answers remain saved in this browser, so please try again.'
             );
             error.requestId = result.requestId || '';
             error.code = result.code || '';
-            error.technicalMessage = result.message || '';
             throw error;
           }
-
-          // Drive is saved at this point. Do NOT allow an email warning to make
-          // the client retry and accidentally create duplicate work.
-          localStorage.removeItem(storageKey);
-          clearPendingSubmission();
-          form.reset();
-          renderFiles([]);
-          updateServicePanel();
-          updateProgress();
 
           const details = [
             result.submissionId ? `Submission ID: ${result.submissionId}` : '',
             result.driveFolderName ? `Drive folder: ${result.driveFolderName}` : '',
-            result.folderReused ? 'Existing folder reused safely: Yes' : 'New folder created: Yes',
-            `Files uploaded: ${Number(result.filesUploaded || 0)}`,
+            result.folderReused ? 'Existing project folder reused safely.' : 'New project folder created.',
+            Number.isFinite(Number(result.filesUploaded)) ? `Files uploaded: ${Number(result.filesUploaded || 0)}` : '',
             result.emailSent === true ? 'Internal notification email: sent' : 'Internal notification email: pending'
           ].filter(Boolean).join('\n');
 
-          if (result.warning || result.emailSent === false) {
-            console.warn('[JRMRC Onboarding] Saved with warning.', {
-              requestId: result.requestId || null,
-              submissionId: result.submissionId || submission.id,
-              warning: result.warning || result.userMessage || 'Email notification was not sent.'
-            });
+          resetAfterSuccess();
 
+          if (result.warning || result.emailSent === false) {
             openStatusModal('warning', {
               eyebrow: 'Onboarding received',
               title: 'Your project information is saved.',
-              message: 'Your onboarding and Google Drive project folder were saved successfully. The internal notification email had an issue, but you do not need to submit the form again.',
+              message: 'Your onboarding and project folder were saved successfully. The internal notification email had an issue, but you do not need to submit the form again.',
               meta: details,
               driveUrl: result.driveFolderUrl || ''
             });
@@ -2739,101 +2279,102 @@
               eyebrow: 'Submission complete',
               title: 'Onboarding received!',
               message: result.folderReused
-                ? 'Your onboarding was confirmed successfully. The existing project folder was reused, so no duplicate folder was created.'
-                : 'Your onboarding was submitted successfully. JRM Digital Solution now has the project information needed to begin.',
+                ? 'Your onboarding was confirmed successfully and the existing project folder was reused, so no duplicate folder was created.'
+                : 'Your onboarding was submitted successfully. JRM Digital Solution now has the information needed to begin.',
               meta: details,
               driveUrl: result.driveFolderUrl || ''
             });
           }
-
         } catch (error) {
-          const isAbort = error?.name === 'AbortError';
+          const timedOut = error?.name === 'AbortError';
           const requestId = error?.requestId || '';
-          const friendlyMessage = isAbort
-            ? 'The submission took too long to confirm. Your answers are still saved in this browser. Please try again; the same submission ID will be reused to prevent duplicate folders.'
+          const message = timedOut
+            ? 'The submission took too long to confirm. Your answers are still saved. Please try again; the same submission ID will be reused to reduce duplicate work.'
             : (error?.message || 'Submission failed. Your answers are still saved in this browser. Please try again.');
 
-          console.error('[JRMRC Onboarding] SUBMISSION ERROR', {
-            name: error?.name,
-            code: error?.code || null,
-            message: error?.message,
-            technicalMessage: error?.technicalMessage || null,
-            requestId: requestId || null,
-            submissionId: submission.id,
-            stack: error?.stack,
-            workerUrl: WORKER_URL,
-            timestamp: new Date().toISOString()
-          });
+          // Do not log form data or other client PII to the browser console.
+          console.error('[JRM Onboarding] Submission error:', error?.code || error?.name || 'UNKNOWN_ERROR');
 
-          showToast('Submission needs attention.');
           openStatusModal('error', {
             eyebrow: 'Submission not confirmed',
             title: 'We could not confirm the submission.',
-            message: friendlyMessage,
-            meta: requestId
-              ? `Reference ID: ${requestId}\nYour form progress is still saved. Retrying will reuse the same submission ID.`
-              : 'Your form progress is still saved. Retrying will reuse the same submission ID.'
+            message,
+            meta: requestId ? `Reference ID: ${requestId}\nYour form progress is still saved.` : 'Your form progress is still saved.'
           });
+          showToast('Submission needs attention.');
         } finally {
-          clearTimeout(requestTimeout);
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalSubmitHtml;
+          window.clearTimeout(timeoutId);
+          setSubmitting(false);
         }
+      }
+
+      form.addEventListener('input', event => {
+        clearInvalidState(event.target);
+        updateProgress();
+        scheduleAutosave();
       });
 
-      statusCloseBtn.addEventListener('click', closeStatusModal);
+      form.addEventListener('change', event => {
+        clearInvalidState(event.target);
+        if (event.target.matches('input[name="service"]')) updateServicePanels();
+        if (event.target === dom.sopStatus) updateSopFields();
+        updateProgress();
+        scheduleAutosave();
+      });
 
-      statusRetryBtn.addEventListener('click', () => {
+      form.addEventListener('submit', submitForm);
+      dom.saveBtn?.addEventListener('click', () => saveProgress({ silent: false }));
+
+      dom.assetFiles?.addEventListener('change', () => renderFileList(dom.assetFiles.files, dom.fileList));
+      dom.sopFile?.addEventListener('change', () => renderFileList(dom.sopFile.files, dom.sopFileList, 1));
+      bindDropState(dom.uploadZone);
+      bindDropState(dom.sopUploadZone);
+
+      dom.statusCloseBtn?.addEventListener('click', closeStatusModal);
+      dom.statusRetryBtn?.addEventListener('click', () => {
         closeStatusModal();
-        document.getElementById('onboarding-form')?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        document.getElementById('onboarding-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
 
-      statusModal.addEventListener('click', e => {
-        if (
-          e.target === statusModal &&
-          !statusModal.classList.contains('sending')
-        ) {
+      dom.statusModal?.addEventListener('click', event => {
+        if (event.target === dom.statusModal && !dom.statusModal.classList.contains('sending')) closeStatusModal();
+      });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && dom.statusModal?.classList.contains('open') && !dom.statusModal.classList.contains('sending')) {
           closeStatusModal();
         }
       });
 
-      document.addEventListener('keydown', e => {
-        if (
-          e.key === 'Escape' &&
-          !statusModal.classList.contains('sending')
-        ) {
-          closeStatusModal();
-        }
+      const sectionObserver = 'IntersectionObserver' in window
+        ? new IntersectionObserver(entries => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              for (const link of document.querySelectorAll('.jump-link')) link.classList.remove('active');
+              document.querySelector(`[data-link="${entry.target.id}"]`)?.classList.add('active');
+            }
+          }, { rootMargin: '-28% 0px -58% 0px', threshold: 0 })
+        : null;
+
+      if (sectionObserver) {
+        for (const section of document.querySelectorAll('[data-section]')) sectionObserver.observe(section);
+      }
+
+      window.addEventListener('pagehide', () => {
+        window.clearTimeout(state.autosaveTimer);
+        if (!state.submissionCompleted) saveProgress({ silent: true });
       });
-
-      const sectionObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          document.querySelectorAll('.jump-link').forEach(link => link.classList.remove('active'));
-          document.querySelector(`[data-link="${entry.target.id}"]`)?.classList.add('active');
-        });
-      }, { rootMargin: '-28% 0px -58% 0px', threshold: 0 });
-
-      document.querySelectorAll('[data-section]').forEach(section => sectionObserver.observe(section));
-
-      const revealObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: .08 });
-      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
       restoreProgress();
-      updateServicePanel();
+      updateServicePanels();
       updateSopFields();
       updateProgress();
+      updateAutosaveStatus(state.storageAvailable ? 'Progress saved locally' : 'Autosave unavailable', state.storageAvailable ? 'saved' : 'error');
+
+      // Keep the build id available for non-PII diagnostics without noisy console logging.
+      document.documentElement.dataset.build = CONFIG.buildVersion;
     })();
+
   </script>
 </body>
 </html>
