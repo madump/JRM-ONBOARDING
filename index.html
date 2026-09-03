@@ -3,8 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="JRMRC client onboarding form for the four service packages offered by JRMRC: Custom Coded Website, GoHighLevel Setup, GHL + AI Receptionist, and GHL AI Revenue System." />
-  <title>JRMRC Client Onboarding</title>
+  <meta name="description" content="JRM Digital Solution client onboarding form for Custom Coded Website, GoHighLevel Setup, GHL + AI Receptionist, and GHL AI Revenue System services." />
+  <meta name="theme-color" content="#080d15" />
+  <meta name="application-name" content="JRM Digital Solution" />
+  <meta name="apple-mobile-web-app-title" content="JRM Digital Solution" />
+
+  <!-- Social / sharing metadata. For production, use the logo's absolute public HTTPS URL in og:image and twitter:image. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="JRM Digital Solution" />
+  <meta property="og:title" content="JRM Digital Solution | Client Onboarding" />
+  <meta property="og:description" content="Start your JRM Digital Solution project by completing the client onboarding form." />
+  <meta property="og:image" content="jrm-digital-solution-logo.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JRM Digital Solution | Client Onboarding" />
+  <meta name="twitter:description" content="Start your JRM Digital Solution project by completing the client onboarding form." />
+  <meta name="twitter:image" content="jrm-digital-solution-logo.png" />
+
+  <link rel="icon" type="image/png" href="jrm-digital-solution-logo.png" />
+  <link rel="apple-touch-icon" href="jrm-digital-solution-logo.png" />
+
+  <title>JRM Digital Solution | Client Onboarding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -103,25 +122,28 @@
       letter-spacing: -.02em;
     }
 
-    .brand-mark {
-      width: 36px;
-      height: 36px;
+    .brand-logo {
+      display: block;
+      width: clamp(138px, 15vw, 176px);
+      height: 52px;
+      object-fit: contain;
+      object-position: left center;
       border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: #090b08;
-      background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(133,255,10,.08);
-      font-weight: 900;
+    }
+
+    .brand-context {
+      display: flex;
+      align-items: center;
+      min-width: 0;
     }
 
     .brand small {
       display: block;
       color: var(--muted);
-      font: 500 11px/1.2 "DM Sans", sans-serif;
-      letter-spacing: .12em;
+      font: 600 10px/1.2 "DM Sans", sans-serif;
+      letter-spacing: .11em;
       text-transform: uppercase;
-      margin-top: 2px;
+      white-space: nowrap;
     }
 
     .nav-actions {
@@ -1050,7 +1072,8 @@
     @media (max-width: 720px) {
       .page, .nav { padding-left: 16px; padding-right: 16px; }
       .nav { min-height: 66px; }
-      .brand small, .status-pill { display: none; }
+      .brand-context, .status-pill { display: none; }
+      .brand-logo { width: 132px; height: 46px; }
       .ghost-btn { padding: 0 12px; font-size: 12px; }
       .hero { padding-top: 54px; padding-bottom: 45px; }
       h1 { font-size: clamp(49px, 15vw, 72px); }
@@ -1197,10 +1220,15 @@
 <body>
   <header class="topbar">
     <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="Back to top">
-        <span class="brand-mark">J</span>
-        <span>
-          JRMRC
+      <a class="brand" href="#top" aria-label="JRM Digital Solution — Back to top">
+        <img
+          class="brand-logo"
+          src="jrm-digital-solution-logo.png"
+          alt="JRM Digital Solution"
+          width="176"
+          height="64"
+        />
+        <span class="brand-context">
           <small>Client Onboarding</small>
         </span>
       </a>
@@ -1709,7 +1737,7 @@
     </section>
 
     <footer class="footer">
-      <span>© 2026 JRMRC. Client Onboarding.</span>
+      <span>© 2026 JRM Digital Solution. Client Onboarding.</span>
       <span>Clear scope. Faster kickoff.</span>
     </footer>
   </main>
@@ -2276,7 +2304,7 @@
           openStatusModal('sending', {
             eyebrow: 'Secure submission',
             title: 'Sending your onboarding…',
-            message: 'Your information is being saved to JRMRC project storage. Please keep this page open until confirmation appears.',
+            message: 'Your information is being saved to JRM Digital Solution project storage. Please keep this page open until confirmation appears.',
             meta: assetFiles.files.length
               ? `${assetFiles.files.length} file${assetFiles.files.length === 1 ? '' : 's'} included with this submission.`
               : 'No files attached — that is okay. Your client folder and empty asset folders will still be created.'
@@ -2381,7 +2409,7 @@
               title: 'Onboarding received!',
               message: result.folderReused
                 ? 'Your onboarding was confirmed successfully. The existing project folder was reused, so no duplicate folder was created.'
-                : 'Your onboarding was submitted successfully. JRMRC now has the project information needed to begin.',
+                : 'Your onboarding was submitted successfully. JRM Digital Solution now has the project information needed to begin.',
               meta: details,
               driveUrl: result.driveFolderUrl || ''
             });
