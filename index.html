@@ -1449,45 +1449,10 @@
                 <div class="service-panel" data-service-panel="custom-coded-website" hidden>
                   <div class="service-panel-head">
                     <h4>Custom Coded Website</h4>
-                    <p>Tell me what the up-to-5-page website needs to say and do.</p>
+                    <p>Share any design references or websites you want me to review.</p>
                   </div>
                   <div class="field-grid">
                     <p class="package-scope-note"><strong>Package scope:</strong> responsive coded marketing website, up to 5 standard pages, CRO-focused structure, basic SEO, GitHub/Vercel handoff, and 30-day technical support.</p>
-                    <div class="field">
-                      <label for="codedSiteType">Website type <span class="required">*</span></label>
-                      <select id="codedSiteType" name="codedSiteType" data-conditional-required>
-                        <option value="">Select one</option>
-                        <option>New website</option>
-                        <option>Website redesign</option>
-                        <option>Landing page / single-page site</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label for="codedDomain">Domain / current URL</label>
-                      <input id="codedDomain" name="codedDomain" type="text" placeholder="yourdomain.com or current website" />
-                    </div>
-                    <div class="field full">
-                      <label for="codedGoal">Primary goal / CTA <span class="required">*</span></label>
-                      <input id="codedGoal" name="codedGoal" type="text" placeholder="Book a call, request a quote, submit a form, buy, call now…" data-conditional-required />
-                    </div>
-                    <div class="field full">
-                      <label for="codedPages">Pages needed — up to 5 <span class="required">*</span></label>
-                      <textarea class="compact-textarea" id="codedPages" name="codedPages" placeholder="Example: Home, About, Services, Reviews, Contact" data-conditional-required></textarea>
-                    </div>
-                    <div class="field">
-                      <label for="codedCopy">Copy/content status <span class="required">*</span></label>
-                      <select id="codedCopy" name="codedCopy" data-conditional-required>
-                        <option value="">Select one</option>
-                        <option>Final copy is ready</option>
-                        <option>I have rough copy</option>
-                        <option>Use content from my current website</option>
-                        <option>I need help organizing the copy</option>
-                      </select>
-                    </div>
-                    <div class="field">
-                      <label for="codedLeadDestination">Where should leads go?</label>
-                      <input id="codedLeadDestination" name="codedLeadDestination" type="text" placeholder="Email, CRM, booking page, phone, etc." />
-                    </div>
                     <div class="field full">
                       <label for="codedReferences">Design references</label>
                       <textarea class="compact-textarea" id="codedReferences" name="codedReferences" placeholder="Paste 1–3 websites you like and tell me what you like about them."></textarea>
@@ -2167,12 +2132,6 @@
         const lines = [`Package booked: ${serviceLabel(service)}`];
 
         if (service === 'custom-coded-website') {
-          lines.push(`Website type: ${getValue('codedSiteType')}`);
-          lines.push(`Primary goal / CTA: ${getValue('codedGoal')}`);
-          lines.push(`Pages: ${getValue('codedPages')}`);
-          lines.push(`Copy/content: ${getValue('codedCopy')}`);
-          lines.push(`Domain / current URL: ${getValue('codedDomain') || 'Not specified'}`);
-          lines.push(`Lead destination: ${getValue('codedLeadDestination') || 'Not specified'}`);
           lines.push(`Design references: ${getValue('codedReferences') || 'None provided'}`);
         } else if (service === 'foundation') {
           lines.push(`Existing GHL account: ${getValue('foundationAccount')}`);
@@ -2251,16 +2210,8 @@
         formData.set('service', workerServiceKey(selectedPackage));
 
         if (selectedPackage === 'custom-coded-website') {
-          formData.set('webType', `${packageName} — ${getValue('codedSiteType')}`);
           formData.set('webPlatform', 'Custom HTML / CSS / JavaScript');
-          formData.set('webGoal', getValue('codedGoal'));
-          formData.set('webPages', getValue('codedPages'));
-          formData.set('webCopy', getValue('codedCopy'));
-          formData.set('webDomain', getValue('codedDomain'));
           formData.set('webReferences', getValue('codedReferences'));
-
-          formData.set('project_goal', getValue('codedGoal'));
-          formData.set('required_pages', getValue('codedPages'));
           formData.set('hosting_provider', 'Custom HTML / CSS / JavaScript');
           formData.set('reference_sites', getValue('codedReferences'));
         }
