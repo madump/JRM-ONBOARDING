@@ -696,6 +696,70 @@
     .package-scope-note strong,
     .inline-note strong { color: #173000; font-weight: 800; }
 
+    .communication-details {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .communication-option {
+      padding: 18px;
+      border: 1px solid rgba(11,19,27,.12);
+      border-radius: 14px;
+      background: #fbfcfd;
+    }
+
+    .communication-option label { margin-bottom: 9px; }
+
+    .invite-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 15px;
+      border: 1px solid rgba(11,19,27,.12);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .invite-card-copy { min-width: 0; }
+
+    .invite-card-copy small {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .invite-email {
+      color: var(--accent-ink);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .copy-btn {
+      appearance: none;
+      flex: 0 0 auto;
+      min-height: 40px;
+      padding: 0 13px;
+      border: 1px solid rgba(11,19,27,.16);
+      border-radius: 10px;
+      background: #f3f5f7;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+      background: var(--accent-soft);
+      border-color: rgba(108,205,15,.45);
+    }
+
     .upload-zone {
       position: relative;
       min-height: 190px;
@@ -1050,6 +1114,9 @@
       label, .label { font-size: 14px; }
       input, textarea, select { min-height: 56px; font-size: 16px; }
       textarea, .compact-textarea { min-height: 124px; }
+      .communication-option { padding: 16px; }
+      .invite-card { align-items: stretch; flex-direction: column; }
+      .copy-btn { width: 100%; }
       .service-panel { padding: 20px 16px; }
       .service-card { min-height: 0; padding: 18px; }
       .upload-zone { min-height: 170px; padding: 24px 16px; }
@@ -1437,6 +1504,65 @@
                     <option>Telegram</option>
                   </select>
                 </div>
+
+                <div class="communication-details" id="communicationDetails" aria-live="polite">
+                  <div class="communication-option" data-channel-panel="WhatsApp" hidden>
+                    <label for="whatsappNumber">WhatsApp number <span class="required">*</span></label>
+                    <input
+                      id="whatsappNumber"
+                      name="whatsappNumber"
+                      type="tel"
+                      inputmode="tel"
+                      autocomplete="tel"
+                      placeholder="+63 912 345 6789"
+                      data-communication-required
+                    />
+                    <small class="helper">Include the country code so I can message you without delays.</small>
+                  </div>
+
+                  <div class="communication-option" data-channel-panel="Telegram" hidden>
+                    <label for="telegramUsername">Telegram username <span class="required">*</span></label>
+                    <input
+                      id="telegramUsername"
+                      name="telegramUsername"
+                      type="text"
+                      autocomplete="off"
+                      autocapitalize="none"
+                      spellcheck="false"
+                      placeholder="@yourusername"
+                      data-communication-required
+                    />
+                    <small class="helper">Enter the username people can use to find you on Telegram.</small>
+                  </div>
+
+                  <div class="communication-option" data-channel-panel="Discord" hidden>
+                    <label for="discordInviteLink">Discord invitation link <span class="required">*</span></label>
+                    <input
+                      id="discordInviteLink"
+                      name="discordInviteLink"
+                      type="url"
+                      inputmode="url"
+                      autocomplete="off"
+                      placeholder="https://discord.gg/your-invite"
+                      data-communication-required
+                    />
+                    <small class="helper">Paste a valid invitation link to the Discord server or channel you want to use.</small>
+                  </div>
+
+                  <div class="communication-option" data-channel-panel="Slack" hidden>
+                    <span class="label">Slack invitation</span>
+                    <div class="invite-card">
+                      <div class="invite-card-copy">
+                        <small>Send the Slack workspace invitation to</small>
+                        <a class="invite-email" href="mailto:jhimrickofficial@gmail.com">jhimrickofficial@gmail.com</a>
+                      </div>
+                      <button class="copy-btn" id="copySlackEmailBtn" type="button">Copy email</button>
+                    </div>
+                    <input id="slackInviteEmail" name="slackInviteEmail" type="hidden" value="jhimrickofficial@gmail.com" disabled />
+                    <small class="helper">In Slack, choose Invite people and use this email address.</small>
+                  </div>
+                </div>
+
                 <div class="field full">
                   <label for="notes">Important notes</label>
                   <textarea class="compact-textarea" id="notes" name="notes" placeholder="Deadline context, restrictions, required approvals, or anything I need to know before starting."></textarea>
@@ -1542,7 +1668,7 @@
         maxTotalFileSize: 25 * 1024 * 1024,
         requestTimeoutMs: 90_000,
         autosaveDelayMs: 350,
-        buildVersion: 'JRM-ONBOARDING-2026-09-03-PROD-V7'
+        buildVersion: 'JRM-ONBOARDING-2026-09-04-PROD-V8'
       });
 
       const form = document.getElementById('clientForm');
@@ -1583,10 +1709,13 @@
         sopFile: document.getElementById('sopFile'),
         sopUploadZone: document.getElementById('sopUploadZone'),
         sopFileList: document.getElementById('sopFileList'),
+        channel: document.getElementById('channel'),
+        copySlackEmailBtn: document.getElementById('copySlackEmailBtn'),
         submitBtn: form.querySelector('button[type="submit"]')
       };
 
       const servicePanels = [...form.querySelectorAll('[data-service-panel]')];
+      const communicationPanels = [...form.querySelectorAll('[data-channel-panel]')];
       const originalSubmitHtml = dom.submitBtn?.innerHTML || 'Submit onboarding';
 
       const state = {
@@ -1621,7 +1750,10 @@
         aiAccount: 'GoHighLevel account status',
         revAccount: 'GoHighLevel account status',
         sopFile: 'SOP file',
-        channel: 'Preferred communication'
+        channel: 'Preferred communication',
+        whatsappNumber: 'WhatsApp number',
+        telegramUsername: 'Telegram username',
+        discordInviteLink: 'Discord invitation link'
       });
 
       function safeStorageGet(key) {
@@ -1800,6 +1932,48 @@
         if (sopLink) sopLink.disabled = hasDocumentedSop;
       }
 
+      function updateCommunicationFields() {
+        const selected = dom.channel?.value || '';
+
+        for (const panel of communicationPanels) {
+          const active = panel.dataset.channelPanel === selected;
+          panel.hidden = !active;
+
+          for (const field of panel.querySelectorAll('input, textarea, select')) {
+            field.disabled = !active;
+            if (field.hasAttribute('data-communication-required')) field.required = active;
+            if (!active) clearInvalidState(field);
+          }
+        }
+      }
+
+      async function copyText(text) {
+        if (!text) return false;
+
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        } catch {
+          // Fall back to a temporary textarea below.
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        textarea.style.pointerEvents = 'none';
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch { copied = false; }
+        textarea.remove();
+        return copied;
+      }
+
       function requiredGroups() {
         const required = [...form.querySelectorAll('[required]:not(:disabled)')];
         const groups = new Map();
@@ -1958,6 +2132,16 @@
         return lines.filter(Boolean).join('\n');
       }
 
+      function getCommunicationDetail() {
+        const channel = getValue('channel');
+
+        if (channel === 'WhatsApp') return getValue('whatsappNumber') ? `WhatsApp number: ${getValue('whatsappNumber')}` : '';
+        if (channel === 'Telegram') return getValue('telegramUsername') ? `Telegram username: ${getValue('telegramUsername')}` : '';
+        if (channel === 'Discord') return getValue('discordInviteLink') ? `Discord invitation link: ${getValue('discordInviteLink')}` : '';
+        if (channel === 'Slack') return 'Slack invitation email: jhimrickofficial@gmail.com';
+        return '';
+      }
+
       function appendWorkerCompatibilityFields(formData, submission) {
         const selectedPackage = form.querySelector('input[name="service"]:checked')?.value || '';
         const packageName = serviceLabel(selectedPackage);
@@ -1966,6 +2150,7 @@
         const sopStatusText = SOP_STATUS_LABELS[sopStatusValue] || sopStatusValue;
         const sopLink = getValue('sopLink');
         const notes = getValue('notes');
+        const communicationDetail = getCommunicationDetail();
 
         formData.set('submission_id', submission.id);
         formData.set('submission_created_at', submission.createdAt);
@@ -1976,6 +2161,7 @@
         formData.set('brand_asset_link', getValue('brandLink'));
         formData.set('content_notes', getValue('accessNotes'));
         formData.set('communication', getValue('channel'));
+        formData.set('communication_details', communicationDetail);
         formData.set('business_description', `${packageName} onboarding`);
         formData.set('project_goal', `${packageName} onboarding`);
         formData.set('required_features', summary);
@@ -1985,6 +2171,7 @@
 
         formData.set('additional_notes', [
           `Package booked: ${packageName}`,
+          communicationDetail ? `Communication details: ${communicationDetail}` : '',
           notes,
           sopStatusText ? `SOP status: ${sopStatusText}` : '',
           (sopStatusValue === 'yes' && dom.sopFile?.files?.[0]) ? `SOP file uploaded: ${dom.sopFile.files[0].name}` : '',
@@ -2175,6 +2362,7 @@
         renderFileList([], dom.sopFileList);
         updateServicePanels();
         updateSopFields();
+        updateCommunicationFields();
         updateProgress();
         updateAutosaveStatus('Progress saved locally', 'saved');
       }
@@ -2188,6 +2376,7 @@
         normalizeOptionalUrlField(document.getElementById('website'));
         normalizeOptionalUrlField(document.getElementById('brandLink'));
         normalizeOptionalUrlField(document.getElementById('sopLink'));
+        normalizeOptionalUrlField(document.getElementById('discordInviteLink'));
 
         if (!form.checkValidity()) {
           showValidationErrors();
@@ -2318,12 +2507,17 @@
         clearInvalidState(event.target);
         if (event.target.matches('input[name="service"]')) updateServicePanels();
         if (event.target === dom.sopStatus) updateSopFields();
+        if (event.target === dom.channel) updateCommunicationFields();
         updateProgress();
         scheduleAutosave();
       });
 
       form.addEventListener('submit', submitForm);
       dom.saveBtn?.addEventListener('click', () => saveProgress({ silent: false }));
+      dom.copySlackEmailBtn?.addEventListener('click', async () => {
+        const copied = await copyText('jhimrickofficial@gmail.com');
+        showToast(copied ? 'Slack invitation email copied.' : 'Copy failed. Select the email manually.');
+      });
 
       dom.assetFiles?.addEventListener('change', () => renderFileList(dom.assetFiles.files, dom.fileList));
       dom.sopFile?.addEventListener('change', () => renderFileList(dom.sopFile.files, dom.sopFileList, 1));
@@ -2368,6 +2562,7 @@
       restoreProgress();
       updateServicePanels();
       updateSopFields();
+      updateCommunicationFields();
       updateProgress();
       updateAutosaveStatus(state.storageAvailable ? 'Progress saved locally' : 'Autosave unavailable', state.storageAvailable ? 'saved' : 'error');
 
